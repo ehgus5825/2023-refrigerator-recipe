@@ -1,0 +1,91 @@
+@import "@/scss/variables";
+
+$modal-pd: 0.9rem;
+$modal-border-radius: 0.75rem;
+
+$header-bg-color: $grey-100;
+$header-font-color: $grey-800;
+$header-font-size: 17px;
+
+$header-font-color-disabled: $grey-400;
+
+.modalBackground {
+	position: fixed;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 2;
+	background-color: rgba(black, 0.5);
+}
+
+.modal {
+	position: fixed;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 86%;
+	z-index: 3;
+
+	display: flex;
+	flex-direction: column;
+
+	border-radius: $modal-border-radius;
+	background-color: white;
+
+	> div {
+		display: flex;
+	}
+
+	.modalHeader {
+		padding: $modal-pd;
+		border-bottom: $divider;
+		border-radius: $modal-border-radius $modal-border-radius 0 0;
+		background-color: $grey-100;
+
+		> span {
+			flex: 1;
+			text-align: center;
+			color: $header-font-color;
+			font-size: $header-font-size;
+			line-height: $header-font-size;
+			font-weight: bold;
+			letter-spacing: 0.5px;
+		}
+
+		.closeBtn {
+			position: absolute;
+			right: 24px;
+		}
+	}
+
+	.modalBody {
+		flex: 1;
+		overflow: scroll;
+	}
+
+	.modalFooter {
+		background-color: $grey-100;
+		border-radius: 0 0 $modal-border-radius $modal-border-radius;
+
+		> button {
+			flex: 1;
+			border: none;
+			background-color: transparent;
+			padding: $modal-pd;
+			color: $header-font-color;
+			font-size: $header-font-size;
+			line-height: $header-font-size;
+			letter-spacing: 0.5px;
+			border-left: $divider;
+			border-top: $divider;
+
+			&:disabled {
+				color: $header-font-color-disabled;
+			}
+
+			&:first-child {
+				border-left: none;
+			}
+		}
+	}
+}

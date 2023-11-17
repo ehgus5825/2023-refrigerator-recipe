@@ -1,0 +1,28 @@
+@import "@/scss/variables";
+
+.tooltipContainer {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip {
+	position: absolute;
+	padding: 0.25rem 0.5rem;
+
+	background-color: $grey-100;
+	border: $divider;
+	border-radius: 10px;
+	box-shadow: 0 2px 5px rgba($grey-500, 0.3);
+	opacity: 0;
+	visibility: hidden;
+
+	color: $grey-500;
+	font-size: 14px;
+	letter-spacing: 0.5px;
+	font-weight: 400;
+}
+
+.tooltipContainer:hover .tooltip {
+	opacity: 1;
+	visibility: visible;
+}

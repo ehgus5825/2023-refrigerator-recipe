@@ -1,0 +1,85 @@
+@import "@/scss/variables";
+
+$input-bg-color: $grey-100;
+$input-font-color: $grey-700;
+$placeholder-font-color: $grey-400;
+$input-font-color-disabled: $grey-500;
+
+$input-font-size-info: 19px;
+$input-font-size-search: 17px;
+$input-font-size-add: 19px;
+
+$clear-btn-color: $grey-400;
+
+$back-to-today-btn-color: $grey-500;
+$back-to-today-btn-size: 20px;
+
+@mixin input-container {
+	display: flex;
+	align-items: center;
+	padding: 0.5rem 0.75rem 0.5rem 1rem;
+	gap: 0.5rem;
+	border-radius: 0.75rem;
+	background-color: $input-bg-color;
+}
+.inputContainer_search {
+	@include input-container();
+	width: 100%;
+	height: $refrigerator-bar-height;
+	font-size: $input-font-size-search;
+}
+.inputContainer_info {
+	@include input-container();
+	width: 100%;
+	height: $ingredient-info-height;
+	font-size: $input-font-size-info;
+}
+.inputContainer_add {
+	@include input-container();
+	height: $ingredient-info-height;
+	font-size: $input-font-size-add;
+	margin: 0 -0.5rem;
+	width: 105%;
+}
+.inputContainer_modal {
+	@include input-container();
+	height: 36px;
+	font-size: 18px;
+}
+
+@mixin input-content {
+	flex: 1;
+	background-color: transparent;
+	border: none;
+	color: $input-font-color;
+	caret-color: $grey-500;
+
+	&:focus {
+		outline: none;
+	}
+	&:disabled {
+		color: $input-font-color-disabled;
+		text-align: center;
+	}
+
+	&::placeholder {
+		color: $placeholder-font-color;
+		text-align: left;
+	}
+	&::-webkit-calendar-picker-indicator {
+		filter: invert(0.4);
+	}
+}
+.inputContent {
+	@include input-content();
+}
+
+.clearBtn {
+	color: $clear-btn-color;
+}
+
+.backToTodayBtn {
+	height: $back-to-today-btn-size;
+	width: $back-to-today-btn-size;
+	color: $back-to-today-btn-color;
+}

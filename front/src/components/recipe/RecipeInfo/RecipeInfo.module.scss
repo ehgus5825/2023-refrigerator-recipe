@@ -1,0 +1,219 @@
+@import "@/scss/variables";
+
+$info-font-size: 17px;
+$info-key-font-color: $grey-500;
+$info-value-font-color: $grey-800;
+
+$bookmark-icon-size: 28px;
+
+$recipe-info-emphasis-font-size: 18px;
+$recipe-info-emphasis-font-color: $grey-900;
+
+$header-title-font-size: 20px;
+$header-sub-font-size: 14px;
+$header-sub-font-color: $grey-500;
+$header-button-font-color: $grey-800;
+
+$ingredient-type-width: 80px;
+$ingredient-font-size: 18px;
+$ingredient-font-color: $grey-500;
+$ingredient-font-color-selected: $grey-700;
+
+$step-number-width: 40px;
+$step-font-size: 16px;
+$step-font-color: $grey-600;
+
+@mixin recipe-info-container {
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	gap: 1.5rem;
+	background-color: white;
+}
+.recipeInfoTopContainer {
+	@include recipe-info-container();
+	padding-top: 2.5rem;
+	border-radius: 1rem 1rem 0rem 0rem;
+}
+.recipeInfoContainer {
+	@include recipe-info-container();
+}
+
+@mixin recipe-info-emphasis {
+	color: $recipe-info-emphasis-font-color;
+	font-size: $recipe-info-emphasis-font-size;
+	font-weight: 600;
+	padding: 0.5rem 0rem;
+}
+
+.recipeNameInbun {
+	display: flex;
+	gap: 0.7rem;
+	align-items: center;
+
+	.recipeName {
+		font-size: 28px;
+		line-height: 28px;
+		font-weight: bold;
+	}
+	.recipeInbun {
+		font-size: 16px;
+		line-height: 16px;
+		color: $grey-400;
+		align-self: flex-end;
+	}
+	.bookmarkIcon {
+		width: $bookmark-icon-size;
+		height: $bookmark-icon-size;
+		color: $grey-900;
+	}
+	.bookmarkedIcon {
+		width: $bookmark-icon-size;
+		height: $bookmark-icon-size;
+		color: $primary-color-recipe;
+	}
+	> span {
+		flex: 1;
+	}
+}
+.recipeDescription {
+	font-size: 16px;
+	line-height: 180%;
+	color: $grey-500;
+}
+.recipeExtraInfo {
+	display: flex;
+	flex-wrap: wrap;
+
+	> div {
+		display: flex;
+		gap: 0.5rem;
+		font-size: $info-font-size;
+		font-weight: 600;
+		align-items: center;
+		margin-bottom: 0.3rem;
+	}
+	.recipeInfoKey {
+		color: $info-key-font-color;
+	}
+	.recipeInfoValue {
+		margin-right: 1.25rem;
+		color: $info-value-font-color;
+	}
+}
+
+.recipeInfoHeader {
+	display: flex;
+	gap: 0.75rem;
+	align-items: center;
+	position: relative;
+
+	> div {
+		font-size: $header-title-font-size;
+		font-weight: bold;
+	}
+	> span {
+		flex: 1;
+		align-self: center;
+		font-size: 18px;
+		color: $grey-400;
+		font-weight: 400;
+	}
+	button {
+		padding: 0.25rem 1rem;
+		border: none;
+		border-radius: 3rem;
+		background-color: $primary-color-recipe;
+		color: $header-button-font-color;
+		font-size: $header-sub-font-size;
+		font-weight: 600;
+
+		&:disabled {
+			background-color: $grey-200;
+		}
+	}
+}
+
+.recipeIngredientTable {
+	display: flex;
+	flex-direction: column;
+
+	> div {
+		display: flex;
+		border-top: $divider;
+
+		> div {
+			display: flex;
+			flex: 1;
+			flex-direction: column;
+			margin-top: -1px;
+
+			> div {
+				display: flex;
+				gap: 0.5rem;
+				align-items: center;
+				border-top: $divider;
+			}
+		}
+	}
+	.recipeIngredientType {
+		width: $ingredient-type-width;
+		@include recipe-info-emphasis();
+	}
+	@mixin recipe-ingredient-info {
+		padding: 0.5rem;
+		font-size: $ingredient-font-size;
+
+		> span {
+			flex: 1;
+		}
+	}
+	.recipeIngredientInfo {
+		@include recipe-ingredient-info();
+		color: $ingredient-font-color;
+	}
+	.recipeIngredientInfoSelected {
+		@include recipe-ingredient-info();
+		color: $ingredient-font-color-selected;
+		background-color: rgba($grey-100, 0.5);
+	}
+	.recipeIngredientIcon {
+		color: $primary-color-recipe;
+	}
+}
+
+.recipeStepTable {
+	display: flex;
+	flex-direction: column;
+
+	> div {
+		display: flex;
+		border-top: $divider;
+	}
+	.recipeStepNumber {
+		min-width: $step-number-width;
+		@include recipe-info-emphasis();
+	}
+	.recipeStep {
+		padding: 0.5rem 0rem;
+		color: $step-font-color;
+		font-size: $step-font-size;
+		line-height: 160%;
+	}
+}
+
+.recipeCommentList {
+	display: flex;
+	flex-direction: column;
+
+	> div {
+		border-top: $divider;
+		padding: 1rem 0rem;
+	}
+}
+
+.questionIcon {
+	color: $header-sub-font-color;
+	height: 20px;
+	width: 20px;
+}

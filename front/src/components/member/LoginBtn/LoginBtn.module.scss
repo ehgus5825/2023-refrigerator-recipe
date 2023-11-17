@@ -1,0 +1,17 @@
+.loginBtn {
+	width: 320px;
+	height: 57px;
+	size: 25px;
+	text-align: left;
+	padding-left: 25px;
+	font-size: 17px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	background-color: #6fb2d2;
+	border: none;
+
+	span {
+		margin-left: 20px;
+	}
+}

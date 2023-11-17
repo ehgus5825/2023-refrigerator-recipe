@@ -1,0 +1,32 @@
+@import "@/scss/variables";
+
+$label-color: $grey-400;
+$label-color-active: $grey-700;
+$label-font-size: 14px;
+
+@mixin switch-container {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: $gap-sm;
+	padding: $pd-sm 0;
+	margin-right: -0.75rem;
+}
+.switchContainer {
+	@include switch-container();
+}
+
+@mixin switch-label {
+	display: flex;
+	font-size: $label-font-size;
+	align-items: center;
+}
+.switchLabel {
+	@include switch-label();
+	color: $label-color;
+}
+
+.switchLabel_active {
+	@include switch-label();
+	color: $label-color-active;
+}

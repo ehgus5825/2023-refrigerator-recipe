@@ -1,0 +1,26 @@
+.announcementContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border-radius: 0%;
+	align-items: center;
+}
+
+.announcementTitle {
+	font-size: 27px;
+	font-weight: 600;
+	margin: 30px 0;
+}
+
+.announcementList {
+	display: flex;
+	align-items: center;
+	width: 325px;
+	height: 65px;
+	background-color: aliceblue;
+}
+
+.icon {
+	font-size: 27px;
+	margin-right: 10px;
+}

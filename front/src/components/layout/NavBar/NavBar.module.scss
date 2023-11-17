@@ -1,0 +1,44 @@
+@import "@/scss/variables";
+
+$nav-item-color: $grey-500;
+$nav-item-color-active: $grey-900;
+$nav-icon-size: 26px;
+$nav-label-size: 12px;
+
+.navContainer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	display: flex;
+	height: $navbar-height;
+}
+
+@mixin nav-item {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+	background-color: white;
+	border-top: 1px solid $grey-300;
+	margin: 0 -1px;
+}
+.navItem {
+	@include nav-item();
+	color: $nav-item-color;
+}
+.navItem_active {
+	@include nav-item();
+	color: $nav-item-color-active;
+}
+
+.navIcon {
+	height: $nav-icon-size;
+	width: $nav-icon-size;
+}
+
+.navLabel {
+	font-size: $nav-label-size;
+	line-height: $nav-label-size;
+}

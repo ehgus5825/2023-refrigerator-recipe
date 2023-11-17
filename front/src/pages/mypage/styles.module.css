@@ -1,0 +1,115 @@
+.mypageContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.mypageTitle {
+  font-size: 27px;
+  font-weight: 600;
+}
+
+.mypageMe {
+  position: absolute;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mypageChange {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3px;
+}
+
+.mypageBar {
+  margin: 0 10px;
+}
+
+.mypageImg {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  z-index: 0;
+  border-style: solid;
+}
+
+.mypageNickContainer {
+  margin-top: 25px;
+  font-size: 20px;
+}
+
+.mypageNickname {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.mypageBackground {
+  display: flex;
+  background-color: #6fb2d2;
+  width: 300px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  line-height: 100px;
+  margin-top: -40px;
+  z-index: -1;
+  border-radius: 15px;
+}
+
+.mypageNicknameChange {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  height: 30px;
+  background: none;
+  font-size: 15px;
+  padding: 3px;
+}
+
+.mypageIcon {
+  margin-right: 5px;
+}
+
+.mypageStar,
+.mypageBookmark {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  font-weight: 600;
+}
+
+.mypageStarTitle,
+.mypageBookmarkTitle {
+  float: left;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.mypageLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.mypageLink span {
+  margin: 0px 10px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.mypageUnregister {
+  display: flex;
+  align-items: center;
+}
+.mypageUnregister span {
+  margin-right: 2px;
+  font-size: 15px;
+}/*# sourceMappingURL=styles.module.css.map */

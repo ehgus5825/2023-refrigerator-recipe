@@ -1,0 +1,64 @@
+.recipeBtn {
+  border: none;
+  background: none;
+}
+
+.recipeImage {
+  width: 116px;
+  height: 116px;
+  margin-bottom: 10px;
+}
+
+.scroll {
+  display: flex;
+  overflow-x: auto;
+  height: 150px;
+}
+
+.content {
+  flex: 0 0 120px;
+  height: 120px;
+  border: 2px solid #222;
+  background: #fff;
+  margin-right: -2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.content__plus {
+  width: 120px;
+  height: 120px;
+  border: 2px solid #222;
+  background: #fff;
+}
+
+.recipeNameWrapper {
+  margin-top: auto;
+  text-align: center;
+}
+
+.recipeName {
+  color: black;
+  font-size: 13px;
+}
+
+.recipeBtn__plus {
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.recipeBtn__plus span {
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+}
+.recipeBtn__plus .plus {
+  font-size: 25px;
+}/*# sourceMappingURL=ScrollContent.module.css.map */

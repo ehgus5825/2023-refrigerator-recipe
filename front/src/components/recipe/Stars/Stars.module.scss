@@ -1,0 +1,35 @@
+@import "@/scss/variables";
+
+$info-font-size: 15px;
+$info-font-color: $grey-400;
+$info-font-weight: 300; //500;
+
+.starsContainer {
+	display: flex;
+	align-items: center;
+	margin-right: 0.15rem;
+	gap: 0.1rem;
+
+	.starIcon {
+		display: inline-flex;
+	}
+}
+
+.scoreInfo {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	font-size: $info-font-size;
+	color: $info-font-color;
+	font-weight: $info-font-weight;
+}
+
+.mouseOverStarsContainer {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+
+	.starIcon {
+		display: inline-flex;
+	}
+}

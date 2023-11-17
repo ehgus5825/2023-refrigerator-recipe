@@ -1,0 +1,29 @@
+@import "@/scss/variables";
+
+$ingredientlist-font-size: 19px;
+$ingredientlist-check-size: 28px;
+$ingredientlist-font-color: $grey-400;
+$ingredientlist-font-color-selected: $grey-900;
+
+@mixin ingredient-list($color: $grey-500) {
+	display: flex;
+	padding: 0.8rem 0 0.8rem 0.5rem;
+	align-items: center;
+	border-bottom: 1px solid $grey-300;
+	font-size: $ingredientlist-font-size;
+}
+.ingredientlist {
+	@include ingredient-list();
+	color: $ingredientlist-font-color;
+}
+.ingredientlist_selected {
+	@include ingredient-list($grey-900);
+	color: $ingredientlist-font-color-selected;
+	font-weight: bold;
+}
+
+.ingredientlistCheck {
+	height: $ingredientlist-check-size;
+	width: $ingredientlist-check-size;
+	color: $primary-color-refrigerator;
+}

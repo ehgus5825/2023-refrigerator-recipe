@@ -1,0 +1,35 @@
+@import "@/scss/variables";
+
+.layoutContainer {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+@mixin layout-content() {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+.layoutContentWithApp {
+	@include layout-content();
+	padding: $appbar-height 0 0 0;
+}
+.layoutContentWithAppNav {
+	@include layout-content();
+	padding: $appbar-height 0 $navbar-height 0;
+}
+.layoutContentWithAppBottomBtn {
+	@include layout-content();
+	padding: $appbar-height 0 $bottom-btn-height 0;
+}
+.layoutContentWithAppCommentForm {
+	@include layout-content();
+	padding: $appbar-height 0 $comment-form-height 0;
+}
+
+.appbarBtnGroup {
+	display: flex;
+	align-items: center;
+	gap: $gap-basic;
+}

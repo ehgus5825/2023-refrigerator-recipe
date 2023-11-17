@@ -1,0 +1,63 @@
+.notificationContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.notificationTitle {
+	font-size: 27px;
+	font-weight: 600;
+	margin: 25px 0px;
+}
+
+.notificationList {
+	display: flex;
+	align-items: center;
+	width: 375px;
+	height: 80px;
+	border-top: 1px solid black;
+}
+
+.notificationDay {
+	font-weight: bold;
+	background-color: #6fb2d2;
+	border-top: 1px solid black;
+	span {
+		margin-left: 5px;
+	}
+}
+
+.link {
+	text-decoration: none;
+	color: black !important;
+}
+
+.icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #e0e0e0;
+	font-size: 27px;
+	width: 45px;
+	height: 45px;
+	margin: 0 10px;
+	background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='50' ry='50' stroke='black' stroke-width='3' stroke-dasharray='2%2c 8' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e ");
+	border-radius: 50px;
+}
+
+.ment {
+	display: inline-block;
+	color: black;
+	font-size: 15px;
+	width: 300px;
+	.state {
+		margin-right: 5px;
+	}
+	.time {
+		margin-left: 3px;
+		color: gray;
+		font-size: 13px;
+	}
+}

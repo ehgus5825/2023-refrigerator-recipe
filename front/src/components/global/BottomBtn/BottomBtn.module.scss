@@ -1,0 +1,24 @@
+@import "@/scss/variables";
+
+$btn-width: 92%;
+$btn-margin: (100-$btn-width)/2;
+$btn-radius: 0.5rem;
+$btn-font-size: 18px;
+
+.bottombtn {
+	position: fixed;
+	bottom: 0;
+	width: $btn-width;
+	margin: $btn-margin;
+	padding: $pd-md;
+
+	border: none;
+	border-radius: $btn-radius;
+	font-size: $btn-font-size;
+	background-color: $primary-color-refrigerator;
+
+	&:disabled {
+		background-color: $bg-color-disabled;
+		color: $color-disabled;
+	}
+}

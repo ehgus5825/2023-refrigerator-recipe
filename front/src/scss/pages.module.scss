@@ -1,0 +1,101 @@
+@import "@/scss/variables";
+
+$title-size-md: 23px;
+$title-size-lg: 32px;
+
+$subtitle-size: 16px;
+$icon-size: 24px;
+
+.container {
+	display: flex;
+	flex-direction: column;
+	padding: 2rem 2rem 0rem 2rem;
+}
+
+.ingredientInfoContainer {
+	display: flex;
+	flex-direction: column;
+	margin-top: 2.5rem;
+	gap: 1.5rem;
+}
+
+.recipeInfoContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	margin-top: 180px;
+
+	border-radius: 1rem 1rem 0rem 0rem;
+	box-shadow: 0 3px 30px rgba(0.5, 0.5, 0.5, 0.5);
+	background-color: $grey-100;
+}
+
+@mixin title($size: $title-size-md) {
+	display: flex;
+	padding-bottom: 1rem;
+	font-weight: bold;
+}
+.title_md {
+	@include title();
+	font-size: $title-size-md;
+	line-height: $title-size-md;
+	margin-bottom: 0.75rem;
+}
+.title_lg {
+	@include title();
+	font-size: $title-size-lg;
+	line-height: $title-size-lg;
+}
+
+.subtitle {
+	font-size: $subtitle-size;
+	color: $grey-400;
+}
+
+.fixedContainer {
+	position: fixed;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	background-color: white;
+	padding: $pd-sm $pd-basic;
+}
+
+.icon {
+	min-height: $icon-size;
+	min-width: $icon-size;
+	color: $grey-500;
+}
+
+.badge {
+	display: flex;
+	align-self: start;
+	padding: 0.25rem 0.75rem;
+	background-color: $grey-500;
+	border-radius: 1rem;
+	font-size: 14px;
+	color: white;
+}
+
+.backgroundImg {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: -1;
+}
+
+.commentListContainer {
+	display: flex;
+	flex-direction: column;
+
+	> div {
+		padding: 1rem 1.5rem;
+		border-top: $divider;
+	}
+}
+
+.scrollContainer {
+	overflow-y: scroll;
+}
