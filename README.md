@@ -1,4 +1,5 @@
 
+리드미 수정
 
 ## 👨‍👨‍👧 냉장고를 부탁해
   - 삼시세끼를 뭐 해먹을지 항상 고민인 1인 가구를 위한 레시피 추천 모바일 웹 서비스
@@ -9,10 +10,7 @@
   - 냉장고 속 식재료 정보를 기반으로 레시피를 추천 받고 싶은 유저
 
 <br>
-
-## 📆 기간
-  - 2023.03 ~ 2023.05
-
+  <strong>냉장고 속 식재료 관리가 어려운 1인 가구를 위한 레시피 추천 서비스 !</strong>
 <br>
 
 ## 📗 기술 스택
@@ -25,46 +23,29 @@
     - Spring Data Redis, Spring Security, Spring Batch
 
 <br>
-
-## ✏ 기획 & 설계
-- 도메인 모델링
-![도메인 모델링](https://github.com/xiu0327/2023-refrigerator-recipe/assets/78461009/bc31d72b-0fcd-4249-b2a0-99604bca79d5)
-
-
-
+  
+[![Application](http://img.shields.io/badge/Application-F46A54?style=flat&logo=github&logoColor=white&link=)]()
+[![Storybook](http://img.shields.io/badge/Storybook-FF4785?style=flat&logo=Storybook&logoColor=white&link=h)]()
+[![API Docs](http://img.shields.io/badge/-API%20Docs-important?style=flat&logo=dev.to&logoColor=white&link=)]()
+[![WIKI](http://img.shields.io/badge/-GitHub%20WiKi-395FC1?style=flat&logo=GitHub&logoColor=white&link=https://github.com/xiu0327/2023-refrigerator-recipe/wiki/%F0%9F%9A%97-%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD-%EB%B6%84%EC%84%9D)](https://github.com/xiu0327/2023-refrigerator-recipe/wiki/%F0%9F%9A%97-%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD-%EB%B6%84%EC%84%9D)
 <br>
+[![서비스_이용_가이드](http://img.shields.io/badge/-서비스_이용_가이드-81B441?style=flat&logo=Pinboard&logoColor=white&link=)]()
+[![체험_가이드](http://img.shields.io/badge/-체험_가이드-6F53F3?style=flat&logo=&logoColor=white&link=)]()
 
-## 🐱‍💻 프론트 역할 분담
-  - 진경
-  - 명선
+</div>
 
-## 🐱‍💻 백엔드 역할 분담
-  - 도현
-    - [x] 식재료(Ingredient)
-    - [x] 알림(Notification)
-  - 나현
-    - [x] 인증/인가(Authentication)
-    - [x] 댓글(Comment)
-    - [x] 레시피(Recipe)
-    - [x] 본인인증(Identification)
-    - [x] 회원(Member)
-    - [x] 북마크(MyBookmark)
-    - [x] 별점(MyScore)
-    - [x] 검색(Search)
-  - 공통
-    - [x] 인프라
+# 1. 기술 스택
 
-<br>
+## 1.1 ⚡️ 프론트엔드
 
-## 💡 Issues
+<img width="993" alt="스크린샷 2023-02-27 오전 1 38 21" src="https://user-images.githubusercontent.com/78461009/221423824-1513d24b-e89b-4112-a36f-37a6b359b991.png">
 
+## 1.2 ⚡️ 백엔드
 
-## 📝 Posting
-  - [`레시피 검색어 자동완성 기능 구현`](https://adaptive-hen-d10.notion.site/65362f6e73634a749f11403db26e333f)
-  - [`예외처리와 @ExceptionHandler`](https://adaptive-hen-d10.notion.site/ExceptionHandler-afb5de76a1f64f20a3be92be19c8f9bb)
-  - [`타입스크립트 기초 문법`](https://adaptive-hen-d10.notion.site/0003bc722dfa4f03b3ffa93d09563381)
-  - [`React Hooks`](https://adaptive-hen-d10.notion.site/React-Hooks-60254364843a4a969fabd8290aa7b777)
-  - [`CSS 마진 겹칩 문제 해결 방안`](https://adaptive-hen-d10.notion.site/CSS-69907310f2514ad1a2261b11ada4d5ed)
-  - [`MapStruct 사용기`](https://adaptive-hen-d10.notion.site/MapStruct-1b73a85d98ad482c93656210553c3bed)
-  - [`프론트엔드의 CORS 문제와 해결`](https://adaptive-hen-d10.notion.site/CORS-12371bc3965a4a9db63ebe9bf7a9f582)
-  - [`알림 서비스 확장`](https://adaptive-hen-d10.notion.site/d0a6ae820c26452e9f059b888e5a07b7)
+<img width="510" alt="스크린샷 2023-02-27 오전 12 02 44" src="https://user-images.githubusercontent.com/78461009/221419923-ec7f5cb4-d5e0-4b6e-abe9-d2ed448a0822.png">
+
+## 1.3 ⚡️ 인프라
+
+<img width="653" alt="스크린샷 2023-02-27 오전 12 16 37" src="https://user-images.githubusercontent.com/78461009/221419954-bd2b4174-c1c3-44cc-9a66-d537cd6099e6.png">
+
+## 2. 팀 문화

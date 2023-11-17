@@ -1,0 +1,65 @@
+name: build application docker
+
+on:
+    push:
+        branches: [back-module-split]
+
+env:
+    APPLICATION_YML: ${{secrets.APPLICATION_YML}}
+    APPLICATION_PROPERTIES: ${{secrets.APPLICATION_PROPERTIES}}
+    APPLICATION_OAUTH: ${{secrets.APPLICATION_OAUTH}}
+    TEST_APPLICATION_YML: ${{secrets.TEST_APPLICATION_YML}}
+
+jobs:
+    setup-build-publish-deploy:
+        name: Setup Build Publish deploy
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Repository
+            uses: actions/checkout@v2
+
+          - name: Set up application option
+            run: |
+              touch ./back/refrigerator-api/src/main/resources/application.yml
+              touch ./back/refrigerator-api/src/main/resources/application.properties
+              touch ./back/refrigerator-api/src/main/resources/application-oauth.yml
+              echo "${{env.TEST_APPLICATION_YML}}" > ./back/refrigerator-api/src/main/resources/application.yml
+              echo "${{env.APPLICATION_OAUTH}}" > ./back/refrigerator-api/src/main/resources/application-oauth.yml
+              echo "${{env.APPLICATION_PROPERTIES}}" > ./back/refrigerator-api/src/main/resources/application.properties
+
+          - name: Set up JDK 11
+            uses: actions/setup-java@v1
+            with:
+              java-version: 11
+              
+          - name: Login to Docker Hub
+            uses: docker/login-action@v1
+            with:
+              username: ${{ secrets.DOCKERHUB_USERNAME }}
+              password: ${{ secrets.DOCKERHUB_TOKEN }}
+              
+          - name: Application Build
+            run: |
+                cd back
+                ./gradlew :refrigerator-api:build -x test
+          
+          - name: Docker Image Build
+            run: |
+                cd back/refrigerator-api
+                docker build -t xiu0327/refrigerator-application:centos .
+          
+          - name: Docker Image push
+            run: docker push xiu0327/refrigerator-application:centos
+          - name: connect ssh
+            uses: appleboy/ssh-action@master
+            with:
+                host: ${{ secrets.NCP_SERVER_IP }}
+                username: ${{ secrets.NCP_SERVER_USERNAME }}
+                password: ${{ secrets.NCP_SERVER_PASSWORD }}
+                port: ${{ secrets.NCP_SERVER_PORT }}
+                script: |
+                  cd app
+                  docker compose rm app -f
+                  docker rmi xiu0327/refrigerator-application:centos
+                  docker pull xiu0327/refrigerator-application:centos
+                  docker compose up app -d
