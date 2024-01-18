@@ -3,7 +3,7 @@ package refrigerator.back.member.application.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import refrigerator.back.member.application.domain.MemberStatus;
+import refrigerator.back.member.application.domain.value.MemberStatus;
 import refrigerator.back.member.application.port.in.WithdrawUseCase;
 import refrigerator.back.member.application.port.out.UpdateMemberPort;
 

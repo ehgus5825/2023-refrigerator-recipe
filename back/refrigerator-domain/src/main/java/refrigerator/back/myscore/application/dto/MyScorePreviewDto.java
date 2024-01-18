@@ -1,7 +1,6 @@
 package refrigerator.back.myscore.application.dto;
 
 import lombok.*;
-import refrigerator.back.global.s3.ImageUrlConvert;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

@@ -12,51 +12,72 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import refrigerator.back.global.exception.BasicHttpMethod;
 import refrigerator.back.global.time.CurrentTime;
-import refrigerator.back.member.application.domain.MemberStatus;
-import refrigerator.back.notification.application.domain.Notification;
-import refrigerator.back.notification.application.domain.NotificationType;
+import refrigerator.back.member.application.domain.value.MemberStatus;
+import refrigerator.back.notification.application.domain.entity.MemberNotification;
+import refrigerator.back.notification.application.domain.entity.Notification;
+import refrigerator.back.notification.application.domain.value.NotificationType;
 import refrigerator.back.notification.application.port.batch.DeleteNotificationBatchPort;
-import refrigerator.back.notification.application.port.out.memberNotification.ModifyMemberNotificationPort;
+import refrigerator.back.notification.application.port.out.FindMemberNotificationPort;
+import refrigerator.back.notification.application.port.out.SaveMemberNotificationPort;
 import refrigerator.batch.common.querydsl.expression.Expression;
 import refrigerator.batch.common.querydsl.options.QuerydslNoOffsetStringOptions;
 import refrigerator.batch.common.querydsl.reader.QuerydslNoOffsetPagingItemReader;
 import refrigerator.batch.common.querydsl.reader.QuerydslPagingItemReader;
 import refrigerator.batch.dto.OutIngredientGroupDTO;
 import refrigerator.batch.dto.QOutIngredientGroupDTO;
+import refrigerator.batch.jabParameter.CreateDateJobParameter;
 
 import javax.persistence.EntityManagerFactory;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static java.time.LocalDate.from;
-import static java.time.format.DateTimeFormatter.ofPattern;
-import static refrigerator.back.ingredient.application.domain.QIngredient.ingredient;
-import static refrigerator.back.member.application.domain.QMember.member;
+import static refrigerator.back.ingredient.application.domain.entity.QIngredient.ingredient;
+import static refrigerator.back.member.application.domain.entity.QMember.member;
 
 @RequiredArgsConstructor
 @Configuration
 @Slf4j
+@ConditionalOnProperty(name = "job.name", havingValue = "scheduleBatch_Job")
 public class NotificationScheduleConfig {
+
+    public static final String BATCH_NAME = "scheduleBatch";
+    public static final String JOB_NAME = BATCH_NAME + "_Job";
 
     private final EntityManagerFactory entityManagerFactory;
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
     private final DeleteNotificationBatchPort deleteNotificationBatchPort;
-    private final ModifyMemberNotificationPort modifyMemberNotificationPort;
+    private final SaveMemberNotificationPort saveMemberNotificationPort;
+    private final FindMemberNotificationPort findMemberNotificationPort;
 
     private final CurrentTime<LocalDateTime> currentTime;
+
+    private final CreateDateJobParameter jobParameter;
 
     @Value("${chunkSize:1000}")
     private int chunkSize = 1000;
 
-    @Bean
+    @Bean(name = BATCH_NAME + "jobParameter")
+    @JobScope
+    public CreateDateJobParameter jobParameter() {
+        return new CreateDateJobParameter();
+    }
+
+    /**
+     * step 1 : 유통기한 안내 알림(매일), 일반 알림(14일 전) 삭제
+     * step 2 : 유통기한 마감 1일전 식재료 알림 전송
+     * step 3 : 유통기한 마감 3일전 식재료 알림 전송
+     */
+
+    @Bean(name = JOB_NAME)
     public Job scheduleJob(){
-        return jobBuilderFactory.get("scheduleJob")
+        return jobBuilderFactory.get(JOB_NAME)
                 .preventRestart()
                 .start(deleteNotificationStep())
                 .next(createDeadlineNotificationByOneStep())
@@ -64,7 +85,8 @@ public class NotificationScheduleConfig {
                 .build();
     }
 
-    // 알림 삭제 Step
+    /** step 1 **/
+
     @Bean
     @JobScope
     public Step deleteNotificationStep() {
@@ -74,19 +96,20 @@ public class NotificationScheduleConfig {
 
                     deleteNotificationBatchPort.deleteNotification(true, currentTime.now());
                     deleteNotificationBatchPort.deleteNotification(false, currentTime.now().minusDays(14));
-                    
+
                     return RepeatStatus.FINISHED;
                 })
                 .build();
     }
 
-    // 임박 식재료 알림 생성 Step (1일)
+    /** step 2 **/
+
     @Bean
     @JobScope
     public Step createDeadlineNotificationByOneStep() {
         return stepBuilderFactory.get("createDeadlineNotificationStep")
                 .<OutIngredientGroupDTO, Notification> chunk(chunkSize)
-                .reader(createDeadlineNotificationByOneReader(null))
+                .reader(createDeadlineNotificationByOneReader())
                 .processor(createDeadlineNotificationByOneProcessor())
                 .writer(createDeadlineNotificationWriter())
                 .build();
@@ -94,10 +117,9 @@ public class NotificationScheduleConfig {
 
     @Bean
     @StepScope
-    public QuerydslPagingItemReader<OutIngredientGroupDTO> createDeadlineNotificationByOneReader(
-                                                                        @Value("#{jobParameters['date']}") String date) {
+    public QuerydslPagingItemReader<OutIngredientGroupDTO> createDeadlineNotificationByOneReader() {
 
-        LocalDate localDate = from(LocalDateTime.parse(date, ofPattern("yyyy-MM-dd HH:mm:ss:SSS")));
+        LocalDate localDate = jobParameter.getCreateDate();
 
         QuerydslNoOffsetStringOptions<OutIngredientGroupDTO> options = new QuerydslNoOffsetStringOptions<>(ingredient.email, Expression.ASC);
 
@@ -121,7 +143,12 @@ public class NotificationScheduleConfig {
 
         return (dto) -> {
 
-            modifyMemberNotificationPort.modify(dto.getEmail(), true);
+            MemberNotification memberNotification = findMemberNotificationPort
+                    .getMemberNotification(dto.getEmail());
+
+            memberNotification.setSign(true);
+
+            saveMemberNotificationPort.save(memberNotification);
 
             Notification notification = Notification.create(
                     NotificationType.ONE_DAY_BEFORE_EXPIRATION,
@@ -135,13 +162,15 @@ public class NotificationScheduleConfig {
         };
     }
 
-    // 임박 식재료 알림 생성 Step (3일)
+
+    /** step 3 **/
+
     @Bean
     @JobScope
     public Step createDeadlineNotificationByThreeStep() {
         return stepBuilderFactory.get("createDeadlineNotificationStep")
                 .<OutIngredientGroupDTO, Notification> chunk(chunkSize)
-                .reader(createDeadlineNotificationByThreeReader(null))
+                .reader(createDeadlineNotificationByThreeReader())
                 .processor(createDeadlineNotificationByThreeProcessor())
                 .writer(createDeadlineNotificationWriter())
                 .build();
@@ -149,10 +178,9 @@ public class NotificationScheduleConfig {
 
     @Bean
     @StepScope
-    public QuerydslNoOffsetPagingItemReader<OutIngredientGroupDTO> createDeadlineNotificationByThreeReader(
-                                                                        @Value("#{jobParameters['date']}") String date) {
+    public QuerydslNoOffsetPagingItemReader<OutIngredientGroupDTO> createDeadlineNotificationByThreeReader() {
 
-        LocalDate localDate = from(LocalDateTime.parse(date, ofPattern("yyyy-MM-dd HH:mm:ss:SSS")));
+        LocalDate localDate = jobParameter.getCreateDate();
 
         QuerydslNoOffsetStringOptions<OutIngredientGroupDTO> options = new QuerydslNoOffsetStringOptions<>(ingredient.email, Expression.ASC);
 
@@ -175,7 +203,13 @@ public class NotificationScheduleConfig {
     public ItemProcessor<OutIngredientGroupDTO, Notification> createDeadlineNotificationByThreeProcessor() {
 
         return (dto) -> {
-            modifyMemberNotificationPort.modify(dto.getEmail(), true);
+
+            MemberNotification memberNotification = findMemberNotificationPort
+                    .getMemberNotification(dto.getEmail());
+
+            memberNotification.setSign(true);
+
+            saveMemberNotificationPort.save(memberNotification);
 
             Notification notification = Notification.create(
                     NotificationType.THREE_DAY_BEFORE_EXPIRATION,
@@ -184,10 +218,12 @@ public class NotificationScheduleConfig {
                     BasicHttpMethod.GET.name(),
                     currentTime.now()
             );
-            notification.createExpirationDateMessage(dto.getName(), dto.getCount() - 1, 3);
+            notification.createExpirationDateMessage(dto.getName(), dto.getCount(), 3);
             return notification;
         };
     }
+
+    /** step 2, 3 공용 writer **/
 
     @Bean
     @StepScope

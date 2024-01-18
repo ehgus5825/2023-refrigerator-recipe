@@ -8,8 +8,7 @@ import refrigerator.back.global.exception.BasicHttpStatus;
 import static refrigerator.back.global.exception.BasicHttpStatus.*;
 
 @AllArgsConstructor
-public enum
-JwtExceptionType implements BasicExceptionType {
+public enum JwtExceptionType implements BasicExceptionType {
 
     INVALID_REFRESH_TOKEN("INVALID_REFRESH_TOKEN","유효하지 않은 리프레시 토큰입니다.", BAD_REQUEST),
     INVALID_ACCESS_TOKEN("INVALID_ACCESS_TOKEN","유효하지 않은 엑세스 토큰입니다.", BAD_REQUEST),

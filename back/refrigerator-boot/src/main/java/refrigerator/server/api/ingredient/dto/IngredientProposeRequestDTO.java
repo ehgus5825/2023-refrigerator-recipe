@@ -19,5 +19,4 @@ public class IngredientProposeRequestDTO {
 
     @NotBlank
     String unit;
-
 }

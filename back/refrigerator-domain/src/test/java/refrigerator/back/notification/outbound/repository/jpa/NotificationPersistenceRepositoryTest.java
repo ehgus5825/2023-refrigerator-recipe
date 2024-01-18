@@ -9,8 +9,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import refrigerator.back.global.jpa.config.QuerydslConfig;
 import refrigerator.back.global.exception.BasicHttpMethod;
-import refrigerator.back.notification.application.domain.Notification;
-import refrigerator.back.notification.application.domain.NotificationType;
+import refrigerator.back.notification.application.domain.entity.Notification;
+import refrigerator.back.notification.application.domain.value.NotificationType;
 
 import java.time.LocalDateTime;
 

@@ -4,13 +4,9 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import refrigerator.back.global.exception.MappingException;
 import refrigerator.back.global.s3.ImageUrlConvert;
 import refrigerator.back.ingredient.application.dto.IngredientDTO;
-import refrigerator.back.ingredient.application.dto.IngredientDetailDTO;
 import refrigerator.back.ingredient.outbound.mapper.OutIngredientMapper;
-import refrigerator.back.member.application.domain.MemberProfileImage;
-import refrigerator.back.member.exception.MemberExceptionType;
 
 import java.time.LocalDate;
 

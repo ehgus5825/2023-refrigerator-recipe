@@ -5,7 +5,6 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Getter;
 import refrigerator.back.global.s3.ImageUrlConvert;
-import refrigerator.back.mybookmark.application.dto.MyBookmarkDto;
 import refrigerator.back.mybookmark.application.dto.MyBookmarkPreviewDto;
 import refrigerator.back.mybookmark.outbound.mapper.OutMyBookmarkDtoMapper;
 

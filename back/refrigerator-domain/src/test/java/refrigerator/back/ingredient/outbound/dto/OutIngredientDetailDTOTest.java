@@ -7,16 +7,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import refrigerator.back.global.s3.ImageUrlConvert;
-import refrigerator.back.global.s3.S3ImageConvertAdapter;
 import refrigerator.back.global.s3.S3TestConfiguration;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.ingredient.IngredientConfig;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 import refrigerator.back.ingredient.application.dto.IngredientDetailDTO;
 import refrigerator.back.ingredient.outbound.mapper.OutIngredientMapper;
 
@@ -82,6 +79,6 @@ class OutIngredientDetailDTOTest {
         assertThat(dto.getRegistrationDate()).isEqualTo(LocalDate.of(2023, 1, 1));
         assertThat(dto.getExpirationDate()).isEqualTo(LocalDate.of(2023, 1, 1));
         assertThat(dto.getStorage()).isEqualTo(IngredientStorageType.FRIDGE);
-        log.info(dto.getImage());
+        assertThat(dto.getImage()).isEqualTo("https://refrigerator-image.s3.ap-northeast-2.amazonaws.com/ingredient/IMAGE_INGREDIENT_PROCESSED.png");
     }
 }

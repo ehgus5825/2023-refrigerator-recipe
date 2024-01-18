@@ -3,15 +3,15 @@ package refrigerator.back.myscore.application.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import refrigerator.back.global.exception.BusinessException;
-import refrigerator.back.myscore.application.service.RecipeScoreModifyHandler;
+import refrigerator.back.myscore.application.handler.RecipeScoreModifyHandler;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MyScoreTest {
@@ -25,7 +25,7 @@ class MyScoreTest {
         double score = 3.2;
         long recipeId = 1L;
         LocalDateTime createDateTime = LocalDateTime.of(2023, 7, 9, 1, 1);
-        BDDMockito.doNothing().when(handler).addUp(recipeId, score);
+        doNothing().when(handler).addUp(recipeId, score);
         // when & then
         assertDoesNotThrow(() -> MyScore.create("memberId", recipeId, score, createDateTime, handler));
     }
@@ -51,7 +51,7 @@ class MyScoreTest {
         double newScore = 4.3;
         long recipeId = 1L;
         LocalDateTime createDateTime = LocalDateTime.of(2023, 7, 9, 1, 1);
-        BDDMockito.doNothing().when(handler).renew(recipeId, score, newScore);
+        doNothing().when(handler).renew(recipeId, score, newScore);
         // when & then
         MyScore myScore = MyScore.create("memberId", recipeId, score, createDateTime, handler);
         assertDoesNotThrow(() -> myScore.update(newScore, handler));
@@ -69,6 +69,4 @@ class MyScoreTest {
         MyScore myScore = MyScore.create("memberId", recipeId, score, createDateTime, handler);
         assertThrows(BusinessException.class, () -> myScore.update(newScore, handler));
     }
-
-
 }

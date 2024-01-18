@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import refrigerator.server.config.TestTokenService;
-import refrigerator.server.security.authentication.application.usecase.JsonWebTokenUseCase;
+import refrigerator.server.security.common.TestTokenService;
+import refrigerator.server.security.common.jwt.JsonWebTokenUseCase;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -27,17 +26,6 @@ class OwnedRecipeIngredientControllerTest {
 
     @Autowired
     JsonWebTokenUseCase jsonWebTokenUseCase;
-
-//    @Test
-    @DisplayName("레시피 식재료 중 소유하고 있는 식재료 조회")
-    void getOwnedRecipeIngredientsTest() throws Exception {
-
-        mockMvc.perform(get("/api/ingredients/owned/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
-        ).andExpect(status().is2xxSuccessful()
-        ).andDo(print());
-    }
 
     @Test
     @DisplayName("레시피 식재료 중 소유하고 있는 식재료 조회 : 알 수 없는 id")

@@ -1,11 +1,9 @@
 package refrigerator.back.recipe.application.domain.entity;
 
 import lombok.*;
-import refrigerator.back.recipe.application.domain.entity.Recipe;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 
 @Entity
 @Table(name = "recipe_course")

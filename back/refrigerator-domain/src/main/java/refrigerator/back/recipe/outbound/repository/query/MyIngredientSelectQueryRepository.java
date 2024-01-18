@@ -3,14 +3,14 @@ package refrigerator.back.recipe.outbound.repository.query;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import refrigerator.back.ingredient.application.domain.QIngredient;
 import refrigerator.back.recipe.outbound.dto.OutMyIngredientDto;
 import refrigerator.back.recipe.outbound.dto.QOutMyIngredientDto;
 import refrigerator.back.recipe.outbound.mapper.OutMyIngredientDtoMappingCollection;
 
 import java.util.List;
 
-import static refrigerator.back.ingredient.application.domain.QIngredient.*;
+import static refrigerator.back.ingredient.application.domain.entity.QIngredient.ingredient;
+
 
 @Repository
 @RequiredArgsConstructor

@@ -14,9 +14,9 @@ public enum MyScoreExceptionType implements BasicExceptionType {
     WRONG_SCORE_SCOPE("WRONG_SCORE_SCOPE", "허용하지 않는 별점의 범위입니다.", BAD_REQUEST)
     ;
 
-    private String errorCode;
-    private String message;
-    private BasicHttpStatus httpStatus;
+    private final String errorCode;
+    private final String message;
+    private final BasicHttpStatus httpStatus;
 
     @Override
     public String getErrorCode() {

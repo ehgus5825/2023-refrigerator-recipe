@@ -17,14 +17,15 @@ public enum IngredientExceptionType implements BasicExceptionType {
     NOT_FOUND_REGISTERED_RECIPE("NOT_FOUND_REGISTERED_RECIPE", "등록되어 있지 않은 레시피입니다.", NOT_FOUND),
     NOT_VALID_REQUEST_BODY("NOT_VALID_REQUEST_BODY", "요청하신 데이터가 유효하지 않습니다.", BAD_REQUEST),
     NOT_VALID_INGREDIENTS_TO_BE_DEDUCTED("NOT_VALID_INGREDIENTS_TO_BE_DEDUCTED", "차감될 식재료가 유효하지 않습니다.", BAD_REQUEST),
+    FAILED_TO_DELETE_INGREDIENTS("FAILED_TO_DELETE_INGREDIENTS", "식재료를 삭제하는데 실패하였습니다.", BAD_REQUEST),
     EXCEEDED_CAPACITY_RANGE("EXCEEDED_CAPACITY_RANGE", "용량 범위를 초과하였습니다.", BAD_REQUEST),
     INVALID_DATE("INVALID_DATE", "잘못된 날짜 값 입니다.", BAD_REQUEST),
-    TEST_ERROR("TEST_ERROR", "테스트 오류", BAD_REQUEST),
-    EXCEEDED_EXPIRATION_DATE("EXCEEDED_EXPIRATION_DATE", "식재료의 유통기한이 초과되었습니다.", BAD_REQUEST);
+    EXCEEDED_EXPIRATION_DATE("EXCEEDED_EXPIRATION_DATE", "식재료의 유통기한이 초과되었습니다.", BAD_REQUEST),
+    CAPACITY_MODIFICATION_FAILED("CAPACITY_MODIFICATION_FAILED", "용량을 수정하는 데 실패하였습니다.", BAD_REQUEST);
 
-    private String errorCode;
-    private String message;
-    private BasicHttpStatus httpStatus;
+    private final String errorCode;
+    private final String message;
+    private final BasicHttpStatus httpStatus;
 
     @Override
     public String getErrorCode() {

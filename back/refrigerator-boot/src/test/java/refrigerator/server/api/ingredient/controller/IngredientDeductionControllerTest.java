@@ -1,6 +1,7 @@
 package refrigerator.server.api.ingredient.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,22 +12,20 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import refrigerator.back.ingredient.application.domain.Ingredient;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
-import refrigerator.back.ingredient.application.domain.RegisteredIngredient;
-import refrigerator.back.ingredient.application.port.in.registeredIngredient.FindRegisteredIngredientUseCase;
-import refrigerator.back.ingredient.application.port.out.ingredient.update.SaveIngredientPort;
-import refrigerator.back.ingredient.application.port.out.registeredIngredient.SaveRegisteredIngredientPort;
+import refrigerator.back.ingredient.application.domain.entity.Ingredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
+import refrigerator.back.ingredient.application.port.out.SaveIngredientPort;
+import refrigerator.back.ingredient.application.port.batch.SaveRegisteredIngredientPort;
 import refrigerator.server.api.global.common.BasicListRequestDTO;
 import refrigerator.server.api.ingredient.dto.IngredientDeductionRequestDTO;
-import refrigerator.server.config.TestTokenService;
-import refrigerator.server.security.authentication.application.usecase.JsonWebTokenUseCase;
+import refrigerator.server.security.common.TestTokenService;
+import refrigerator.server.security.common.jwt.JsonWebTokenUseCase;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,9 +44,6 @@ class IngredientDeductionControllerTest {
     SaveIngredientPort saveIngredientPort;
 
     @Autowired
-    FindRegisteredIngredientUseCase findRegisteredIngredientUseCase;
-
-    @Autowired
     SaveRegisteredIngredientPort saveRegisteredIngredientPort;
 
     @BeforeEach
@@ -60,7 +56,7 @@ class IngredientDeductionControllerTest {
         saveRegisteredIngredientPort.saveRegisteredIngredient(builder.name("안심").build());
     }
 
-//    @Test
+    @Test
     @DisplayName("식재료 차감")
     void ingredientDeductionTest() throws Exception {
 
@@ -95,7 +91,7 @@ class IngredientDeductionControllerTest {
         ).andDo(print());
     }
 
-//    @Test
+    @Test
     @DisplayName("식재료 차감 실패 : 회원 냉장고 비어있음")
     void ingredientDeductionTestFailEmptyRefrigerator() throws Exception {
 
@@ -161,7 +157,8 @@ class IngredientDeductionControllerTest {
         list.add(createRecipeIngredient(null, null, null));
         list.add(createRecipeIngredient("안심", 60.0, "g"));
 
-        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO.<IngredientDeductionRequestDTO>builder()
+        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO
+                .<IngredientDeductionRequestDTO>builder()
                 .data(list)
                 .build();
 
@@ -183,7 +180,8 @@ class IngredientDeductionControllerTest {
         list.add(createRecipeIngredient("파워에이드", 60.0, "g"));
         list.add(createRecipeIngredient("안심", 60.0, "g"));
 
-        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO.<IngredientDeductionRequestDTO>builder()
+        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO
+                .<IngredientDeductionRequestDTO>builder()
                 .data(list)
                 .build();
 
@@ -205,7 +203,8 @@ class IngredientDeductionControllerTest {
         list.add(createRecipeIngredient("콩나물", -60.0, "g"));
         list.add(createRecipeIngredient("안심", 60.0, "g"));
 
-        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO.<IngredientDeductionRequestDTO>builder()
+        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO
+                .<IngredientDeductionRequestDTO>builder()
                 .data(list)
                 .build();
 
@@ -219,7 +218,7 @@ class IngredientDeductionControllerTest {
         ).andDo(print());
     }
 
-//    @Test
+    @Test
     @DisplayName("식재료 차감 실패 : 유통기한 초과")
     void ingredientDeductionTestFailOverDate() throws Exception {
 
@@ -240,7 +239,8 @@ class IngredientDeductionControllerTest {
         list.add(createRecipeIngredient("콩나물", 60.0, "g"));
         list.add(createRecipeIngredient("안심", 60.0, "g"));
 
-        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO.<IngredientDeductionRequestDTO>builder()
+        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO
+                .<IngredientDeductionRequestDTO>builder()
                 .data(list)
                 .build();
 
@@ -254,7 +254,7 @@ class IngredientDeductionControllerTest {
         ).andDo(print());
     }
 
-//    @Test
+    @Test
     @DisplayName("식재료 차감 실패 : 용량 초과")
     void ingredientDeductionTestFailOverUnit() throws Exception {
 
@@ -275,7 +275,8 @@ class IngredientDeductionControllerTest {
         list.add(createRecipeIngredient("콩나물", 10000.0, "g"));
         list.add(createRecipeIngredient("안심", 60.0, "g"));
 
-        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO.<IngredientDeductionRequestDTO>builder()
+        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO
+                .<IngredientDeductionRequestDTO>builder()
                 .data(list)
                 .build();
 
@@ -297,7 +298,8 @@ class IngredientDeductionControllerTest {
         list.add(createRecipeIngredient("콩나물", 60.0, "g"));
         list.add(IngredientDeductionRequestDTO.builder().name("안심").build());
 
-        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO.<IngredientDeductionRequestDTO>builder()
+        BasicListRequestDTO<IngredientDeductionRequestDTO> dto = BasicListRequestDTO
+                .<IngredientDeductionRequestDTO>builder()
                 .data(list)
                 .build();
 

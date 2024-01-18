@@ -3,6 +3,7 @@ package refrigerator.back.mybookmark.outbound.repository.query;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import refrigerator.back.annotation.DisabledRepositoryTest;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisabledRepositoryTest
 @Import({QuerydslConfig.class, MyBookmarkSelectQueryRepository.class})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestDataInit("mybookmark.sql")
 class MyBookmarkSelectQueryRepositoryTest {
 
@@ -36,7 +38,7 @@ class MyBookmarkSelectQueryRepositoryTest {
         assertEquals(size, result.size());
         /* 최신순으로 정렬이 되었는지 확인 */
         for (OutMyBookmarkPreviewDto dto : result) {
-            assertTrue(preDate.compareTo(dto.getCreateDateTime()) >= 0);
+            assertFalse(preDate.isBefore(dto.getCreateDateTime()));
         }
     }
 
@@ -52,7 +54,7 @@ class MyBookmarkSelectQueryRepositoryTest {
         assertEquals(size, result.size());
         /* 최신순으로 정렬이 되었는지 확인 */
         for (OutMyBookmarkDto dto : result) {
-            assertTrue(preDate.compareTo(dto.getCreateDateTime()) >= 0);
+            assertFalse(preDate.isBefore(dto.getCreateDateTime()));
         }
     }
 

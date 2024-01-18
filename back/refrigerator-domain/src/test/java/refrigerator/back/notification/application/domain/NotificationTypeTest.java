@@ -2,12 +2,9 @@ package refrigerator.back.notification.application.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import refrigerator.back.global.exception.BusinessException;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.notification.application.domain.value.NotificationType;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class NotificationTypeTest {
     

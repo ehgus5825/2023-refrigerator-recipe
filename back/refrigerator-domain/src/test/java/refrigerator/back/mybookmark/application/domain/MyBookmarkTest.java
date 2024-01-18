@@ -3,16 +3,16 @@ package refrigerator.back.mybookmark.application.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import refrigerator.back.global.exception.BusinessException;
-import refrigerator.back.mybookmark.application.service.RecipeBookmarkModifyHandler;
+import refrigerator.back.mybookmark.application.handler.RecipeBookmarkModifyHandler;
 import refrigerator.back.mybookmark.exception.MyBookmarkExceptionType;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MyBookmarkTest {
@@ -25,7 +25,7 @@ class MyBookmarkTest {
         // given
         Long recipeId = 1L;
         LocalDateTime createDateTime = LocalDateTime.of(2023, 7, 11, 1, 1);
-        BDDMockito.doNothing().when(handler).added(recipeId);
+        doNothing().when(handler).added(recipeId);
         // when
         MyBookmark myBookmark = MyBookmark.create("memberId", recipeId, createDateTime, handler);
         // then
@@ -38,7 +38,7 @@ class MyBookmarkTest {
         // given
         Long recipeId = 1L;
         LocalDateTime createDateTime = LocalDateTime.of(2023, 7, 11, 1, 1);
-        BDDMockito.doNothing().when(handler).added(recipeId);
+        doNothing().when(handler).added(recipeId);
         // when
         MyBookmark myBookmark = MyBookmark.createForTest("memberId", recipeId, true, createDateTime);
         myBookmark.add(handler);
@@ -71,7 +71,7 @@ class MyBookmarkTest {
         Long recipeId = 1L;
         LocalDateTime createDateTime = LocalDateTime.of(2023, 7, 11, 1, 1);
         MyBookmark myBookmark = MyBookmark.createForTest("memberId", recipeId, false, createDateTime);
-        BDDMockito.doNothing().when(handler).deleted(recipeId);
+        doNothing().when(handler).deleted(recipeId);
         // when
         myBookmark.deleted(handler);
         // then

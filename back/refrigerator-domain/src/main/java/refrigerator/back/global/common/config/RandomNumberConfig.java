@@ -9,11 +9,6 @@ import java.util.Random;
 @Configuration
 public class RandomNumberConfig {
 
-//    @Bean
-//    public int intRandomNumber(){
-//        return new Random().nextInt(5);
-//    }
-
     @Bean
     public RandomNumber<Integer> intRandomNumber(){
         return () -> new Random().nextInt(5);

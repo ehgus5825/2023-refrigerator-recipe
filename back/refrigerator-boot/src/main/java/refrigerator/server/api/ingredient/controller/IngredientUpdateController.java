@@ -4,17 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import refrigerator.server.api.authentication.GetMemberEmailUseCase;
-import refrigerator.back.ingredient.application.port.in.ingredient.update.ModifyIngredientUseCase;
-import refrigerator.back.ingredient.application.port.in.ingredient.update.RegisterIngredientUseCase;
-import refrigerator.back.ingredient.application.port.in.ingredient.update.RemoveIngredientUseCase;
-import refrigerator.back.ingredient.application.port.in.registeredIngredient.FindRegisteredIngredientUseCase;
-import refrigerator.server.api.global.common.BasicListResponseDTO;
+import refrigerator.server.api.global.common.BasicListRequestDTO;
+import refrigerator.server.security.common.email.GetMemberEmailUseCase;
+import refrigerator.back.ingredient.application.port.in.ModifyIngredientUseCase;
+import refrigerator.back.ingredient.application.port.in.RegisterIngredientUseCase;
+import refrigerator.back.ingredient.application.port.in.RemoveIngredientUseCase;
+import refrigerator.back.ingredient.application.port.in.FindRegisteredIngredientUseCase;
 import refrigerator.server.api.ingredient.dto.IngredientRegisterRequestDTO;
 import refrigerator.server.api.ingredient.dto.IngredientUpdateRequestDTO;
 import refrigerator.back.ingredient.application.dto.IngredientRegisterDTO;
-import refrigerator.back.ingredient.application.domain.RegisteredIngredient;
-
+import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
 
 import javax.validation.Valid;
 
@@ -33,10 +32,13 @@ public class IngredientUpdateController {
 
     private final GetMemberEmailUseCase memberInformation;
 
-    @PostMapping("/api/ingredients")
+    @PostMapping("/api/ingredients/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public IngredientRegisterDTO registerIngredient(@RequestBody @Valid IngredientRegisterRequestDTO request, BindingResult bindingResult) {
-        check(bindingResult, NOT_VALID_REQUEST_BODY);
+    public IngredientRegisterDTO registerIngredient(
+            @Valid @RequestBody IngredientRegisterRequestDTO request,
+            BindingResult bindingResult) {
+
+        multiCheck(bindingResult);
 
         RegisteredIngredient ingredientUnit = findRegisteredIngredientUseCase.getIngredient(request.getName());
 
@@ -44,23 +46,36 @@ public class IngredientUpdateController {
                                                                ingredientUnit.getUnit(), request.getStorage(), ingredientUnit.getImage(), memberInformation.getMemberEmail());
     }
 
-    @PutMapping("/api/ingredients/{ingredientId}")
+    @PutMapping("/api/ingredients/{ingredientId}/modify")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void modifyIngredient(@PathVariable("ingredientId") Long id, @RequestBody @Valid IngredientUpdateRequestDTO request, BindingResult bindingResult) {
-        check(bindingResult, NOT_VALID_REQUEST_BODY);
+    public void modifyIngredient(
+            @PathVariable("ingredientId") Long id,
+            @Valid @RequestBody IngredientUpdateRequestDTO request,
+            BindingResult bindingResult) {
+
+        positiveCheck(id);
+        multiCheck(bindingResult);
 
         modifyIngredientUseCase.modifyIngredient(id, request.getExpirationDate(), request.getVolume(), request.getStorage());
     }
 
-    @DeleteMapping("/api/ingredients/{ingredientId}")
+    // TODO : Disabled?
+    @DeleteMapping("/api/ingredients/{ingredientId}/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeIngredient(@PathVariable("ingredientId") Long id) {
+    public void removeIngredient(
+             @PathVariable("ingredientId") Long id) {
+
+        positiveCheck(id);
+
         removeIngredientUseCase.removeIngredient(id);
     }
 
-    @DeleteMapping("/api/ingredients")
+    @DeleteMapping("/api/ingredients/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeAllIngredient(@RequestBody @Valid BasicListResponseDTO<Long> request, BindingResult bindingResult) {
+    public void removeAllIngredient(
+            @Valid @RequestBody BasicListRequestDTO<Long> request,
+            BindingResult bindingResult) {
+
         check(bindingResult, NOT_VALID_REQUEST_BODY);
 
         removeIngredientUseCase.removeAllIngredients(request.getData());

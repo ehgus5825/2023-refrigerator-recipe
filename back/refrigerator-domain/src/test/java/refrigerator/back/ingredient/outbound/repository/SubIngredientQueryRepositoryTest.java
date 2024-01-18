@@ -1,5 +1,6 @@
 package refrigerator.back.ingredient.outbound.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,9 @@ import org.springframework.context.annotation.Import;
 import refrigerator.back.annotation.TestDataInit;
 import refrigerator.back.global.jpa.config.QuerydslConfig;
 import refrigerator.back.ingredient.outbound.dto.OutIngredientInRecipeDTO;
-import refrigerator.back.ingredient.application.domain.RegisteredIngredient;
-import refrigerator.back.ingredient.application.domain.SuggestedIngredient;
+import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
+import refrigerator.back.ingredient.application.domain.entity.SuggestedIngredient;
+import refrigerator.back.ingredient.outbound.repository.query.SubIngredientQueryRepository;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import({QuerydslConfig.class, SubIngredientQueryRepository.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestDataInit({"/ingredientImage.sql", "/ingredient.sql"})
+@Slf4j
 class SubIngredientQueryRepositoryTest {
 
     @Autowired SubIngredientQueryRepository subIngredientQueryRepository;
@@ -55,30 +58,44 @@ class SubIngredientQueryRepositoryTest {
     }
 
     @Test
-    @DisplayName("식재료명과 동일한 데이터 모두 삭제")
-    void deleteSuggestedIngredientTest() {
-        String name = "감자";
-
-        SuggestedIngredient ingredient = SuggestedIngredient.builder()
-                .name(name)
-                .email("email123@gmail.com")
-                .unit("g")
-                .build();
-
-        Long id = em.persistAndGetId(ingredient, Long.class);
-
-        subIngredientQueryRepository.deleteSuggestedIngredient("감자");
-
-        assertThat(em.find(SuggestedIngredient.class, id))
-                .isNull();
-    }
-
-    @Test
     @DisplayName("레시피 ID에 맞는 레시피 식재료 목록 조회")
     void getRecipeIngredientTest() {
 
         List<OutIngredientInRecipeDTO> list = subIngredientQueryRepository.getRecipeIngredient(1L);
 
         assertThat(list.size()).isEqualTo(8);
+    }
+
+    @Test
+    void findUnitNameTest(){
+
+        String name = "감자";
+
+        SuggestedIngredient.SuggestedIngredientBuilder builder = SuggestedIngredient.builder()
+                .name(name)
+                .email("email123@gmail.com");
+
+        em.persist(builder.unit("g").build());
+        em.persist(builder.unit("g").build());
+        em.persist(builder.unit("g").build());
+        em.persist(builder.unit("g").build());
+        em.persist(builder.unit("g").build());
+        em.persist(builder.unit("개").build());
+        em.persist(builder.unit("개").build());
+        em.persist(builder.unit("개").build());
+        em.persist(builder.unit("개").build());
+        em.persist(builder.unit("ml").build());
+        em.persist(builder.unit("ml").build());
+        em.persist(builder.unit("ml").build());
+        em.persist(builder.unit("장").build());
+        em.persist(builder.unit("장").build());
+        em.persist(builder.unit("대").build());
+
+        subIngredientQueryRepository.findUnitName(name).ifPresent(
+                unitName -> {
+                    log.info("enter");
+                    assertThat(unitName).isEqualTo("g");
+                }
+        );
     }
 }

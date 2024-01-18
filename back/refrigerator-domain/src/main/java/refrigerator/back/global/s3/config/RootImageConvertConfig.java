@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import refrigerator.back.global.s3.ImageUrlConvert;
 import refrigerator.back.global.s3.S3ImageConvertAdapter;
+//import refrigerator.back.global.s3.S3ImageConvertCacheProxyV1;
 import refrigerator.back.global.s3.S3ImageHandler;
 
 /**
@@ -26,6 +27,8 @@ public class RootImageConvertConfig {
     @Bean(name = "rootImageUrlConvert")
     @Primary
     public ImageUrlConvert rootImageUrlConvert(){
+//        S3ImageConvertAdapter target = new S3ImageConvertAdapter(s3ImageHandler, bucketName);
+//        return new S3ImageConvertCacheProxyV1(target);
         return new S3ImageConvertAdapter(s3ImageHandler, bucketName);
     }
 }

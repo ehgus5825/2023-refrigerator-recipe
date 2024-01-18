@@ -3,7 +3,7 @@ package refrigerator.back.member.outbound.adapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import refrigerator.back.global.s3.ImageUrlConvert;
-import refrigerator.back.member.application.domain.MemberProfileImage;
+import refrigerator.back.member.application.domain.value.MemberProfileImage;
 import refrigerator.back.member.application.dto.MemberDto;
 import refrigerator.back.member.application.dto.MemberProfileImageDto;
 import refrigerator.back.member.application.port.out.FindMyProfilePort;

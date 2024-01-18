@@ -5,13 +5,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import refrigerator.back.annotation.DisabledRepositoryTest;
 import refrigerator.back.annotation.TestDataInit;
 import refrigerator.back.comment.outbound.dto.OutCommentDto;
-import refrigerator.back.comment.application.domain.CommentSortCondition;
+import refrigerator.back.comment.application.domain.value.CommentSortCondition;
 import refrigerator.back.comment.outbound.dto.OutCommentNumberDto;
 import refrigerator.back.global.jpa.config.QuerydslConfig;
 
@@ -72,9 +71,11 @@ class CommentSelectQueryRepositoryTest {
     void selectMyComments() {
         // given
         String memberId = "jktest101@gmail.com";
+        int size = 11;
         // when
-        List<OutCommentDto> comments = queryRepository.selectMyComments(memberId, 1L, PageRequest.of(0, 11));
+        List<OutCommentDto> comments = queryRepository.selectMyComments(memberId, 1L, PageRequest.of(0, size));
         // then
+        assertEquals(size, comments.size());
         assertTrue(isExist(comments));
     }
 

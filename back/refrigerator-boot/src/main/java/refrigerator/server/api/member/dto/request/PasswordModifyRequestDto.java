@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PasswordModifyRequestDto {
+
     @Pattern(regexp = InputDataFormatCheck.PASSWORD_REGEX)
     private String password;
-
 }

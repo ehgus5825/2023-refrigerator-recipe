@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import refrigerator.back.global.exception.MappingException;
 import refrigerator.back.global.s3.ImageUrlConvert;
-import refrigerator.back.member.application.domain.MemberProfileImage;
+import refrigerator.back.member.application.domain.value.MemberProfileImage;
 import refrigerator.back.member.application.dto.MemberDto;
 import refrigerator.back.member.exception.MemberExceptionType;
 import refrigerator.back.member.outbound.mapper.OutMemberMapper;

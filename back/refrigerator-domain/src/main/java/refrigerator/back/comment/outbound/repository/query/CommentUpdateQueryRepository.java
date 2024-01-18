@@ -4,13 +4,14 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import refrigerator.back.global.jpa.WriteQueryResultType;
+import refrigerator.back.global.exception.WriteQueryResultType;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 
-import static refrigerator.back.comment.application.domain.QComment.*;
-import static refrigerator.back.comment.application.domain.QCommentHeart.commentHeart;
+import static refrigerator.back.comment.application.domain.entity.QComment.comment;
+import static refrigerator.back.comment.application.domain.entity.QCommentHeart.commentHeart;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -33,7 +34,7 @@ public class CommentUpdateQueryRepository {
                 .set(comment.commentRecord.modifiedState, true)
                 .where(comment.commentId.eq(id))
                 .execute();
-        em.flush();
+        em.flush(); //
         em.clear();
         return WriteQueryResultType.findTypeByResult(result);
     }
@@ -52,7 +53,7 @@ public class CommentUpdateQueryRepository {
                         commentHeart.commentId.eq(commentId),
                         commentHeart.deleteStatus.eq(false))
                 .execute();
-        em.flush();
+        em.flush(); //
         em.clear();
         return WriteQueryResultType.findTypeByResult(result);
     }
@@ -69,7 +70,7 @@ public class CommentUpdateQueryRepository {
                 .where(comment.commentId.eq(id),
                         comment.commentRecord.deletedState.eq(false))
                 .execute();
-        em.flush();
+        em.flush(); //
         em.clear();
         return WriteQueryResultType.findTypeByResult(result);
     }
@@ -87,15 +88,12 @@ public class CommentUpdateQueryRepository {
                 .where(commentHeart.commentId.eq(id),
                         commentHeart.deleteStatus.eq(false))
                 .execute();
-        em.flush();
+        em.flush(); //
         em.clear();
         return WriteQueryResultType.findTypeByResult(result);
     }
 
     private BooleanExpression decideUpdateCondition(int value) {
-        if (value < 0){
-            return commentHeart.count.goe(1);
-        }
-        return commentHeart.count.goe(0);
+        return commentHeart.count.goe((value < 0)? 1:0);
     }
 }

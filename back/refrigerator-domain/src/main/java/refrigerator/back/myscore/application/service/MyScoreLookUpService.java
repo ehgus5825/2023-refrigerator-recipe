@@ -7,6 +7,7 @@ import refrigerator.back.myscore.application.dto.MyScoreDto;
 import refrigerator.back.myscore.application.port.in.FindMyScoreOneUseCase;
 import refrigerator.back.myscore.application.port.out.FindMyScoreDtoPort;
 
+// TODO : Disabled?
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor

@@ -9,15 +9,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import refrigerator.back.global.exception.BasicHttpMethod;
-import refrigerator.back.notification.application.domain.Notification;
-import refrigerator.back.notification.application.domain.NotificationType;
-import refrigerator.back.notification.application.port.out.notification.SaveNotificationPort;
-import refrigerator.server.config.TestTokenService;
-import refrigerator.server.security.authentication.application.usecase.JsonWebTokenUseCase;
+import refrigerator.back.notification.application.domain.entity.Notification;
+import refrigerator.back.notification.application.domain.value.NotificationType;
+import refrigerator.back.notification.application.port.out.SaveNotificationPort;
+import refrigerator.server.security.common.TestTokenService;
+import refrigerator.server.security.common.jwt.JsonWebTokenUseCase;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

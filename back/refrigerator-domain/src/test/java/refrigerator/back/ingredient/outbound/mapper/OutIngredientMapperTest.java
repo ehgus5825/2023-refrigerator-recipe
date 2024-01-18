@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 import refrigerator.back.ingredient.outbound.dto.OutIngredientDTO;
 import refrigerator.back.ingredient.outbound.dto.OutIngredientDetailDTO;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 import refrigerator.back.ingredient.application.dto.IngredientDTO;
 import refrigerator.back.ingredient.application.dto.IngredientDetailDTO;
 

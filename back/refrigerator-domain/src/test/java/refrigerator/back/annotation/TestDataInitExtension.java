@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.platform.commons.util.AnnotationUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.ScriptStatementFailedException;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -19,20 +18,16 @@ public class TestDataInitExtension implements BeforeAllCallback, AfterAllCallbac
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        Class<?> testClass = context.getTestClass().orElse(null);
-        if (testClass != null){
-            AnnotationUtils.findAnnotation(testClass, TestDataInit.class)
-                    .ifPresent(testDataInit -> {
-                        DataSource dataSource = getDataSource(context);
-                        try (Connection connection = dataSource.getConnection()){
-                            for (String path : testDataInit.value()) {
-                                ScriptUtils.executeSqlScript(connection, new ClassPathResource(path));
-                            }
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
+        context.getTestClass().flatMap(testClass -> AnnotationUtils.findAnnotation(testClass, TestDataInit.class)).ifPresent(testDataInit -> {
+            DataSource dataSource = getDataSource(context);
+            try (Connection connection = dataSource.getConnection()) {
+                for (String path : testDataInit.value()) {
+                    ScriptUtils.executeSqlScript(connection, new ClassPathResource(path));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private DataSource getDataSource(ExtensionContext context){
@@ -43,17 +38,13 @@ public class TestDataInitExtension implements BeforeAllCallback, AfterAllCallbac
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
 
-        Class<?> testClass = context.getTestClass().orElse(null);
-        if (testClass != null){
-            AnnotationUtils.findAnnotation(testClass, TestDataInit.class)
-                    .ifPresent(testDataInit -> {
-                        DataSource dataSource = getDataSource(context);
-                        try (Connection connection = dataSource.getConnection()){
-                            ScriptUtils.executeSqlScript(connection, new ClassPathResource("/delete.sql"));
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
+        context.getTestClass().flatMap(testClass -> AnnotationUtils.findAnnotation(testClass, TestDataInit.class)).ifPresent(testDataInit -> {
+            DataSource dataSource = getDataSource(context);
+            try (Connection connection = dataSource.getConnection()) {
+                ScriptUtils.executeSqlScript(connection, new ClassPathResource("/delete.sql"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 import refrigerator.back.global.s3.ImageUrlConvert;
-import refrigerator.back.myscore.application.dto.InMyScorePreviewsDto;
 import refrigerator.back.myscore.application.dto.MyScoreDetailDto;
 import refrigerator.back.myscore.application.dto.MyScorePreviewDto;
 import refrigerator.back.myscore.application.port.out.FindMyScoreListPort;
@@ -33,13 +32,10 @@ public class MyScoreListLookUpAdapter implements FindMyScoreListPort {
     }
 
     @Override
-    public InMyScorePreviewsDto findMyScorePreviews(String memberId, int page, int size) {
+    public List<MyScorePreviewDto> findMyScorePreviews(String memberId, int page, int size) {
         List<OutMyScorePreviewDto> scores = queryRepository.selectMyScorePreviewDtos(memberId, PageRequest.of(page, size));
-        int previewSize = queryRepository.selectMyScoreCountByMemberId(memberId).getNumber();
-        List<MyScorePreviewDto> previews = scores.stream()
+        return scores.stream()
                 .map(score -> score.mapping(mapper, imageUrlConvert))
                 .collect(Collectors.toList());
-        return new InMyScorePreviewsDto(previews, previewSize);
     }
-
 }

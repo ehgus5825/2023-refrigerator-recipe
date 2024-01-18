@@ -3,7 +3,7 @@ package refrigerator.back.authentication.application.dto;
 
 import lombok.Getter;
 import refrigerator.back.global.exception.BusinessException;
-import refrigerator.back.member.application.domain.MemberStatus;
+import refrigerator.back.member.application.domain.value.MemberStatus;
 import refrigerator.back.member.exception.MemberExceptionType;
 
 @Getter

@@ -2,7 +2,7 @@ package refrigerator.back.ingredient.application.dto;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 
 import java.time.LocalDate;
 

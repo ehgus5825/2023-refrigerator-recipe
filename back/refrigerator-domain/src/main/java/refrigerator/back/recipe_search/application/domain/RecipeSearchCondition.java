@@ -3,9 +3,7 @@ package refrigerator.back.recipe_search.application.domain;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.myscore.application.domain.ScoreScope;
-import refrigerator.back.recipe.exception.RecipeExceptionType;
 
 @Getter
 @Builder

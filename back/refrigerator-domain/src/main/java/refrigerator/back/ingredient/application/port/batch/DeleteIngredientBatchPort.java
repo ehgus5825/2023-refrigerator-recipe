@@ -2,8 +2,8 @@ package refrigerator.back.ingredient.application.port.batch;
 
 public interface DeleteIngredientBatchPort {
 
-    Long deleteIngredients();
+    void deleteIngredients();
 
-    Long deleteSuggestedIngredient(String name);
+    Long deleteSuggestedIngredient();
 
 }

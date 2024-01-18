@@ -1,6 +1,6 @@
 package refrigerator.back.comment.outbound.mapper;
 
-import refrigerator.back.comment.application.domain.CommentHeartPeople;
+import refrigerator.back.comment.application.domain.entity.CommentHeartPeople;
 import refrigerator.back.comment.application.dto.CommentHeartPeopleDto;
 
 import java.util.HashMap;

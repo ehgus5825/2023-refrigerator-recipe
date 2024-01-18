@@ -3,6 +3,8 @@ package refrigerator.back.ingredient.application.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import refrigerator.back.global.exception.BusinessException;
+import refrigerator.back.ingredient.application.domain.entity.Ingredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 
 import java.time.LocalDate;
 

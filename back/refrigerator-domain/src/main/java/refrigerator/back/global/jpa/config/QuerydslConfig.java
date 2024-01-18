@@ -20,7 +20,6 @@ public class QuerydslConfig {
         return new JPAQueryFactory(em);
     }
 
-
     @Bean
     public EntityManager entityManager() {
         return em;

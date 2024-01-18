@@ -11,6 +11,7 @@ import static refrigerator.back.global.exception.BasicHttpStatus.*;
 @Getter
 public enum AuthenticationExceptionType implements BasicExceptionType {
 
+    EMPTY_INPUT_DATA("EMPTY_INPUT_DATA", "입력한 값이 비어있습ㄴ다.", BAD_REQUEST),
     NOT_FOUND_AUTHORITY("NOT_FOUND_AUTHORITY", "권한이 존재하지 않습니다.", BAD_REQUEST),
     NOT_EQUAL_PASSWORD("NOT_EQUAL_PASSWORD", "비밀번호가 일치하지 않습니다.", BAD_REQUEST),
     ALREADY_LOGIN_MEMBER("WRONG_REQUEST", "잘못된 요청입니다.", BAD_REQUEST),

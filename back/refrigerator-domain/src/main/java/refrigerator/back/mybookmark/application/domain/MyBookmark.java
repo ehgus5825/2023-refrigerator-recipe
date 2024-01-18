@@ -3,7 +3,7 @@ package refrigerator.back.mybookmark.application.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import refrigerator.back.global.exception.BusinessException;
-import refrigerator.back.mybookmark.application.service.RecipeBookmarkModifyHandler;
+import refrigerator.back.mybookmark.application.handler.RecipeBookmarkModifyHandler;
 import refrigerator.back.mybookmark.exception.MyBookmarkExceptionType;
 
 import javax.persistence.*;

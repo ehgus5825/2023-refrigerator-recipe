@@ -3,16 +3,10 @@ package refrigerator.back.ingredient.outbound.dto;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Getter;
-import refrigerator.back.global.exception.MappingException;
 import refrigerator.back.global.s3.ImageUrlConvert;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
-import refrigerator.back.ingredient.application.dto.IngredientDTO;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 import refrigerator.back.ingredient.application.dto.IngredientDetailDTO;
 import refrigerator.back.ingredient.outbound.mapper.OutIngredientMapper;
-import refrigerator.back.member.application.domain.MemberProfileImage;
-import refrigerator.back.member.application.dto.MemberDto;
-import refrigerator.back.member.exception.MemberExceptionType;
-import refrigerator.back.member.outbound.mapper.OutMemberMapper;
 
 import java.time.LocalDate;
 

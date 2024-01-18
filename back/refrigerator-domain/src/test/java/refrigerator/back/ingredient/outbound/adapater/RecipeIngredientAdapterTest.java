@@ -8,8 +8,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import refrigerator.back.annotation.TestDataInit;
 import refrigerator.back.global.jpa.config.QuerydslConfig;
-import refrigerator.back.ingredient.outbound.mapper.OutRecipeIngredientMapperConfig;
-import refrigerator.back.ingredient.outbound.repository.SubIngredientQueryRepository;
+import refrigerator.back.ingredient.IngredientConfig;
+import refrigerator.back.ingredient.outbound.repository.query.SubIngredientQueryRepository;
 import refrigerator.back.ingredient.application.dto.RecipeIngredientDto;
 
 import static org.assertj.core.api.Assertions.*;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @Import({QuerydslConfig.class, SubIngredientQueryRepository.class,
-        RecipeIngredientAdapter.class, OutRecipeIngredientMapperConfig.class})
+        RecipeIngredientAdapter.class, IngredientConfig.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestDataInit({"/ingredient.sql"})
 class RecipeIngredientAdapterTest {

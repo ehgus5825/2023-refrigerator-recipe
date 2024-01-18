@@ -1,11 +1,9 @@
 package refrigerator.back.member.outbound.repository.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import refrigerator.back.member.application.domain.Member;
-import refrigerator.back.member.application.domain.MemberProfileImage;
+import refrigerator.back.member.application.domain.entity.Member;
 
 
 import java.util.Optional;

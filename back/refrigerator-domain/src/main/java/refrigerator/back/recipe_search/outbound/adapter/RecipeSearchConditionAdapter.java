@@ -7,7 +7,7 @@ import refrigerator.back.recipe.application.domain.entity.RecipeFoodType;
 import refrigerator.back.recipe.application.domain.value.RecipeDifficulty;
 import refrigerator.back.recipe.application.domain.value.RecipeType;
 import refrigerator.back.recipe_search.application.dto.RecipeSearchConditionsDto;
-import refrigerator.back.recipe_search.outbound.repository.RecipeSearchSelectQueryRepository;
+import refrigerator.back.recipe_search.outbound.repository.query.RecipeSearchSelectQueryRepository;
 import refrigerator.back.recipe_search.application.port.out.FindSearchConditionDataPort;
 
 import java.util.Arrays;
@@ -23,7 +23,7 @@ public class RecipeSearchConditionAdapter implements FindSearchConditionDataPort
     @Override
     public RecipeSearchConditionsDto findConditionData() {
         return RecipeSearchConditionsDto.builder()
-                .recipeTypes(getRecipeCategoryCond())
+                .recipeTypes(getRecipeTypeCond())
                 .foodCategories(getRecipeCategoryCond())
                 .recipeLevels(getRecipeDifficultyCond())
                 .foodTypes(getRecipeFoodTypeCond())

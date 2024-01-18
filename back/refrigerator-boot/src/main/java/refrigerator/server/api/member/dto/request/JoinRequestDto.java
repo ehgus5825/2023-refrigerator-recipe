@@ -6,21 +6,21 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import refrigerator.server.api.global.common.InputDataFormatCheck;
-import refrigerator.back.member.exception.MemberExceptionType;
+
+import javax.validation.constraints.Pattern;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class JoinRequestDto extends InputDataFormatCheck {
+public class JoinRequestDto {
 
+    @Pattern(regexp = InputDataFormatCheck.EMAIL_REGEX)
     private String email;
-    private String password;
-    private String nickname;
 
-    public void check() {
-        inputCheck(EMAIL_REGEX, email, MemberExceptionType.INCORRECT_EMAIL_FORMAT);
-        inputCheck(PASSWORD_REGEX, password, MemberExceptionType.INCORRECT_PASSWORD_FORMAT);
-        inputCheck(NICKNAME_REGEX, nickname, MemberExceptionType.INCORRECT_NICKNAME_FORMAT);
-    }
+    @Pattern(regexp = InputDataFormatCheck.PASSWORD_REGEX)
+    private String password;
+
+    @Pattern(regexp = InputDataFormatCheck.NICKNAME_REGEX)
+    private String nickname;
 }

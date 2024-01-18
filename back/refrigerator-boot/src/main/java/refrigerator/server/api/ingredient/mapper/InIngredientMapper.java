@@ -3,9 +3,9 @@ package refrigerator.server.api.ingredient.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import refrigerator.server.api.ingredient.dto.IngredientDeductionRequestDTO;
-import refrigerator.back.ingredient.application.domain.IngredientSearchCondition;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
-import refrigerator.back.ingredient.application.domain.RegisteredIngredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientSearchCondition;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
 import refrigerator.back.ingredient.application.dto.IngredientDeductionDTO;
 import refrigerator.back.ingredient.application.dto.IngredientUnitDTO;
 

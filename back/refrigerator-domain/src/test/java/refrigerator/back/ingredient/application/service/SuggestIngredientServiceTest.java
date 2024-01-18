@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import refrigerator.back.ingredient.application.port.out.suggestedIngredient.SaveSuggestedIngredientPort;
+import refrigerator.back.ingredient.application.port.out.SaveSuggestedIngredientPort;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;

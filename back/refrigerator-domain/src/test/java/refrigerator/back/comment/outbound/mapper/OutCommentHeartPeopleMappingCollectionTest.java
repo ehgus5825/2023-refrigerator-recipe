@@ -1,7 +1,7 @@
 package refrigerator.back.comment.outbound.mapper;
 
 import org.junit.jupiter.api.Test;
-import refrigerator.back.comment.application.domain.CommentHeartPeople;
+import refrigerator.back.comment.application.domain.entity.CommentHeartPeople;
 import refrigerator.back.comment.application.dto.CommentHeartPeopleDto;
 
 import java.util.Arrays;

@@ -1,12 +1,11 @@
 package refrigerator.back.ingredient.application.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import refrigerator.back.global.exception.BusinessException;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class IngredientStorageTypeTest {
 

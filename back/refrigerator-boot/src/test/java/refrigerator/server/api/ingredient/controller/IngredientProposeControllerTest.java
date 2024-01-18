@@ -11,10 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import refrigerator.server.api.ingredient.dto.IngredientProposeRequestDTO;
-import refrigerator.server.config.TestTokenService;
-import refrigerator.server.security.authentication.application.usecase.JsonWebTokenUseCase;
+import refrigerator.server.security.common.TestTokenService;
+import refrigerator.server.security.common.jwt.JsonWebTokenUseCase;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

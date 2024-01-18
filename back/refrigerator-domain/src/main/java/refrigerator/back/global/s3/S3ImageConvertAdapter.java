@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
 
 @RequiredArgsConstructor
-public class S3ImageConvertAdapter implements ImageUrlConvert{
+public class S3ImageConvertAdapter implements ImageUrlConvert {
 
     private final S3ImageHandler s3ImageHandler;
     private final String bucketName;

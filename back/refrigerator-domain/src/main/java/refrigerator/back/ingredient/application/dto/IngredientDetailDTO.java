@@ -2,7 +2,7 @@ package refrigerator.back.ingredient.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

@@ -2,40 +2,45 @@ package refrigerator.back.notification.application.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import refrigerator.back.notification.application.domain.entity.MemberNotification;
 import refrigerator.back.notification.application.dto.NotificationSignDTO;
-import refrigerator.back.notification.application.port.in.memberNotification.CreateMemberNotificationUseCase;
-import refrigerator.back.notification.application.port.in.memberNotification.FindMemberNotificationSignUseCase;
-import refrigerator.back.notification.application.port.in.memberNotification.TurnOffMemberNotificationSignUseCase;
-import refrigerator.back.notification.application.port.out.memberNotification.FindMemberNotificationSignPort;
-import refrigerator.back.notification.application.port.out.memberNotification.CreateMemberNotificationPort;
-import refrigerator.back.notification.application.port.out.memberNotification.ModifyMemberNotificationPort;
+import refrigerator.back.notification.application.port.in.CreateMemberNotificationUseCase;
+import refrigerator.back.notification.application.port.in.FindMemberNotificationSignUseCase;
+import refrigerator.back.notification.application.port.in.TurnOffMemberNotificationSignUseCase;
+import refrigerator.back.notification.application.port.out.FindMemberNotificationPort;
+import refrigerator.back.notification.application.port.out.SaveMemberNotificationPort;
 
 @Service
 @RequiredArgsConstructor
 public class MemberNotificationService implements
         CreateMemberNotificationUseCase, FindMemberNotificationSignUseCase, TurnOffMemberNotificationSignUseCase {
 
-    private final CreateMemberNotificationPort createMemberNotificationPort;
-    private final FindMemberNotificationSignPort findMemberNotificationSignPort;
-    private final ModifyMemberNotificationPort modifyMemberNotificationPort;
+    private final SaveMemberNotificationPort saveMemberNotificationPort;
+    private final FindMemberNotificationPort findMemberNotificationPort;
 
     @Override
     public NotificationSignDTO getMemberNotificationSign(String memberId) {
-        return new NotificationSignDTO(
-                findMemberNotificationSignPort.getSign(memberId)
-                        .orElseGet(() -> {
-                            createMemberNotification(memberId);
-                            return false;
-                        }));
+        return new NotificationSignDTO(findMemberNotificationPort.getMemberNotification(memberId).getSign());
     }
 
     @Override
     public void createMemberNotification(String memberId) {
-        createMemberNotificationPort.create(memberId);
+
+        MemberNotification memberNotification = MemberNotification.builder()
+                .memberId(memberId)
+                .sign(false)
+                .build();
+
+        saveMemberNotificationPort.save(memberNotification);
     }
 
     @Override
     public void turnOffMemberNotification(String memberId) {
-        modifyMemberNotificationPort.modify(memberId, false);
+
+        MemberNotification memberNotification = findMemberNotificationPort.getMemberNotification(memberId);
+        memberNotification.setSign(false);
+
+        saveMemberNotificationPort.save(memberNotification);
     }
+
 }

@@ -6,8 +6,8 @@ import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.notification.outbound.mapper.OutNotificationMapper;
 import refrigerator.back.notification.outbound.repository.query.NotificationQueryRepository;
 import refrigerator.back.notification.application.dto.CommentNotificationDTO;
-import refrigerator.back.notification.application.port.out.commentHeart.FindCommentDetailsPort;
-import refrigerator.back.notification.application.port.out.commentHeart.FindSenderNicknamePort;
+import refrigerator.back.notification.application.port.out.FindCommentDetailsPort;
+import refrigerator.back.notification.application.port.out.FindSenderNicknamePort;
 import refrigerator.back.notification.exception.NotificationExceptionType;
 
 @Component
@@ -25,8 +25,8 @@ public class CommentHeartNotificationAdapter implements FindSenderNicknamePort, 
 
     @Override
     public CommentNotificationDTO getDetails(Long commentId) {
-        return mapper.toCommentNotificationDetail(
-                notificationQueryRepository.getDetails(commentId)
-                .orElseThrow(() -> new BusinessException(NotificationExceptionType.TEST_ERROR)));
+        return notificationQueryRepository.getDetails(commentId)
+                .orElseThrow(() -> new BusinessException(NotificationExceptionType.TEST_ERROR))
+                .mapping(mapper);
     }
 }

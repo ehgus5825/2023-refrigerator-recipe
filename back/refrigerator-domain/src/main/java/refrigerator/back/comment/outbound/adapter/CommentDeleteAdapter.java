@@ -2,11 +2,9 @@ package refrigerator.back.comment.outbound.adapter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import refrigerator.back.comment.outbound.repository.query.CommentDeleteQueryRepository;
 import refrigerator.back.comment.application.port.out.DeleteCommentPort;
 import refrigerator.back.comment.exception.CommentExceptionType;
 import refrigerator.back.comment.outbound.repository.query.CommentUpdateQueryRepository;
-import refrigerator.back.global.exception.BusinessException;
 
 @Repository
 @RequiredArgsConstructor

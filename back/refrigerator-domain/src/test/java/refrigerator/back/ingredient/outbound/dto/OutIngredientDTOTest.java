@@ -12,9 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import refrigerator.back.global.s3.ImageUrlConvert;
 import refrigerator.back.global.s3.S3TestConfiguration;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.ingredient.IngredientConfig;
 import refrigerator.back.ingredient.application.dto.IngredientDTO;
-import refrigerator.back.ingredient.application.dto.IngredientDetailDTO;
 import refrigerator.back.ingredient.outbound.mapper.OutIngredientMapper;
 
 import java.time.LocalDate;
@@ -63,6 +62,6 @@ class OutIngredientDTOTest {
         assertThat(dto.getIngredientID()).isEqualTo(1L);
         assertThat(dto.getName()).isEqualTo("감자");
         assertThat(dto.getExpirationDate()).isEqualTo(LocalDate.of(2023, 1, 1));
-        log.info(dto.getImage());
+        assertThat(dto.getImage()).isEqualTo("https://refrigerator-image.s3.ap-northeast-2.amazonaws.com/ingredient/IMAGE_INGREDIENT_PROCESSED.png");
     }
 }

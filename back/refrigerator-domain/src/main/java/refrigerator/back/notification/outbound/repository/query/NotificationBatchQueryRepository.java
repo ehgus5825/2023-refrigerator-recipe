@@ -6,12 +6,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import refrigerator.back.global.exception.BusinessException;
-import refrigerator.back.notification.application.domain.NotificationType;
+import refrigerator.back.notification.application.domain.value.NotificationType;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 
-import static refrigerator.back.notification.application.domain.QNotification.notification;
+import static refrigerator.back.notification.application.domain.entity.QNotification.notification;
 import static refrigerator.back.notification.exception.NotificationExceptionType.*;
 
 @Component
@@ -24,7 +24,13 @@ public class NotificationBatchQueryRepository {
 
     // option이 true이면 type이 EXPIRATION_DATE인 알림 삭제
     // option이 false이면 type이 EXPIRATION_DATE가 아닌 알림 삭제
-    @Transactional
+
+    /**
+     *
+     * @param option
+     * @param date
+     * @return
+     */
     public Long deleteNotification(Boolean option, LocalDateTime date) {
 
         long row = jpaQueryFactory
@@ -38,6 +44,11 @@ public class NotificationBatchQueryRepository {
         return row;
     }
 
+    /**
+     *
+     * @param date
+     * @return
+     */
     @Transactional
     public Long deleteTestNotification(LocalDateTime date) {
 

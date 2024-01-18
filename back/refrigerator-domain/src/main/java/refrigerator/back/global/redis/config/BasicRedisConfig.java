@@ -1,6 +1,7 @@
 package refrigerator.back.global.redis.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +12,6 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
-@EnableCaching
 public class BasicRedisConfig extends CachingConfigurerSupport {
 
     @Value("${spring.redis.basic.host}")
@@ -22,7 +22,6 @@ public class BasicRedisConfig extends CachingConfigurerSupport {
 
     @Value("${spring.redis.basic.password}")
     private String password;
-
 
     @Bean
     public RedisTemplate<String, String> redisTemplate() {

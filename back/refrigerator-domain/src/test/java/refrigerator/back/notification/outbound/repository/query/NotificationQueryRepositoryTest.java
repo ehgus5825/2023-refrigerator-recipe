@@ -13,8 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import refrigerator.back.annotation.TestDataInit;
 import refrigerator.back.global.jpa.config.QuerydslConfig;
 import refrigerator.back.global.exception.BasicHttpMethod;
-import refrigerator.back.notification.application.domain.Notification;
-import refrigerator.back.notification.application.domain.NotificationType;
+import refrigerator.back.notification.application.domain.entity.Notification;
+import refrigerator.back.notification.application.domain.value.NotificationType;
+import refrigerator.back.notification.outbound.dto.OutNotificationDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,7 +45,6 @@ class NotificationQueryRepositoryTest {
                 .memberId("dhtest@gmail.com")
                 .method(BasicHttpMethod.GET.name());
 
-
         for (NotificationType value : NotificationType.values()) {
             for (int i = 0; i < 2; i++) {
                 em.persist(builder
@@ -72,10 +72,9 @@ class NotificationQueryRepositoryTest {
         Long id = em.persistAndGetId(notification, Long.class);
 
         // when
-        Long execute = notificationQueryRepository.updateReadStatus(id, true);
+        notificationQueryRepository.updateReadStatus(id, true);
 
         // then
-        assertThat(execute).isEqualTo(1);
         assertThat(em.find(Notification.class, id).isReadStatus()).isTrue();
     }
 
@@ -87,7 +86,8 @@ class NotificationQueryRepositoryTest {
         String email = "dhtest@gmail.com";
 
         // when
-        List<Notification> list = notificationQueryRepository.findNotificationList(email, PageRequest.of(0, 20));
+        List<OutNotificationDTO> list = notificationQueryRepository
+                .findNotificationList(email, PageRequest.of(0, 20));
 
         // then
         assertThat(list.size()).isEqualTo(10);
@@ -103,7 +103,8 @@ class NotificationQueryRepositoryTest {
         LocalDateTime now = LocalDateTime.of(2023, 1, 1, 0, 0, 0);
 
         // when
-        List<Notification> list = notificationQueryRepository.findNotificationList(email, PageRequest.of(0, 20));
+        List<OutNotificationDTO> list = notificationQueryRepository
+                .findNotificationList(email, PageRequest.of(0, 20));
 
         // then
         assertThat(list.size()).isEqualTo(10);

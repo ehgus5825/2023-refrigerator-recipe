@@ -3,13 +3,11 @@ package refrigerator.back.global.time;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import refrigerator.back.comment.application.service.CommentTimeService;
-import refrigerator.back.notification.application.domain.NotificationTimeService;
+import refrigerator.back.notification.application.service.NotificationTimeService;
 
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 @Component

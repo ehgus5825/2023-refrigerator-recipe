@@ -7,13 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import refrigerator.back.comment.outbound.dto.*;
-import refrigerator.back.comment.application.domain.CommentSortCondition;
+import refrigerator.back.comment.application.domain.value.CommentSortCondition;
 
 import java.util.List;
 
-import static refrigerator.back.comment.application.domain.QComment.comment;
-import static refrigerator.back.comment.application.domain.QCommentHeart.commentHeart;
-import static refrigerator.back.member.application.domain.QMember.member;
+import static refrigerator.back.comment.application.domain.entity.QComment.comment;
+import static refrigerator.back.comment.application.domain.entity.QCommentHeart.commentHeart;
+import static refrigerator.back.member.application.domain.entity.QMember.member;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class CommentSelectQueryRepository {
                 .offset(page.getOffset())
                 .limit(page.getPageSize())
                 .where(recipeIdEq(recipeId), notDeleted())
-                .orderBy(commentHeart.count.desc())
+                .orderBy(conditionEq(CommentSortCondition.HEART))
                 .fetch();
     }
 
@@ -106,7 +107,7 @@ public class CommentSelectQueryRepository {
                 .leftJoin(member).on(member.email.eq(comment.writerId))
                 .leftJoin(commentHeart).on(commentHeart.commentId.eq(comment.commentId))
                 .where(member.email.eq(memberId), notDeleted(), recipeIdEq(recipeId))
-                .orderBy(comment.commentRecord.createDateTime.desc())
+                .orderBy(conditionEq(CommentSortCondition.DATE))
                 .offset(page.getOffset())
                 .limit(page.getPageSize())
                 .fetch();

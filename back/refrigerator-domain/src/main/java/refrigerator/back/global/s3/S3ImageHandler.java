@@ -3,7 +3,6 @@ package refrigerator.back.global.s3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ListObjectsV2Request;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import refrigerator.back.global.exception.S3Exception;
 
