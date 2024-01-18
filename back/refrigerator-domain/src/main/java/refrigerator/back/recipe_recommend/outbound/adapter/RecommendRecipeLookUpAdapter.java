@@ -5,14 +5,12 @@ import org.springframework.stereotype.Repository;
 import refrigerator.back.global.s3.ImageUrlConvert;
 import refrigerator.back.recipe_recommend.application.dto.RecommendRecipeDto;
 import refrigerator.back.recipe_recommend.application.port.out.FindRecommendRecipesPort;
-import refrigerator.back.recipe_recommend.outbound.dto.OutRecommendRecipeDto;
 import refrigerator.back.recipe_recommend.outbound.mapper.OutRecommendRecipeDtoMapper;
-import refrigerator.back.recipe_recommend.outbound.repository.RecipeRecommendSelectQueryRepository;
+import refrigerator.back.recipe_recommend.outbound.repository.query.RecipeRecommendSelectQueryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository

@@ -1,7 +1,7 @@
 package refrigerator.back.comment.application.port.in;
 
 
-import refrigerator.back.comment.application.domain.CommentSortCondition;
+import refrigerator.back.comment.application.domain.value.CommentSortCondition;
 import refrigerator.back.comment.application.dto.CommentDto;
 import refrigerator.back.comment.application.dto.InCommentsPreviewResponseDto;
 

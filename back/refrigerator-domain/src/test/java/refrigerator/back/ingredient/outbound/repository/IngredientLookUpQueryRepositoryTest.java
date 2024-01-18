@@ -14,9 +14,11 @@ import refrigerator.back.global.jpa.config.QuerydslConfig;
 import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.global.time.CurrentTime;
 import refrigerator.back.ingredient.outbound.dto.OutIngredientDTO;
-import refrigerator.back.ingredient.application.domain.Ingredient;
-import refrigerator.back.ingredient.application.domain.IngredientSearchCondition;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.entity.Ingredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientSearchCondition;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
+import refrigerator.back.ingredient.outbound.dto.OutMyIngredientDTO;
+import refrigerator.back.ingredient.outbound.repository.query.IngredientLookUpQueryRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -43,6 +45,9 @@ class IngredientLookUpQueryRepositoryTest {
 
         String email = "email123@gmail.com";
 
+        // 보관 방식 : FRIDGE 
+        // deadline : false => 유통기한이 남아있는 식재료
+        // email : email이 같은 사용자 식재료 목록에서 조회
         IngredientSearchCondition condition = IngredientSearchCondition.builder()
                 .email(email)
                 .storage(IngredientStorageType.FRIDGE)
@@ -56,15 +61,19 @@ class IngredientLookUpQueryRepositoryTest {
                 .image(1)
                 .deleted(false);
 
+        // 조회 X (보관 방식이 FREEZER)
         em.persist(builder.name("감자").expirationDate(currentTime.now().plusDays(1))
                 .storageMethod(IngredientStorageType.FREEZER).email(email).build());
 
+        // 조회 X (유통기한이 지남)
         em.persist(builder.name("고구마").expirationDate(currentTime.now().minusDays(1))
                 .storageMethod(IngredientStorageType.FRIDGE).email(email).build());
 
+        // 조회 X (다른 이메일)
         em.persist(builder.name("호박").expirationDate(currentTime.now().plusDays(1))
                 .storageMethod(IngredientStorageType.FRIDGE).email("email456@gmail.com").build());
 
+        // 조회 O
         Long id = em.persistAndGetId(builder.name("수박").expirationDate(currentTime.now().plusDays(1))
                 .storageMethod(IngredientStorageType.FRIDGE).email(email).build(), Long.class);
 
@@ -82,7 +91,7 @@ class IngredientLookUpQueryRepositoryTest {
     }
 
     @Test
-    @DisplayName("식재료 목록 조회 정렬 테스트 : deadline -> false")
+    @DisplayName("식재료 목록 조회 정렬 테스트 : deadline -> false / 유통기한이 남아있는 식재료")
     void findIngredientListSortTestByDeadlineFalse() {
 
         // given
@@ -117,6 +126,7 @@ class IngredientLookUpQueryRepositoryTest {
 
         // then
 
+        // 유통기한이 남아있는 식재료 정렬 기준 : 유통기한 가까운순 -> 먼순 (오름차순), 식재료명 가나다순
         assertThat(list.get(0).getIngredientID()).isEqualTo(id3);
         assertThat(list.get(1).getIngredientID()).isEqualTo(id4);
         assertThat(list.get(2).getIngredientID()).isEqualTo(id2);
@@ -124,7 +134,7 @@ class IngredientLookUpQueryRepositoryTest {
     }
 
     @Test
-    @DisplayName("식재료 목록 조회 정렬 테스트 : deadline -> true")
+    @DisplayName("식재료 목록 조회 정렬 테스트 : deadline -> true / 유통기한이 지난 식재료")
     void findIngredientListSortTestByDeadlineTrue() {
 
         // given
@@ -158,6 +168,8 @@ class IngredientLookUpQueryRepositoryTest {
         List<OutIngredientDTO> list = ingredientLookUpQueryRepository.findIngredientList(currentTime.now(), condition, PageRequest.of(0, 5));
 
         // then
+
+        // 유통기한이 지난 식재료 정렬 기준 : 유통기한 가까운순 -> 먼순 (내림차순), 식재료명 가나다순
         assertThat(list.get(0).getIngredientID()).isEqualTo(id3);
         assertThat(list.get(1).getIngredientID()).isEqualTo(id4);
         assertThat(list.get(2).getIngredientID()).isEqualTo(id2);
@@ -180,13 +192,16 @@ class IngredientLookUpQueryRepositoryTest {
                 .image(1)
                 .deleted(false);
 
+        // 유통기한 1일 남은 식재료
         Long id = em.persistAndGetId(builder.name("감자").expirationDate(currentTime.now().plusDays(1))
                 .storageMethod(IngredientStorageType.FREEZER).email(email).build(), Long.class);
 
+        // 유통기한 3일 남은 식재료
         em.persist(builder.name("고구마").expirationDate(currentTime.now().plusDays(3))
                 .storageMethod(IngredientStorageType.FREEZER).email(email).build());
 
         // when
+        // 유통기한 1일 남은 식재료 조회
         List<OutIngredientDTO> list = ingredientLookUpQueryRepository.findIngredientListByDeadline(currentTime.now(), 1L, email);
 
         // then
@@ -215,9 +230,11 @@ class IngredientLookUpQueryRepositoryTest {
                 .image(1)
                 .deleted(false);
 
+        // 같은 이메일 (조회 O)
         Long id = em.persistAndGetId(builder.name("감자").expirationDate(currentTime.now())
                 .storageMethod(IngredientStorageType.FREEZER).email(email).build(), Long.class);
 
+        // 다른 이메일 (조회 X)
         em.persist(builder.name("고구마").expirationDate(currentTime.now())
                 .storageMethod(IngredientStorageType.FREEZER).email("email456@gmail.com").build());
 
@@ -269,6 +286,36 @@ class IngredientLookUpQueryRepositoryTest {
                     assertThat(dto.getStorage()).isEqualTo(IngredientStorageType.FREEZER);
                 }
         );
+    }
+
+    @Test
+    @DisplayName("사용 가능한 식재료 목록 조회")
+    void findAvailableIngredientsTest(){
+
+        CurrentTime<LocalDate> currentTime = () -> LocalDate.of(2023, 1,1);
+
+        String email = "email123@gmail.com";
+
+        Ingredient.IngredientBuilder builder = Ingredient.builder()
+                .registrationDate(currentTime.now())
+                .capacity(30.0)
+                .capacityUnit("g")
+                .image(1)
+                .deleted(false)
+                .storageMethod(IngredientStorageType.FREEZER)
+                .email(email);
+
+        em.persist(builder.name("감자").expirationDate(currentTime.now().plusDays(5)).build());
+        em.persist(builder.name("당근").expirationDate(currentTime.now().minusDays(5)).build());
+
+        List<OutMyIngredientDTO> list = ingredientLookUpQueryRepository.findAvailableIngredients(email, currentTime.now());
+
+        assertThat(list.size()).isEqualTo(1);
+
+        OutMyIngredientDTO dto = list.get(0);
+        assertThat(dto.getName()).isEqualTo("감자");
+        assertThat(dto.getVolume()).isEqualTo(30.0);
+        assertThat(dto.getUnit()).isEqualTo("g");
     }
 
     @Test

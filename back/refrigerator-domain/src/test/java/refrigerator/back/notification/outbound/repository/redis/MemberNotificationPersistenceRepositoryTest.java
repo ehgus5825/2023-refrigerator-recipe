@@ -6,12 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
-import refrigerator.back.notification.application.domain.MemberNotification;
+import refrigerator.back.notification.application.domain.entity.MemberNotification;
 
 import static org.assertj.core.api.Assertions.*;
-
-
-
 
 @DataRedisTest
 @Slf4j

@@ -3,6 +3,7 @@ package refrigerator.back.recipe_search.outbound.repository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import refrigerator.back.annotation.DisabledRepositoryTest;
@@ -12,6 +13,7 @@ import refrigerator.back.recipe.application.domain.entity.RecipeCategory;
 import refrigerator.back.recipe.application.domain.entity.RecipeFoodType;
 import refrigerator.back.recipe_search.application.domain.RecipeSearchCondition;
 import refrigerator.back.recipe_search.outbound.dto.OutRecipeSearchDto;
+import refrigerator.back.recipe_search.outbound.repository.query.RecipeSearchSelectQueryRepository;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisabledRepositoryTest
 @Import({QuerydslConfig.class, RecipeSearchSelectQueryRepository.class})
 @TestDataInit("/recipe.sql")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class RecipeSearchSelectQueryRepositoryTest {
 
     @Autowired RecipeSearchSelectQueryRepository queryRepository;
@@ -30,7 +33,7 @@ class RecipeSearchSelectQueryRepositoryTest {
         RecipeSearchCondition condition = RecipeSearchCondition.builder().build();
         List<OutRecipeSearchDto> result = queryRepository.selectSearchRecipeDtos(condition, PageRequest.of(0, 11));
         System.out.println("result = " + result);
-        assertEquals(3, result.size());
+        assertEquals(11, result.size());
     }
 
     @Test
@@ -41,7 +44,18 @@ class RecipeSearchSelectQueryRepositoryTest {
                 .build();
         List<OutRecipeSearchDto> result = queryRepository.selectSearchRecipeDtos(condition, PageRequest.of(0, 11));
         System.out.println("result = " + result);
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    @DisplayName("레시피 검색 테스트 -> 조건이 있을 때 2")
+    void selectSearchRecipeDtosTest3() {
+        RecipeSearchCondition condition = RecipeSearchCondition.builder()
+                .difficulty("초보환영")
+                .build();
+        List<OutRecipeSearchDto> result = queryRepository.selectSearchRecipeDtos(condition, PageRequest.of(0, 11));
+        System.out.println("result = " + result);
+        assertEquals(7, result.size());
     }
 
     @Test

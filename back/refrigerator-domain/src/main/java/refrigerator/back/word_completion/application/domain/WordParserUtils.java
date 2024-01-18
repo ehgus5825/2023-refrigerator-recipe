@@ -1,5 +1,11 @@
 package refrigerator.back.word_completion.application.domain;
 
-public interface WordParserUtils {
-    String split(String keyword);
+import org.springframework.stereotype.Component;
+
+
+@Component
+public class WordParserUtils {
+    public String split(String keyword) {
+        return JamoUtils.split(keyword);
+    }
 }

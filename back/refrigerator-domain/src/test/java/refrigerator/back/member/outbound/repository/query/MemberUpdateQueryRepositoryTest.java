@@ -3,16 +3,15 @@ package refrigerator.back.member.outbound.repository.query;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import refrigerator.back.annotation.DisabledRepositoryTest;
-import refrigerator.back.annotation.TestDataInit;
-import refrigerator.back.global.jpa.WriteQueryResultType;
+import refrigerator.back.global.exception.WriteQueryResultType;
 import refrigerator.back.global.jpa.config.QuerydslConfig;
-import refrigerator.back.member.application.domain.Member;
-import refrigerator.back.member.application.domain.MemberProfileImage;
-import refrigerator.back.member.application.domain.MemberStatus;
+import refrigerator.back.member.application.domain.entity.Member;
+import refrigerator.back.member.application.domain.value.MemberProfileImage;
+import refrigerator.back.member.application.domain.value.MemberStatus;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Import({QuerydslConfig.class, MemberUpdateQueryRepository.class})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class MemberUpdateQueryRepositoryTest {
 
     @Autowired MemberUpdateQueryRepository queryRepository;
@@ -111,5 +111,26 @@ class MemberUpdateQueryRepositoryTest {
         // then
         assertEquals(WriteQueryResultType.NORMAL, result);
         assertEquals(profileImage, em.find(Member.class, memberId).getProfile());
+    }
+
+    @Test
+    @DisplayName("회원 상태 수정 쿼리 성공 테스트")
+    void updateMemberStatusByEmail() {
+        // given
+        String email = "mstest102@gmail.com";
+        LocalDateTime joinDateTime = LocalDateTime.of(2023, 7, 12, 1, 47);
+        Member member = Member.createForTest(
+                email,
+                "password",
+                "nickname",
+                MemberStatus.STEADY_STATUS,
+                MemberProfileImage.PROFILE_IMAGE_TWO,
+                joinDateTime);
+        Long memberId = em.persistAndGetId(member, Long.class);
+        // when
+        WriteQueryResultType result = queryRepository.updateMemberStatusByEmail(email, MemberStatus.LEAVE_STATUS);
+        // then
+        assertEquals(WriteQueryResultType.NORMAL, result);
+        assertEquals(MemberStatus.LEAVE_STATUS, em.find(Member.class, memberId).getMemberStatus());
     }
 }

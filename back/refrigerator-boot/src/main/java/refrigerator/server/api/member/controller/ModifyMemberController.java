@@ -5,13 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import refrigerator.server.api.authentication.GetMemberEmailUseCase;
+import refrigerator.server.security.common.email.GetMemberEmailUseCase;
 import refrigerator.back.member.application.port.in.ModifyMemberUseCase;
-import refrigerator.server.api.authentication.cookie.RefreshTokenCookie;
 import refrigerator.server.api.member.dto.request.NicknameModifyRequestDto;
 import refrigerator.server.api.member.dto.request.PasswordModifyRequestDto;
 import refrigerator.back.member.exception.MemberExceptionType;
-import refrigerator.server.security.authentication.application.usecase.RestrictAccessUseCase;
+import refrigerator.server.api.authentication.application.usecase.RestrictAccessUseCase;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,33 +29,38 @@ public class ModifyMemberController {
 
     @PutMapping("/api/members/nickname/modify")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void setUpdateNicknameUseCase(@RequestBody @Valid NicknameModifyRequestDto request, BindingResult result){
+    public void setUpdateNickname(@Valid @RequestBody NicknameModifyRequestDto request,
+                                  BindingResult result){
+
         check(result, MemberExceptionType.INCORRECT_NICKNAME_FORMAT);
+
         String email = memberInformation.getMemberEmail();
         modifyMemberUseCase.modifyNickname(email, request.getNickname());
     }
 
     @PutMapping("/api/members/profileImage/modify")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void setUpdateProfileUseCase(@RequestParam("imageNo") Integer imageNo){
+        public void setUpdateProfile(@RequestParam("imageNo") Integer imageNo){
+
+        positiveOrZeroCheck(imageNo);
+
         String email = memberInformation.getMemberEmail();
         modifyMemberUseCase.modifyProfileImage(email, imageNo);
     }
 
     @PutMapping("/api/members/password/modify")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePassword(@RequestBody @Valid PasswordModifyRequestDto requestDto,
-                               HttpServletRequest request,
+    public void updatePassword(@Valid @RequestBody PasswordModifyRequestDto requestDto,
                                BindingResult result,
+                               HttpServletRequest request,
                                HttpServletResponse response){
-        RefreshTokenCookie refreshTokenCookie = new RefreshTokenCookie();
+
         check(result, MemberExceptionType.INCORRECT_PASSWORD_FORMAT);
+
         String email = memberInformation.getMemberEmail();
         modifyMemberUseCase.modifyPassword(email, passwordEncoder.encode(requestDto.getPassword()));
-        // TODO : 비밀번호 변경, 회원 탈퇴, 로그아웃 등 인증 정보가 제거될 때 아래와 같은 로직이 반복됨 -> 처리할 것
-        String refreshToken = refreshTokenCookie.get(request.getCookies()).getValue();
-        restrictAccessUseCase.restrictAccessToTokens(refreshToken);
-        response.addCookie(refreshTokenCookie.delete());
+
+        response.addCookie(restrictAccessUseCase.restrictAccessToTokens(request.getCookies()));
     }
 
 

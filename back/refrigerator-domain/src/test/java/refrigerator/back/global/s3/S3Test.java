@@ -17,9 +17,10 @@ import refrigerator.back.global.s3.config.S3Config;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(initializers = ConfigDataApplicationContextInitializer.class, classes = S3Config.class)
+@ContextConfiguration(initializers = ConfigDataApplicationContextInitializer.class,
+        classes = S3Config.class)
 @Slf4j
-@Disabled
+//@Disabled
 class S3Test {
 
     @Autowired AmazonS3Client amazonS3Client;

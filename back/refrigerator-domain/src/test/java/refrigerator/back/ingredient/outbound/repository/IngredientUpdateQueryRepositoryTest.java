@@ -9,8 +9,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import refrigerator.back.global.jpa.config.QuerydslConfig;
 import refrigerator.back.global.exception.BusinessException;
-import refrigerator.back.ingredient.application.domain.Ingredient;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.entity.Ingredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
+import refrigerator.back.ingredient.outbound.repository.query.IngredientUpdateQueryRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -53,10 +54,9 @@ public class IngredientUpdateQueryRepositoryTest {
                 .isFalse();
 
         // when
-        Long count = ingredientUpdateQueryRepository.updateIngredientDeleteStateTrue(id);
+        ingredientUpdateQueryRepository.updateIngredientDeleteStateTrue(id);
 
         // then
-        assertThat(count).isEqualTo(1);
         assertThat(em.find(Ingredient.class, id).isDeleted())
                 .isTrue();
     }
@@ -85,38 +85,34 @@ public class IngredientUpdateQueryRepositoryTest {
         assertThat(em.find(Ingredient.class, ids.get(1)).isDeleted()).isFalse();
 
         // when
-        Long count = ingredientUpdateQueryRepository.updateAllIngredientDeleteStateTrue(ids);
+        ingredientUpdateQueryRepository.updateAllIngredientDeleteStateTrue(ids);
 
         // then
-        assertThat(count).isEqualTo(2);
         assertThat(em.find(Ingredient.class, ids.get(0)).isDeleted()).isTrue();
         assertThat(em.find(Ingredient.class, ids.get(1)).isDeleted()).isTrue();
     }
 
     @Test
-    @DisplayName("deleted 상태인 식재료 데이터 모두 삭제")
-    void deleteIngredientsTest() {
+    @DisplayName("식재료 용량 수정")
+    void updateVolumeIngredient() {
 
-        // given
-        Ingredient ingredient = Ingredient.create(
-                "감자",
-                LocalDate.of(2023, 1, 1),
-                LocalDate.of(2023, 1, 1),
-                30.0,
-                "g",
-                IngredientStorageType.FREEZER,
-                1,
-                "email123@gmail.com");
-
-        ingredient.delete();
+        Ingredient ingredient = Ingredient.builder()
+                .name("감자")
+                .expirationDate(LocalDate.of(2023, 1, 1))
+                .registrationDate(LocalDate.of(2023, 1, 1))
+                .email("email123@gmail.com")
+                .capacity(30.0)
+                .storageMethod(IngredientStorageType.FREEZER)
+                .capacityUnit("g")
+                .image(1)
+                .deleted(false)
+                .build();
 
         Long id = em.persistAndGetId(ingredient, Long.class);
 
-        // when
-        ingredientUpdateQueryRepository.deleteIngredients();
+        ingredientUpdateQueryRepository.updateVolumeIngredient(id, 40.0);
 
-        // then
-        assertThat(em.find(Ingredient.class, id)).isNull();
+        assertThat(em.find(Ingredient.class, id).getCapacity()).isEqualTo(40.0);
     }
 
     @Test

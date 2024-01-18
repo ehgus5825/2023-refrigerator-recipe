@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import refrigerator.back.global.exception.BasicHttpMethod;
 import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.global.time.CurrentTime;
+import refrigerator.back.notification.application.domain.entity.Notification;
+import refrigerator.back.notification.application.domain.value.NotificationType;
 
 import java.time.LocalDateTime;
 
@@ -74,10 +76,10 @@ class NotificationTest {
     @DisplayName("유통기한 임박 알림 메시지 테스트")
     void createExpirationDateMessageTest() {
         Notification notification = new Notification();
-        notification.createExpirationDateMessage("사과", 2l, 3);
+        notification.createExpirationDateMessage("사과", 2L, 3);
         assertThat(notification.getMessage()).isEqualTo("사과 외 1개 식재료의 소비기한이 3일 남았습니다. 식재료 확인하러가기!");
 
-        notification.createExpirationDateMessage("사과", 1l, 3);
+        notification.createExpirationDateMessage("사과", 1L, 3);
         assertThat(notification.getMessage()).isEqualTo("사과의 소비기한이 3일 남았습니다. 식재료 확인하러가기!");
 
         assertThatThrownBy(() -> notification.createExpirationDateMessage("사과", 0L, 3))
@@ -90,14 +92,5 @@ class NotificationTest {
         Notification notification = new Notification();
         notification.createIngredientMessage("사과");
         assertThat(notification.getMessage()).isEqualTo("회원님이 요청했던 사과를 이제 냉장고에 담을 수 있습니다. (식재료 추가하기)");
-    }
-
-    @Test
-    @DisplayName("공지사항 알림 메시지 테스트")
-    void createNoticeMessage() {
-        Notification notification = new Notification();
-        notification.createNoticeMessage("안녕하세요");
-        assertThat(notification.getMessage()).isEqualTo("공지사항이 추가되었어요! '안녕하세요'");
-
     }
 }

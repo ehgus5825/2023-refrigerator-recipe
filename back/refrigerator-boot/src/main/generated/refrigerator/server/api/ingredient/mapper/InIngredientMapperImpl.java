@@ -2,17 +2,17 @@ package refrigerator.server.api.ingredient.mapper;
 
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
-import refrigerator.back.ingredient.application.domain.IngredientSearchCondition;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
-import refrigerator.back.ingredient.application.domain.RegisteredIngredient;
+import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientSearchCondition;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 import refrigerator.back.ingredient.application.dto.IngredientDeductionDTO;
 import refrigerator.back.ingredient.application.dto.IngredientUnitDTO;
 import refrigerator.server.api.ingredient.dto.IngredientDeductionRequestDTO;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-07-25T17:22:48+0900",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.15 (JetBrains s.r.o.)"
+    date = "2024-01-13T16:05:59+0900",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.19 (Amazon.com Inc.)"
 )
 @Component
 public class InIngredientMapperImpl implements InIngredientMapper {

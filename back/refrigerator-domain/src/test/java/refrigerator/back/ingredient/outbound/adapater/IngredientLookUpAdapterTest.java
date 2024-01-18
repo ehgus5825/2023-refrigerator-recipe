@@ -13,10 +13,10 @@ import refrigerator.back.annotation.TestDataInit;
 import refrigerator.back.global.jpa.config.QuerydslConfig;
 import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.global.s3.S3TestConfiguration;
-import refrigerator.back.ingredient.outbound.mapper.OutIngredientMapperConfig;
-import refrigerator.back.ingredient.outbound.repository.IngredientLookUpQueryRepository;
-import refrigerator.back.ingredient.application.domain.Ingredient;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.ingredient.IngredientConfig;
+import refrigerator.back.ingredient.outbound.repository.query.IngredientLookUpQueryRepository;
+import refrigerator.back.ingredient.application.domain.entity.Ingredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 import refrigerator.back.ingredient.application.dto.IngredientDTO;
 import refrigerator.back.ingredient.application.dto.IngredientDetailDTO;
 
@@ -25,27 +25,21 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
+@Import({QuerydslConfig.class, IngredientLookUpQueryRepository.class,
+        IngredientLookUpAdapter.class, IngredientConfig.class})
 @ContextConfiguration(
         initializers = ConfigDataApplicationContextInitializer.class,
         classes = {S3TestConfiguration.class, })
-@Import({QuerydslConfig.class, OutIngredientMapperConfig.class,
-        IngredientLookUpQueryRepository.class, IngredientLookUpAdapter.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestDataInit({"/ingredientImage.sql", "/ingredient.sql"})
 class IngredientLookUpAdapterTest {
 
     @Autowired TestEntityManager em;
 
-    @Autowired IngredientLookUpAdapter ingredientLookUpAdapter;
+    @Autowired
+    IngredientLookUpAdapter ingredientLookUpAdapter;
 
     @Autowired IngredientLookUpQueryRepository ingredientLookUpQueryRepository;
-
-    @Test
-    @DisplayName("id에 따른 식재료 엔티티 조회 테스트 => 예외 확인")
-    void getIngredientTest() {
-        assertThatThrownBy(() -> ingredientLookUpAdapter.getIngredient(-1L))
-                .isInstanceOf(BusinessException.class);
-    }
 
     @Test
     @DisplayName("id에 따른 식재료 단건 상세 조회 테스트 => 예외 확인, mapper 테스트")

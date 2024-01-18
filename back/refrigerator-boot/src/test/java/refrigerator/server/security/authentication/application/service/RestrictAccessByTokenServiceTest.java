@@ -6,12 +6,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import refrigerator.back.authentication.outbound.repository.RefreshTokenRepository;
+import refrigerator.back.authentication.outbound.repository.redis.RefreshTokenRepository;
 import refrigerator.back.authentication.application.domain.RefreshToken;
 import refrigerator.back.authentication.exception.AuthenticationExceptionType;
 import refrigerator.back.global.exception.BusinessException;
-import refrigerator.server.security.authentication.application.usecase.RestrictAccessUseCase;
+import refrigerator.server.api.authentication.application.usecase.RestrictAccessUseCase;
 
+import javax.servlet.http.Cookie;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,7 +35,10 @@ class RestrictAccessByTokenServiceTest {
     void logoutSuccessTest() {
         String refreshToken = "refreshToken";
         refreshTokenRepository.save(new RefreshToken("id", refreshToken, true));
-        restrictAccessUseCase.restrictAccessToTokens(refreshToken);
+
+        Cookie[] cookies= {new Cookie("Refresh-Token", "refreshToken")};
+
+        restrictAccessUseCase.restrictAccessToTokens(cookies);
         Optional<RefreshToken> result = refreshTokenRepository.findRefreshTokenByToken(refreshToken);
         assertTrue(result.isPresent());
         assertFalse(result.get().isValidated());
@@ -45,9 +49,12 @@ class RestrictAccessByTokenServiceTest {
     void logoutFailTest() {
         String refreshToken = "refreshToken";
         refreshTokenRepository.save(new RefreshToken("id", refreshToken, false));
+
+        Cookie[] cookies= {new Cookie("Refresh-Token", "refreshToken")};
+
         assertThrows(BusinessException.class, () -> {
             try{
-                restrictAccessUseCase.restrictAccessToTokens(refreshToken);
+                restrictAccessUseCase.restrictAccessToTokens(cookies);
             }catch (BusinessException e){
                 log.info("error message = {}", e.getMessage());
                 assertEquals(AuthenticationExceptionType.FAIL_ACCESS_BY_TOKEN, e.getBasicExceptionType());

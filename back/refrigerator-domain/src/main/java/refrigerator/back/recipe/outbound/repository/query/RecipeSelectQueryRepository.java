@@ -2,19 +2,10 @@ package refrigerator.back.recipe.outbound.repository.query;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import refrigerator.back.recipe.application.domain.entity.RecipeCourse;
-import refrigerator.back.recipe.application.domain.entity.RecipeIngredient;
-import refrigerator.back.recipe.infra.redis.config.RecipeCacheKey;
 import refrigerator.back.recipe.outbound.dto.*;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import static refrigerator.back.ingredient.application.domain.QIngredient.ingredient;
 
 import static refrigerator.back.recipe.application.domain.entity.QRecipe.recipe;
 import static refrigerator.back.recipe.application.domain.entity.QRecipeCourse.recipeCourse;

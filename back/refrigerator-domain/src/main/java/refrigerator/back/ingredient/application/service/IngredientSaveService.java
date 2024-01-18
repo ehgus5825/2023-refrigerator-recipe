@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import refrigerator.back.global.time.CurrentTime;
-import refrigerator.back.ingredient.application.domain.Ingredient;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.entity.Ingredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 import refrigerator.back.ingredient.application.dto.IngredientRegisterDTO;
-import refrigerator.back.ingredient.application.port.in.ingredient.update.RegisterIngredientUseCase;
-import refrigerator.back.ingredient.application.port.out.ingredient.update.SaveIngredientPort;
+import refrigerator.back.ingredient.application.port.in.RegisterIngredientUseCase;
+import refrigerator.back.ingredient.application.port.out.SaveIngredientPort;
 
 import java.time.LocalDate;
 
@@ -18,7 +18,6 @@ import java.time.LocalDate;
 public class IngredientSaveService implements RegisterIngredientUseCase {
 
     private final SaveIngredientPort saveIngredientPort;
-
     private final CurrentTime<LocalDate> currentTime;
 
     @Override

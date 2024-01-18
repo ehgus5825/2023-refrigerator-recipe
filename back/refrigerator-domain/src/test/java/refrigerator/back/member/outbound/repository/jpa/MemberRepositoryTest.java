@@ -3,12 +3,12 @@ package refrigerator.back.member.outbound.repository.jpa;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import refrigerator.back.annotation.DisabledRepositoryTest;
 import refrigerator.back.annotation.TestDataInit;
 import refrigerator.back.global.jpa.config.QuerydslConfig;
-import refrigerator.back.member.application.domain.Member;
+import refrigerator.back.member.application.domain.entity.Member;
 
 import java.util.Optional;
 
@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisabledRepositoryTest
 @Import(QuerydslConfig.class)
 @TestDataInit("/member.sql")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class MemberRepositoryTest {
 
     @Autowired MemberRepository repository;

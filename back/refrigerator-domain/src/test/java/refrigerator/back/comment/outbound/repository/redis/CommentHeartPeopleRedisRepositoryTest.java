@@ -3,20 +3,20 @@ package refrigerator.back.comment.outbound.repository.redis;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
-import refrigerator.back.comment.application.domain.CommentHeartPeople;
+import refrigerator.back.comment.application.domain.entity.CommentHeartPeople;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataRedisTest
-@Disabled
+//@Disabled
 @Slf4j
 class CommentHeartPeopleRedisRepositoryTest {
 
@@ -48,5 +48,18 @@ class CommentHeartPeopleRedisRepositoryTest {
         List<CommentHeartPeople> result = repository.findByMemberId("email");
         // then
         assertEquals(2, result.size());
+    }
+
+    @Test
+    void findByCommentIdTest(){
+        // given
+        CommentHeartPeople people1 = new CommentHeartPeople("id1", 1L, "email1");
+        CommentHeartPeople people2 = new CommentHeartPeople("id2", 1L, "email2");
+        repository.saveAll(Arrays.asList(people1, people2));
+
+        // when
+        List<CommentHeartPeople> commentHeartPeople = repository.findByCommentId(1L);
+
+        assertThat(commentHeartPeople.size()).isEqualTo(2);
     }
 }

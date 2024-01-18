@@ -2,7 +2,7 @@ package refrigerator.back.comment.outbound.adapter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import refrigerator.back.comment.application.domain.CommentHeartValue;
+import refrigerator.back.comment.application.domain.value.CommentHeartValue;
 import refrigerator.back.comment.application.port.out.ChangeCommentHeartCountPort;
 import refrigerator.back.comment.exception.CommentExceptionType;
 import refrigerator.back.comment.outbound.repository.query.CommentUpdateQueryRepository;

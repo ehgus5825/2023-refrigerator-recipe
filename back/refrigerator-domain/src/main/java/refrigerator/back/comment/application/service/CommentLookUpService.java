@@ -3,7 +3,7 @@ package refrigerator.back.comment.application.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import refrigerator.back.comment.application.domain.CommentSortCondition;
+import refrigerator.back.comment.application.domain.value.CommentSortCondition;
 import refrigerator.back.comment.application.dto.CommentDto;
 import refrigerator.back.comment.application.dto.CommentHeartPeopleDto;
 import refrigerator.back.comment.application.dto.InCommentsPreviewResponseDto;
@@ -31,7 +31,7 @@ public class CommentLookUpService implements FindCommentsUseCase {
 
     @Override
     public InCommentsPreviewResponseDto findCommentsPreview(Long recipeId, String memberId, int size) {
-        List<CommentDto> comments = mapping(memberId, findCommentPort.findPreviewComments(recipeId, memberId, size));
+        List<CommentDto> comments = mapping(memberId, findCommentPort.findPreviewComments(recipeId, size));
         Integer count = findNumberOfCommentsPort.getNumber(recipeId);
         return new InCommentsPreviewResponseDto(comments, count);
     }
@@ -42,6 +42,7 @@ public class CommentLookUpService implements FindCommentsUseCase {
     }
 
     private List<CommentDto> mapping(String memberId, List<CommentDto> comments){
+        // 내가 좋아요한 댓글 좋아요 모음
         Map<Long, CommentHeartPeopleDto> peoples = commentHeartPeoplePort.findPeopleMap(memberId);
         comments.forEach(comment -> comment.isLiked(peoples));
         return comments;

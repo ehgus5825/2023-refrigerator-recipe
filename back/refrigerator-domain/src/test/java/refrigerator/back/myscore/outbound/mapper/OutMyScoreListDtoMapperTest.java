@@ -52,6 +52,4 @@ class OutMyScoreListDtoMapperTest {
         MyScorePreviewDto expected = new MyScorePreviewDto(scoreId, recipeId, recipeImageUrl, recipeName);
         assertEquals(expected, result);
     }
-
-
 }

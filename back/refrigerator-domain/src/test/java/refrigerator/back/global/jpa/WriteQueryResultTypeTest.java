@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import refrigerator.back.global.exception.BasicExceptionType;
 import refrigerator.back.global.exception.BasicHttpStatus;
 import refrigerator.back.global.exception.BusinessException;
+import refrigerator.back.global.exception.WriteQueryResultType;
 
 import static org.junit.jupiter.api.Assertions.*;
 

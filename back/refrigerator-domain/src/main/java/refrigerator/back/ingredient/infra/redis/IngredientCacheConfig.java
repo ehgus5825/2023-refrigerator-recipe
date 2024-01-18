@@ -38,9 +38,7 @@ public class IngredientCacheConfig {
                 .disableCachingNullValues()
                 .entryTtl(Duration.ofSeconds(IngredientCacheKey.DEFAULT_EXPIRE_SEC)) // 캐시의 기본 유효시간 설정
                 .computePrefixWith(CacheKeyPrefix.simple())
-                .serializeKeysWith(RedisSerializationContext
-                        .SerializationPair
-                        .fromSerializer(new StringRedisSerializer()));
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()));
     }
 
 }

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
 import refrigerator.back.annotation.TestDataInit;
 import refrigerator.back.global.jpa.config.QuerydslConfig;
 import refrigerator.back.global.exception.BusinessException;
-import refrigerator.back.notification.outbound.mapper.OutNotificationMapperConfig;
+import refrigerator.back.notification.NotificationConfig;
 import refrigerator.back.notification.outbound.repository.query.NotificationQueryRepository;
 import refrigerator.back.notification.application.dto.CommentNotificationDTO;
 
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 @Import({QuerydslConfig.class, NotificationQueryRepository.class,
-        CommentHeartNotificationAdapter.class, OutNotificationMapperConfig.class})
+        CommentHeartNotificationAdapter.class, NotificationConfig.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestDataInit("/comment.sql")
 class CommentHeartNotificationAdapterTest {
@@ -27,7 +27,7 @@ class CommentHeartNotificationAdapterTest {
     @Test
     @DisplayName("이메일에 따른 닉네임 조회 => 예외 확인")
     void getNickname() {
-        assertThatThrownBy(() -> commentHeartNotificationAdapter.getNickname("test123@gmail.com"))
+        assertThatThrownBy(() -> commentHeartNotificationAdapter.getNickname("fail123@gmail.com"))
                 .isInstanceOf(BusinessException.class);
     }
 

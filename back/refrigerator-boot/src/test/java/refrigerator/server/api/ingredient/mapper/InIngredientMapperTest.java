@@ -1,18 +1,16 @@
 package refrigerator.server.api.ingredient.mapper;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
-import refrigerator.back.ingredient.application.domain.IngredientSearchCondition;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
-import refrigerator.back.ingredient.application.domain.RegisteredIngredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientSearchCondition;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
 import refrigerator.back.ingredient.application.dto.IngredientDeductionDTO;
 import refrigerator.back.ingredient.application.dto.IngredientUnitDTO;
 import refrigerator.server.api.ingredient.dto.IngredientDeductionRequestDTO;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class InIngredientMapperTest {
 

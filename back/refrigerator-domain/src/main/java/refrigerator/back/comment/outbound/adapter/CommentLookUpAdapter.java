@@ -9,7 +9,7 @@ import refrigerator.back.comment.application.service.CommentTimeService;
 import refrigerator.back.comment.outbound.dto.OutCommentDto;
 import refrigerator.back.comment.outbound.mapper.OutCommentMapper;
 import refrigerator.back.comment.outbound.repository.query.CommentSelectQueryRepository;
-import refrigerator.back.comment.application.domain.CommentSortCondition;
+import refrigerator.back.comment.application.domain.value.CommentSortCondition;
 import refrigerator.back.comment.application.port.out.FindCommentPort;
 
 import java.util.List;
@@ -32,19 +32,14 @@ public class CommentLookUpAdapter implements FindCommentPort {
     }
 
     @Override
-    public List<CommentDto> findPreviewComments(Long recipeId, String memberId, int size) {
-        return mapping(queryRepository.selectPreviewComments(recipeId, PageRequest.of(0, 3)));
+    public List<CommentDto> findPreviewComments(Long recipeId, int size) {
+        return mapping(queryRepository.selectPreviewComments(recipeId, PageRequest.of(0, size)));
     }
 
     @Override
     public List<CommentDto> findMyComments(String memberId, Long recipeId) {
         Pageable page = PageRequest.of(0, 11);
         return mapping(queryRepository.selectMyComments(memberId, recipeId, page));
-    }
-
-    @Override
-    public Integer findNumberOfComments(Long recipeId) {
-        return queryRepository.selectCommentsCount(recipeId).getNumber();
     }
 
     private List<CommentDto> mapping(List<OutCommentDto> comments){

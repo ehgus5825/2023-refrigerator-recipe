@@ -2,6 +2,7 @@ package refrigerator.back.comment.application.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import refrigerator.back.comment.application.domain.entity.CommentHeartPeople;
 import refrigerator.back.global.common.RandomUUID;
 import refrigerator.back.global.exception.BusinessException;
 

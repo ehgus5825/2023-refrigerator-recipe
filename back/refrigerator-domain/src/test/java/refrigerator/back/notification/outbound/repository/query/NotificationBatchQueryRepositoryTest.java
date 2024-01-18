@@ -12,8 +12,8 @@ import refrigerator.back.global.jpa.config.QuerydslConfig;
 import refrigerator.back.global.exception.BasicHttpMethod;
 import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.notification.outbound.repository.jpa.NotificationPersistenceRepository;
-import refrigerator.back.notification.application.domain.Notification;
-import refrigerator.back.notification.application.domain.NotificationType;
+import refrigerator.back.notification.application.domain.entity.Notification;
+import refrigerator.back.notification.application.domain.value.NotificationType;
 
 import java.time.LocalDateTime;
 
@@ -60,7 +60,8 @@ class NotificationBatchQueryRepositoryTest {
 
         // then
         assertThat(execute).isEqualTo(8);
-        assertThat(notificationPersistenceRepository.findAll().size()).isEqualTo(12);
+        assertThat(notificationPersistenceRepository.findAll().size())
+                .isEqualTo(12);
     }
 
     @Test
@@ -75,7 +76,8 @@ class NotificationBatchQueryRepositoryTest {
 
         // then
         assertThat(execute).isEqualTo(12);
-        assertThat(notificationPersistenceRepository.findAll().size()).isEqualTo(8);
+        assertThat(notificationPersistenceRepository.findAll().size())
+                .isEqualTo(8);
     }
 
     @Test

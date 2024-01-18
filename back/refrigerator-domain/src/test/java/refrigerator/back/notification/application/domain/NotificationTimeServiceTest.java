@@ -3,6 +3,7 @@ package refrigerator.back.notification.application.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import refrigerator.back.global.time.TimeService;
+import refrigerator.back.notification.application.service.NotificationTimeService;
 
 import java.time.LocalDateTime;
 

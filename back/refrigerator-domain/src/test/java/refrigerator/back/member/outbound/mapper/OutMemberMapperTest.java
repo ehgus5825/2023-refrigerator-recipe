@@ -3,10 +3,7 @@ package refrigerator.back.member.outbound.mapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
-import refrigerator.back.global.exception.MappingException;
-import refrigerator.back.member.application.domain.MemberProfileImage;
 import refrigerator.back.member.application.dto.MemberDto;
-import refrigerator.back.member.exception.MemberExceptionType;
 import refrigerator.back.member.outbound.dto.OutMemberDto;
 
 import static org.junit.jupiter.api.Assertions.*;

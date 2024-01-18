@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import refrigerator.back.annotation.DisabledRepositoryTest;
 import refrigerator.back.annotation.TestDataInit;
@@ -12,6 +12,7 @@ import refrigerator.back.global.jpa.config.QuerydslConfig;
 import refrigerator.back.recipe_recommend.outbound.dto.OutMyIngredientDto;
 import refrigerator.back.recipe_recommend.outbound.dto.OutRecipeIngredientDto;
 import refrigerator.back.recipe_recommend.outbound.dto.OutRecommendRecipeDto;
+import refrigerator.back.recipe_recommend.outbound.repository.query.RecipeRecommendSelectQueryRepository;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -21,7 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisabledRepositoryTest
 @Import({QuerydslConfig.class, RecipeRecommendSelectQueryRepository.class})
-@TestDataInit({"/ingredient.sql", "recipe_ingredient.sql", "/recipe.sql"})
+@TestDataInit({"/ingredient2.sql", "/ingredient.sql"})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Slf4j
 class RecipeRecommendSelectQueryRepositoryTest {
 
@@ -44,7 +46,7 @@ class RecipeRecommendSelectQueryRepositoryTest {
         for (OutMyIngredientDto dto : result) {
             log.info("dto={}", dto);
         }
-        assertEquals(4, result.size());
+        assertEquals(10, result.size());
     }
 
     @Test
@@ -56,7 +58,7 @@ class RecipeRecommendSelectQueryRepositoryTest {
         for (OutMyIngredientDto dto : result) {
             log.info("dto={}", dto);
         }
-        assertEquals(2, result.size());
+        assertEquals(7, result.size());
     }
 
     @Test

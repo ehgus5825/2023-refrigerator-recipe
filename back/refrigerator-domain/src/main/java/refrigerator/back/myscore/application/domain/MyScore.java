@@ -3,7 +3,7 @@ package refrigerator.back.myscore.application.domain;
 
 import lombok.*;
 
-import refrigerator.back.myscore.application.service.RecipeScoreModifyHandler;
+import refrigerator.back.myscore.application.handler.RecipeScoreModifyHandler;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

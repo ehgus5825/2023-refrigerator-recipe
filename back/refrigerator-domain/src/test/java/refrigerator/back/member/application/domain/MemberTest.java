@@ -3,6 +3,9 @@ package refrigerator.back.member.application.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import refrigerator.back.global.exception.BusinessException;
+import refrigerator.back.member.application.domain.entity.Member;
+import refrigerator.back.member.application.domain.value.MemberProfileImage;
+import refrigerator.back.member.application.domain.value.MemberStatus;
 import refrigerator.back.member.exception.MemberExceptionType;
 
 import java.time.LocalDateTime;

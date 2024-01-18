@@ -32,6 +32,7 @@ public class CommentDto {
         this.likedInfo = likedInfo;
     }
 
+    // 내가 이 댓글에 좋아요를 했는지 확인하는 것
     public void isLiked(Map<Long, CommentHeartPeopleDto> peoples){
         CommentHeartPeopleDto people = peoples.getOrDefault(commentId, null);
         if (people != null && people.getCommentId().equals(commentId)){

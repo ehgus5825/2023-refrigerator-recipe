@@ -8,15 +8,12 @@ import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.global.s3.ImageUrlConvert;
 import refrigerator.back.ingredient.outbound.dto.OutIngredientDTO;
 import refrigerator.back.ingredient.outbound.dto.OutIngredientDetailDTO;
-import refrigerator.back.ingredient.outbound.repository.IngredientLookUpQueryRepository;
-import refrigerator.back.ingredient.outbound.repository.IngredientPersistenceRepository;
-import refrigerator.back.ingredient.application.domain.Ingredient;
+import refrigerator.back.ingredient.outbound.repository.query.IngredientLookUpQueryRepository;
 import refrigerator.back.ingredient.application.dto.IngredientDetailDTO;
 import refrigerator.back.ingredient.application.dto.IngredientDTO;
 import refrigerator.back.ingredient.outbound.mapper.OutIngredientMapper;
-import refrigerator.back.ingredient.application.domain.IngredientSearchCondition;
-import refrigerator.back.ingredient.application.port.out.ingredient.lookUp.FindIngredientPort;
-import refrigerator.back.ingredient.application.port.out.ingredient.lookUp.FindIngredientListPort;
+import refrigerator.back.ingredient.application.domain.value.IngredientSearchCondition;
+import refrigerator.back.ingredient.application.port.out.FindIngredientPort;
 
 
 import java.time.LocalDate;
@@ -28,23 +25,11 @@ import static refrigerator.back.ingredient.exception.IngredientExceptionType.*;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class IngredientLookUpAdapter implements FindIngredientListPort, FindIngredientPort {
+public class IngredientLookUpAdapter implements FindIngredientPort {
 
-    private final IngredientPersistenceRepository ingredientPersistenceRepository;
     private final IngredientLookUpQueryRepository ingredientLookUpQueryRepository;
     private final OutIngredientMapper mapper;
     private final ImageUrlConvert imageUrlConvert;
-
-    @Override
-    public Ingredient getIngredient(Long id) {
-        return ingredientPersistenceRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new BusinessException(NOT_FOUND_INGREDIENT));
-    }
-
-    @Override
-    public List<Ingredient> getIngredients(String email) {
-        return ingredientPersistenceRepository.findByEmailAndDeletedFalse(email);
-    }
 
     @Override
     public IngredientDetailDTO getIngredientDetail(Long id) {

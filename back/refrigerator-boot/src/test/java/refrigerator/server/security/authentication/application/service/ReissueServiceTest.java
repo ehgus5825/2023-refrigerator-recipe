@@ -6,14 +6,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import refrigerator.back.authentication.outbound.repository.RefreshTokenRepository;
+import refrigerator.back.authentication.application.port.out.RefreshTokenPort;
+import refrigerator.back.authentication.outbound.repository.redis.RefreshTokenRepository;
 import refrigerator.back.authentication.application.domain.RefreshToken;
 import refrigerator.back.authentication.exception.AuthenticationExceptionType;
-import refrigerator.back.member.application.domain.MemberStatus;
-import refrigerator.server.security.authentication.application.TokenDto;
-import refrigerator.server.security.authentication.application.usecase.JsonWebTokenUseCase;
-import refrigerator.server.security.authentication.application.usecase.ReissueUseCase;
-import refrigerator.server.security.exception.JsonWebTokenException;
+import refrigerator.back.member.application.domain.value.MemberStatus;
+import refrigerator.server.api.authentication.application.dto.TokenDto;
+import refrigerator.server.api.authentication.application.service.ReissueService;
+import refrigerator.server.security.common.jwt.JsonWebTokenUseCase;
+import refrigerator.server.api.authentication.application.usecase.ReissueUseCase;
+import refrigerator.server.security.common.exception.JsonWebTokenException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,8 +24,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReissueServiceTest {
 
     @Autowired ReissueUseCase reissueUseCase;
+
     @Autowired JsonWebTokenUseCase jsonWebTokenUseCase;
+
     @Autowired RefreshTokenRepository refreshTokenRepository;
+
+    @Autowired RefreshTokenPort refreshTokenPort;
+
+    @Autowired
+    ReissueService reissueService;
 
     @AfterEach
     void clear(){
@@ -65,9 +74,9 @@ class ReissueServiceTest {
     void reissueFailTest2() {
         // when && then
         assertThrows(JsonWebTokenException.class, () -> {
-            try{
+            try {
                 reissueUseCase.reissue("refreshToken");
-            } catch (JsonWebTokenException e){
+            } catch (JsonWebTokenException e) {
                 log.info("error message={}", e.getMessage());
                 assertEquals(AuthenticationExceptionType.NOT_FOUND_TOKEN, e.getBasicExceptionType());
                 throw e;

@@ -9,7 +9,6 @@ import static refrigerator.back.global.exception.BasicHttpStatus.*;
 @AllArgsConstructor
 public enum MemberExceptionType implements BasicExceptionType {
     INCORRECT_EMAIL_FORMAT("INCORRECT_EMAIL_FORMAT", "이메일 형식에 어긋납니다.", BAD_REQUEST),
-    EMPTY_INPUT_DATA("EMPTY_INPUT_DATA", "입력값이 없습니다.", BAD_REQUEST),
     INCORRECT_PASSWORD_FORMAT("INCORRECT_PASSWORD_FORMAT", "비밀번호 형식에 어긋납니다.", BAD_REQUEST),
     INCORRECT_NICKNAME_FORMAT("INCORRECT_NICKNAME_FORMAT", "허용하지 않는 닉네임 형식입니다.", BAD_REQUEST),
     DUPLICATE_EMAIL("DUPLICATE_EMAIL", "중복된 이메일 입니다.", BAD_REQUEST),

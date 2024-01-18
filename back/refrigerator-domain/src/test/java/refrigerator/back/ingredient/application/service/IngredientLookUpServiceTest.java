@@ -7,12 +7,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import refrigerator.back.global.time.CurrentTime;
-import refrigerator.back.ingredient.application.domain.IngredientSearchCondition;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.value.IngredientSearchCondition;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
 import refrigerator.back.ingredient.application.dto.IngredientDTO;
 import refrigerator.back.ingredient.application.dto.IngredientDetailDTO;
-import refrigerator.back.ingredient.application.port.out.ingredient.lookUp.FindIngredientListPort;
-import refrigerator.back.ingredient.application.port.out.ingredient.lookUp.FindIngredientPort;
+import refrigerator.back.ingredient.application.port.out.FindIngredientPort;
+import refrigerator.back.ingredient.application.port.out.FindSubIngredientPort;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,8 +25,6 @@ import static org.mockito.BDDMockito.*;
 class IngredientLookUpServiceTest {
 
     @InjectMocks IngredientLookUpService ingredientLookUpService;
-
-    @Mock FindIngredientListPort findIngredientListPort;
 
     @Mock FindIngredientPort findIngredientPort;
 
@@ -46,7 +44,7 @@ class IngredientLookUpServiceTest {
 
         IngredientDTO.IngredientDTOBuilder builder = IngredientDTO.builder()
                 .image("test.png")
-                .expirationDate(now);
+                .expirationDate(now.plusDays(4));
 
         List<IngredientDTO> ingredientDTOList = new ArrayList<>();
         ingredientDTOList.add(builder.ingredientID(1L).name("감자").build());
@@ -57,14 +55,14 @@ class IngredientLookUpServiceTest {
         given(currentTime.now())
                 .willReturn(now);
 
-        given(findIngredientListPort.getIngredientList(now, condition, 0, 10))
+        given(findIngredientPort.getIngredientList(now, condition, 0, 10))
                 .willReturn(ingredientDTOList);
 
         List<IngredientDTO> ingredientList = ingredientLookUpService.getIngredientList(condition, 0, 10);
         assertThat(ingredientList.size()).isEqualTo(4);
         for (int i = 0; i < ingredientList.size(); i++) {
             assertThat(ingredientList.get(i).getIngredientID()).isEqualTo(i + 1L);
-            assertThat(ingredientList.get(i).getRemainDays()).isEqualTo("0");
+            assertThat(ingredientList.get(i).getRemainDays()).isEqualTo("-4");
         }
     }
 
@@ -89,7 +87,7 @@ class IngredientLookUpServiceTest {
         given(currentTime.now())
                 .willReturn(now);
 
-        given(findIngredientListPort.getIngredientListOfAll(memberID))
+        given(findIngredientPort.getIngredientListOfAll(memberID))
                 .willReturn(ingredientDTOList);
 
         List<IngredientDTO> ingredientListOfAll = ingredientLookUpService.getIngredientListOfAll(memberID);
@@ -122,7 +120,7 @@ class IngredientLookUpServiceTest {
         given(currentTime.now())
                 .willReturn(now);
 
-        given(findIngredientListPort.getIngredientListByDeadline(now, 1L, memberID))
+        given(findIngredientPort.getIngredientListByDeadline(now, 1L, memberID))
                 .willReturn(ingredientDTOList);
 
         List<IngredientDTO> ingredientListByDeadline = ingredientLookUpService.getIngredientListByDeadline(1L, memberID);

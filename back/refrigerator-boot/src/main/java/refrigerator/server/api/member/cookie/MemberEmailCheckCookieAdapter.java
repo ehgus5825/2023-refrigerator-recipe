@@ -3,7 +3,7 @@ package refrigerator.server.api.member.cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import refrigerator.back.authentication.exception.AuthenticationExceptionType;
-import refrigerator.server.security.exception.JsonWebTokenException;
+import refrigerator.server.security.common.exception.JsonWebTokenException;
 
 import javax.servlet.http.Cookie;
 import java.util.Arrays;
@@ -35,7 +35,7 @@ public class MemberEmailCheckCookieAdapter {
     public Cookie delete(){
         Cookie cookie = new Cookie(cookieName, "delete");
         cookie.setPath("/api/members/join");
-        cookie.setMaxAge(0); // 30분
+        cookie.setMaxAge(0);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         return cookie;

@@ -8,11 +8,11 @@ import java.util.List;
 
 public class WordCompletionTrie {
 
-    private WordParserUtilsImpl parser;
+    private WordParserUtils parser;
     private TrieNode head;
 
     public WordCompletionTrie() {
-        this.parser = new WordParserUtilsImpl();
+        this.parser = new WordParserUtils();
         this.head = new TrieNode(null);
     }
 

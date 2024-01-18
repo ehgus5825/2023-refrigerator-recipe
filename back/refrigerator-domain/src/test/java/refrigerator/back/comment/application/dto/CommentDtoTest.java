@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CommentDtoTest {
 
-
     @Test
     @DisplayName("특정 댓글에 대해 사용자가 하트를 눌렀는지 확인 테스트 -> 하트를 눌렀을 때")
     void isLikedTest1() {

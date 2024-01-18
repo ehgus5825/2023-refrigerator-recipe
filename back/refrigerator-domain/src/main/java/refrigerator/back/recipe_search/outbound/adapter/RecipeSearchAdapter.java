@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import refrigerator.back.global.s3.ImageUrlConvert;
 import refrigerator.back.recipe_search.application.dto.RecipeSearchDto;
 import refrigerator.back.recipe_search.outbound.mapper.OutRecipeSearchDtoMapper;
-import refrigerator.back.recipe_search.outbound.repository.RecipeSearchSelectQueryRepository;
+import refrigerator.back.recipe_search.outbound.repository.query.RecipeSearchSelectQueryRepository;
 import refrigerator.back.recipe_search.application.domain.RecipeSearchCondition;
 import refrigerator.back.recipe_search.application.port.out.FindRecipeSearchDtoPort;
 

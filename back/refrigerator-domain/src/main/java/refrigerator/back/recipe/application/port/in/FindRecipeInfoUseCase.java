@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface FindRecipeInfoUseCase {
     RecipeDto findRecipeDto(Long recipeId);
+
     List<RecipeCourseDto> findRecipeCourseDtoList(Long recipeId);
+
     List<RecipeIngredientDto> findRecipeIngredientDtoList(Long recipeId, String memberId);
 }

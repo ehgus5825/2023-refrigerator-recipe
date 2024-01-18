@@ -6,7 +6,7 @@ import refrigerator.back.recipe_recommend.application.domain.RecommendRecipeIngr
 import refrigerator.back.recipe_recommend.application.port.out.FindRecipeIngredientMapPort;
 import refrigerator.back.recipe_recommend.outbound.mapper.OutRecipeIngredientDtoMappingCollection;
 import refrigerator.back.recipe_recommend.outbound.mapper.OutRecommendRecipeDtoMapper;
-import refrigerator.back.recipe_recommend.outbound.repository.RecipeRecommendSelectQueryRepository;
+import refrigerator.back.recipe_recommend.outbound.repository.query.RecipeRecommendSelectQueryRepository;
 
 import java.util.Map;
 

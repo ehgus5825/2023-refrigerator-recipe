@@ -3,7 +3,6 @@ package refrigerator.back.recipe.outbound.dto;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 import refrigerator.back.global.s3.ImageUrlConvert;
 import refrigerator.back.recipe.application.dto.RecipeDto;
 import refrigerator.back.recipe.outbound.mapper.OutRecipeDtoMapper;

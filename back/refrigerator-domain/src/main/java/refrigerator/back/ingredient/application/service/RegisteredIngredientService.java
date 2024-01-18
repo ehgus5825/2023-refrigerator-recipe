@@ -3,9 +3,9 @@ package refrigerator.back.ingredient.application.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import refrigerator.back.ingredient.application.domain.RegisteredIngredient;
-import refrigerator.back.ingredient.application.port.in.registeredIngredient.FindRegisteredIngredientUseCase;
-import refrigerator.back.ingredient.application.port.out.registeredIngredient.FindRegisteredIngredientPort;
+import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
+import refrigerator.back.ingredient.application.port.in.FindRegisteredIngredientUseCase;
+import refrigerator.back.ingredient.application.port.out.FindRegisteredIngredientPort;
 
 import java.util.List;
 

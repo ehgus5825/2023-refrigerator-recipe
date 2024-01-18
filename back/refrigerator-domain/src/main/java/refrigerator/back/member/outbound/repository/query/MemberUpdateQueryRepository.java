@@ -3,14 +3,14 @@ package refrigerator.back.member.outbound.repository.query;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import refrigerator.back.global.jpa.WriteQueryResultType;
-import refrigerator.back.member.application.domain.MemberProfileImage;
-import refrigerator.back.member.application.domain.MemberStatus;
+import refrigerator.back.global.exception.WriteQueryResultType;
+import refrigerator.back.member.application.domain.value.MemberProfileImage;
+import refrigerator.back.member.application.domain.value.MemberStatus;
 
 import javax.persistence.EntityManager;
 
-import static refrigerator.back.global.jpa.WriteQueryResultType.*;
-import static refrigerator.back.member.application.domain.QMember.*;
+import static refrigerator.back.global.exception.WriteQueryResultType.*;
+import static refrigerator.back.member.application.domain.entity.QMember.member;
 
 @Repository
 @RequiredArgsConstructor
@@ -80,7 +80,7 @@ public class MemberUpdateQueryRepository {
     }
 
     private void clear() {
-        em.flush();
+        em.flush(); //
         em.clear();
     }
 }

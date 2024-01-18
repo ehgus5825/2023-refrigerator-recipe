@@ -4,24 +4,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import refrigerator.back.ingredient.application.domain.Ingredient;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
-import refrigerator.back.ingredient.application.domain.RegisteredIngredient;
-import refrigerator.back.ingredient.application.port.out.ingredient.update.SaveIngredientPort;
-import refrigerator.back.ingredient.application.port.out.registeredIngredient.SaveRegisteredIngredientPort;
-import refrigerator.server.config.TestTokenService;
-import refrigerator.server.security.authentication.application.usecase.JsonWebTokenUseCase;
+import refrigerator.back.ingredient.application.domain.entity.Ingredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
+import refrigerator.back.ingredient.application.port.out.SaveIngredientPort;
+import refrigerator.back.ingredient.application.port.batch.SaveRegisteredIngredientPort;
+import refrigerator.server.security.common.TestTokenService;
+import refrigerator.server.security.common.jwt.JsonWebTokenUseCase;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,19 +45,19 @@ class IngredientLookUpControllerTest {
                 .image(1)
                 .unit("g");
 
+        saveRegisteredIngredientPort.saveRegisteredIngredient(builder.name("감자").build());
         saveRegisteredIngredientPort.saveRegisteredIngredient(builder.name("콩나물").build());
         saveRegisteredIngredientPort.saveRegisteredIngredient(builder.name("안심").build());
-        saveRegisteredIngredientPort.saveRegisteredIngredient(builder.name("감자").build());
     }
 
-//    @Test
+    @Test
     @DisplayName("식재료 이름에 따른 용량단위 반환")
     void findIngredientUnitTest() throws Exception {
 
         String name = "감자";
 
         mockMvc.perform(
-                get("/api/ingredients/unit?name=" + name)
+                get("/api/ingredients/search/unit?name=" + name)
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
         ).andExpect(status().is2xxSuccessful()
         ).andDo(print());
@@ -73,11 +70,12 @@ class IngredientLookUpControllerTest {
         String name = "파워에이드";
 
         mockMvc.perform(
-                get("/api/ingredients/unit?name=" + name)
+                get("/api/ingredients/search/unit?name=" + name)
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
         ).andExpect(status().is4xxClientError()
         ).andDo(print());
     }
+
 
     @Test
     @DisplayName("식재료 목록 조회")
@@ -100,8 +98,9 @@ class IngredientLookUpControllerTest {
         String storage = "냉장";
         String deadline = "true";
 
+
         mockMvc.perform(
-                get("/api/ingredients?storage="+storage+"&deadline="+deadline+"&page=0")
+                get("/api/ingredients/search?storage="+storage+"&deadline="+deadline+"&page=0")
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
         ).andExpect(status().is2xxSuccessful()
         ).andDo(print());
@@ -129,7 +128,7 @@ class IngredientLookUpControllerTest {
         String deadline = "false";
 
         mockMvc.perform(
-                get("/api/ingredients?storage="+storage+"&deadline="+deadline+"&page=0")
+                get("/api/ingredients/search?storage="+storage+"&deadline="+deadline+"&page=0")
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
         ).andExpect(status().is4xxClientError()
         ).andDo(print());
@@ -157,7 +156,7 @@ class IngredientLookUpControllerTest {
         String deadline = "test";
 
         mockMvc.perform(
-                get("/api/ingredients?storage="+storage+"&deadline="+deadline+"&page=0")
+                get("/api/ingredients/search?storage="+storage+"&deadline="+deadline+"&page=0")
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
         ).andExpect(status().is4xxClientError()
         ).andDo(print());
@@ -180,7 +179,7 @@ class IngredientLookUpControllerTest {
         saveIngredientPort.saveIngredient(builder.name("안심").storageMethod(IngredientStorageType.FREEZER).build());
 
         mockMvc.perform(
-                get("/api/ingredients/search")
+                get("/api/ingredients/search/all")
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
         ).andExpect(status().is2xxSuccessful()
         ).andDo(print());
@@ -205,7 +204,7 @@ class IngredientLookUpControllerTest {
         Long id = saveIngredientPort.saveIngredient(ingredient);
 
         mockMvc.perform(
-                get("/api/ingredients/" + id)
+                get("/api/ingredients/" + id + "/details")
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
         ).andExpect(status().is2xxSuccessful()
         ).andDo(print());
@@ -216,7 +215,7 @@ class IngredientLookUpControllerTest {
     void findIngredientTestFail() throws Exception {
 
         mockMvc.perform(
-                get("/api/ingredients/51651656165")
+                get("/api/ingredients/51651656165/details")
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
         ).andExpect(status().is4xxClientError()
         ).andDo(print());
@@ -245,7 +244,7 @@ class IngredientLookUpControllerTest {
         String days = "1";
 
         mockMvc.perform(
-                get("/api/ingredients/deadline/" + days)
+                get("/api/ingredients/search/deadline/" + days)
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
         ).andExpect(status().is2xxSuccessful()
         ).andDo(print());

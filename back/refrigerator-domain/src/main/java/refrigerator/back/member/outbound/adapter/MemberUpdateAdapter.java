@@ -2,8 +2,8 @@ package refrigerator.back.member.outbound.adapter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import refrigerator.back.member.application.domain.MemberProfileImage;
-import refrigerator.back.member.application.domain.MemberStatus;
+import refrigerator.back.member.application.domain.value.MemberProfileImage;
+import refrigerator.back.member.application.domain.value.MemberStatus;
 import refrigerator.back.member.application.port.out.UpdateMemberPort;
 import refrigerator.back.member.exception.MemberExceptionType;
 import refrigerator.back.member.outbound.repository.query.MemberUpdateQueryRepository;

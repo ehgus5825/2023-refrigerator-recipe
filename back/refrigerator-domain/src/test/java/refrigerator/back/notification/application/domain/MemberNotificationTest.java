@@ -1,11 +1,10 @@
 package refrigerator.back.notification.application.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import refrigerator.back.notification.application.domain.entity.MemberNotification;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemberNotificationTest {
 

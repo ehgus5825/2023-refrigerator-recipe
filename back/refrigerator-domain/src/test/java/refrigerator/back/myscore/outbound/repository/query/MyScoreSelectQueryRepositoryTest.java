@@ -3,6 +3,7 @@ package refrigerator.back.myscore.outbound.repository.query;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import refrigerator.back.annotation.DisabledRepositoryTest;
@@ -20,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisabledRepositoryTest
 @Import({QuerydslConfig.class, MyScoreSelectQueryRepository.class})
 @TestDataInit({"/recipe.sql", "/myscore.sql"})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class MyScoreSelectQueryRepositoryTest {
 
     @Autowired MyScoreSelectQueryRepository queryRepository;
@@ -32,7 +34,7 @@ class MyScoreSelectQueryRepositoryTest {
         LocalDateTime preDateTime = LocalDateTime.of(2025, 1, 1, 1, 1);
         for (OutMyScoreDetailDto dto : result) {
             assertNotEquals(OutMyScoreDetailDto.builder().build(), dto);
-            assertTrue(preDateTime.compareTo(dto.getCreateDateTime()) >= 0);
+            assertTrue(preDateTime.isAfter(dto.getCreateDateTime()));
             preDateTime = dto.getCreateDateTime();
         }
     }
@@ -55,7 +57,7 @@ class MyScoreSelectQueryRepositoryTest {
         LocalDateTime preDateTime = LocalDateTime.of(2025, 1, 1, 1, 1);
         for (OutMyScorePreviewDto dto : result) {
             assertNotEquals(OutMyScorePreviewDto.builder().build(), dto);
-            assertTrue(preDateTime.compareTo(dto.getCreateDateTime()) >= 0);
+            assertTrue(preDateTime.isAfter(dto.getCreateDateTime()));
             preDateTime = dto.getCreateDateTime();
         }
     }

@@ -7,7 +7,6 @@ import refrigerator.back.global.s3.ImageUrlConvert;
 import refrigerator.back.mybookmark.application.dto.MyBookmarkDto;
 import refrigerator.back.mybookmark.application.dto.MyBookmarkPreviewDto;
 import refrigerator.back.mybookmark.application.port.out.FindMyBookmarksPort;
-import refrigerator.back.mybookmark.outbound.dto.OutMyBookmarkNumberDto;
 import refrigerator.back.mybookmark.outbound.mapper.OutMyBookmarkDtoMapper;
 import refrigerator.back.mybookmark.outbound.repository.query.MyBookmarkSelectQueryRepository;
 

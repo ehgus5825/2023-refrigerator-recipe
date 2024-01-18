@@ -4,8 +4,6 @@ version = '0.0.1-SNAPSHOT'
 
 dependencies {
     implementation project(':refrigerator-domain')
-    implementation project(':refrigerator-infra')
-    implementation project(':refrigerator-producer')
 
     // web
     implementation 'org.springframework.boot:spring-boot-starter-web'

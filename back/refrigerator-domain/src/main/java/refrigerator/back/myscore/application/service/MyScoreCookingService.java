@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.global.time.CurrentTime;
 import refrigerator.back.myscore.application.domain.MyScore;
+import refrigerator.back.myscore.application.handler.RecipeScoreModifyHandler;
 import refrigerator.back.myscore.application.port.in.CookingUseCase;
 import refrigerator.back.myscore.application.port.out.FindMyScorePort;
 import refrigerator.back.myscore.application.port.out.SaveMyScorePort;

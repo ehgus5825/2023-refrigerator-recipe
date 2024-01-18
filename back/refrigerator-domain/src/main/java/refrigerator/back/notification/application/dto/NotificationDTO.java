@@ -1,7 +1,7 @@
 package refrigerator.back.notification.application.dto;
 
 import lombok.*;
-import refrigerator.back.notification.application.domain.NotificationType;
+import refrigerator.back.notification.application.domain.value.NotificationType;
 
 @Getter
 @Setter

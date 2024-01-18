@@ -6,23 +6,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import refrigerator.back.ingredient.application.domain.Ingredient;
-import refrigerator.back.ingredient.application.domain.IngredientStorageType;
-import refrigerator.back.ingredient.application.domain.RegisteredIngredient;
-import refrigerator.back.ingredient.application.port.out.ingredient.update.SaveIngredientPort;
-import refrigerator.back.ingredient.application.port.out.registeredIngredient.SaveRegisteredIngredientPort;
+import refrigerator.back.ingredient.application.domain.entity.Ingredient;
+import refrigerator.back.ingredient.application.domain.value.IngredientStorageType;
+import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
+import refrigerator.back.ingredient.application.port.out.SaveIngredientPort;
+import refrigerator.back.ingredient.application.port.batch.SaveRegisteredIngredientPort;
 import refrigerator.server.api.global.common.BasicListRequestDTO;
 import refrigerator.server.api.ingredient.dto.IngredientRegisterRequestDTO;
 import refrigerator.server.api.ingredient.dto.IngredientUpdateRequestDTO;
-import refrigerator.server.config.TestTokenService;
-import refrigerator.server.security.authentication.application.usecase.JsonWebTokenUseCase;
+import refrigerator.server.security.common.TestTokenService;
+import refrigerator.server.security.common.jwt.JsonWebTokenUseCase;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -61,12 +60,11 @@ class IngredientUpdateControllerTest {
         saveRegisteredIngredientPort.saveRegisteredIngredient(builder.name("감자").build());
     }
 
-//    @Test
+    @Test
     @DisplayName("식재료 등록")
     void registerIngredientTest() throws Exception {
 
         // 식재료 사전 등록
-        
         IngredientRegisterRequestDTO request = IngredientRegisterRequestDTO.builder()
                 .name("감자")
                 .expirationDate(LocalDate.of(2023,1,1))
@@ -76,7 +74,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(post("/api/ingredients")
+        mockMvc.perform(post("/api/ingredients/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -97,7 +95,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(post("/api/ingredients")
+        mockMvc.perform(post("/api/ingredients/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -116,7 +114,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(post("/api/ingredients")
+        mockMvc.perform(post("/api/ingredients/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -137,7 +135,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(post("/api/ingredients")
+        mockMvc.perform(post("/api/ingredients/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -158,7 +156,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(post("/api/ingredients")
+        mockMvc.perform(post("/api/ingredients/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -166,7 +164,7 @@ class IngredientUpdateControllerTest {
         ).andDo(print());
     }
 
-//    @Test
+    @Test
     @DisplayName("식재료 등록 실패 : 용량 범위 초과")
     void registerIngredientTestFailOverVolume() throws Exception {
 
@@ -181,7 +179,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(post("/api/ingredients")
+        mockMvc.perform(post("/api/ingredients/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -195,7 +193,7 @@ class IngredientUpdateControllerTest {
 
         String content = "{\"name\":\"감자\",\"expirationDate\":\"2023-05-23\",\"volume\":30.0,\"storage\":\"방관\"}";
 
-        mockMvc.perform(post("/api/ingredients")
+        mockMvc.perform(post("/api/ingredients/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -209,7 +207,7 @@ class IngredientUpdateControllerTest {
 
         String content = "{\"name\":\"감자\",\"expirationDate\":\"2023/05/23\",\"volume\":30.0,\"storage\":\"냉장\"}";
 
-        mockMvc.perform(post("/api/ingredients")
+        mockMvc.perform(post("/api/ingredients/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -243,7 +241,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(put("/api/ingredients/" + id)
+        mockMvc.perform(put("/api/ingredients/" + id + "/modify")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -277,7 +275,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(put("/api/ingredients/" + id)
+        mockMvc.perform(put("/api/ingredients/" + id + "/modify")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -309,7 +307,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(put("/api/ingredients/" + id)
+        mockMvc.perform(put("/api/ingredients/" + id + "/modify")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -343,7 +341,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(put("/api/ingredients/" + id)
+        mockMvc.perform(put("/api/ingredients/" + id + "/modify")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -377,7 +375,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request);
 
-        mockMvc.perform(put("/api/ingredients/" + id)
+        mockMvc.perform(put("/api/ingredients/" + id + "/modify")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -404,7 +402,7 @@ class IngredientUpdateControllerTest {
 
         String content = "{\"expirationDate\":\"2023-05-23\",\"volume\":30.0,\"storage\":\"방관\"}";
 
-        mockMvc.perform(put("/api/ingredients/" + id)
+        mockMvc.perform(put("/api/ingredients/" + id + "/modify")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -432,7 +430,7 @@ class IngredientUpdateControllerTest {
 
         String content = "{\"expirationDate\":\"2023/05/23\",\"volume\":30.0,\"storage\":\"냉동\"}";
 
-        mockMvc.perform(put("/api/ingredients/" + id)
+        mockMvc.perform(put("/api/ingredients/" + id + "/modify")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -459,7 +457,7 @@ class IngredientUpdateControllerTest {
         Long id = saveIngredientPort.saveIngredient(ingredient);
 
         mockMvc.perform(
-                delete("/api/ingredients/" + id)
+                delete("/api/ingredients/" + id + "/delete")
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
         ).andExpect(status().is2xxSuccessful()
         ).andDo(print());
@@ -490,7 +488,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().writeValueAsString(request);
 
-        mockMvc.perform(delete("/api/ingredients/")
+        mockMvc.perform(delete("/api/ingredients/delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -508,7 +506,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().writeValueAsString(request);
 
-        mockMvc.perform(delete("/api/ingredients/")
+        mockMvc.perform(delete("/api/ingredients/delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -525,7 +523,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().writeValueAsString(request);
 
-        mockMvc.perform(delete("/api/ingredients/")
+        mockMvc.perform(delete("/api/ingredients/delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -543,7 +541,7 @@ class IngredientUpdateControllerTest {
 
         String content = new ObjectMapper().writeValueAsString(request);
 
-        mockMvc.perform(delete("/api/ingredients/")
+        mockMvc.perform(delete("/api/ingredients/delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))

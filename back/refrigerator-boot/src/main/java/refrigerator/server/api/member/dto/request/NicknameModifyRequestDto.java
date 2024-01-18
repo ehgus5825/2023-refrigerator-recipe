@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import refrigerator.server.api.global.common.InputDataFormatCheck;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
@@ -14,6 +15,8 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NicknameModifyRequestDto {
+
     @Pattern(regexp = InputDataFormatCheck.NICKNAME_REGEX)
+    @NotBlank
     private String nickname;
 }

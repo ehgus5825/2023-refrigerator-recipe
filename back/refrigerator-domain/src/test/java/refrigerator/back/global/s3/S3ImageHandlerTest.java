@@ -1,7 +1,7 @@
 package refrigerator.back.global.s3;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,7 @@ import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
+//@Disabled
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(
         initializers = ConfigDataApplicationContextInitializer.class,
@@ -48,7 +48,7 @@ class S3ImageHandlerTest {
             try{
                 s3ImageHandler.getUrl(bucketName, fileName);
             }catch (S3Exception e){
-                assertEquals(S3ExceptionType.DUPLICATE_FILE_NAME, e.getBasicExceptionType());
+                Assertions.assertEquals(S3ExceptionType.DUPLICATE_FILE_NAME, e.getBasicExceptionType());
                 throw e;
             }
         });

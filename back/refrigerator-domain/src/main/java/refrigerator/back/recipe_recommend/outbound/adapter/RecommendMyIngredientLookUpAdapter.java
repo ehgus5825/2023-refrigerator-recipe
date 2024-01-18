@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import refrigerator.back.recipe_recommend.application.dto.MyIngredientDto;
 import refrigerator.back.recipe_recommend.application.port.out.FindMyIngredientsPort;
 import refrigerator.back.recipe_recommend.outbound.mapper.OutRecommendRecipeDtoMapper;
-import refrigerator.back.recipe_recommend.outbound.repository.RecipeRecommendSelectQueryRepository;
+import refrigerator.back.recipe_recommend.outbound.repository.query.RecipeRecommendSelectQueryRepository;
 
 import java.time.LocalDate;
 import java.util.Set;

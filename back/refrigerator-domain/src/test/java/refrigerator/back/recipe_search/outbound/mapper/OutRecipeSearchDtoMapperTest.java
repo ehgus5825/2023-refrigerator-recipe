@@ -32,5 +32,6 @@ class OutRecipeSearchDtoMapperTest {
                 .views(views)
                 .build();
         assertEquals(expected, result);
+        assertEquals(expected.getRecipeImage(), recipeImage);
     }
 }
