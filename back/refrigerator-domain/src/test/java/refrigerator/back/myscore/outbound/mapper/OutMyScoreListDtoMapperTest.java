@@ -25,13 +25,14 @@ class OutMyScoreListDtoMapperTest {
         String recipeImage = "recipeImage";
         String recipeName = "recipeName";
         Double score = 4.5;
+        Double scoreAvg = 4.5;
+        Integer views = 5;
         LocalDateTime createDateTime = LocalDateTime.of(2023, 7, 7, 1, 1);
-        OutMyScoreDetailDto outDto = new OutMyScoreDetailDto(scoreId, recipeId, recipeImage, recipeName, score, createDateTime);
+        OutMyScoreDetailDto outDto = new OutMyScoreDetailDto(scoreId, recipeId, recipeImage, recipeName, score, createDateTime, scoreAvg, views);
         // when
-        String recipeImageUrl = "recipeImageUrl";
-        MyScoreDetailDto result = mapper.toMyScoreDetailDto(outDto, recipeImageUrl);
+        MyScoreDetailDto result = mapper.toMyScoreDetailDto(outDto);
         // then
-        MyScoreDetailDto expected = new MyScoreDetailDto(scoreId, recipeId, recipeImageUrl, recipeName, score);
+        MyScoreDetailDto expected = new MyScoreDetailDto(scoreId, recipeId, recipeImage, recipeName, score, scoreAvg, views);
         assertEquals(expected, result);
     }
 
@@ -46,10 +47,9 @@ class OutMyScoreListDtoMapperTest {
         LocalDateTime createDateTime = LocalDateTime.of(2023, 7, 7, 1, 1);
         OutMyScorePreviewDto outDto = new OutMyScorePreviewDto(scoreId, recipeId, recipeImage, recipeName, createDateTime);
         // when
-        String recipeImageUrl = "recipeImageUrl";
-        MyScorePreviewDto result = mapper.toMyScorePreviewDto(outDto, recipeImageUrl);
+        MyScorePreviewDto result = mapper.toMyScorePreviewDto(outDto);
         // then
-        MyScorePreviewDto expected = new MyScorePreviewDto(scoreId, recipeId, recipeImageUrl, recipeName);
+        MyScorePreviewDto expected = new MyScorePreviewDto(scoreId, recipeId, recipeImage, recipeName);
         assertEquals(expected, result);
     }
 }

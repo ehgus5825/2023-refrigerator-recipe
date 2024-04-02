@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+// TODO : 얘는 안쓰는 거 같은데..
+
 @Entity
 @Table(name = "member_last_access_date")
 @Getter

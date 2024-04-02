@@ -27,7 +27,7 @@ public class OutMyScorePreviewDto {
         this.createDateTime = createDateTime;
     }
 
-    public MyScorePreviewDto mapping(OutMyScoreListDtoMapper mapper, ImageUrlConvert imageUrlConvert){
-        return mapper.toMyScorePreviewDto(this, imageUrlConvert.getUrl(recipeImageName));
+    public MyScorePreviewDto mapping(OutMyScoreListDtoMapper mapper){
+        return mapper.toMyScorePreviewDto(this);
     }
 }

@@ -19,9 +19,10 @@ public class OutRecipeDto {
     Integer kcal;
     Integer servings;
     String difficulty;
+    Integer views;
 
     @QueryProjection
-    public OutRecipeDto(Long recipeId, String recipeName, String recipeImageName, Double scoreAvg, String description, Integer cookingTime, Integer kcal, Integer servings, String difficulty) {
+    public OutRecipeDto(Long recipeId, String recipeName, String recipeImageName, Double scoreAvg, String description, Integer cookingTime, Integer kcal, Integer servings, String difficulty, Integer views) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.recipeImageName = recipeImageName;
@@ -31,10 +32,11 @@ public class OutRecipeDto {
         this.kcal = kcal;
         this.servings = servings;
         this.difficulty = difficulty;
+        this.views = views;
     }
 
-    public RecipeDto mapping(OutRecipeDtoMapper mapper, ImageUrlConvert imageUrlConvert){
-        return mapper.toRecipeDto(this, imageUrlConvert.getUrl(recipeImageName));
+    public RecipeDto mapping(OutRecipeDtoMapper mapper){
+        return mapper.toRecipeDto(this);
     }
 
 }

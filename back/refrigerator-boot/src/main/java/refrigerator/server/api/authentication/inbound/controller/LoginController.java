@@ -44,6 +44,8 @@ public class LoginController {
         return login(request.getEmail(), request.getPassword(), response);
     }
 
+    // TODO : disable?
+
     @GetMapping("/api/auth/login/oauth")
     @ResponseStatus(HttpStatus.CREATED)
     public void loginByOAuth2(@RequestParam("email") String email,

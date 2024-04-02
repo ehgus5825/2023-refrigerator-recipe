@@ -31,7 +31,7 @@ public class RecipeSearchController {
     public BasicListResponseDTO<RecipeSearchDto> getRecipeSearchList(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "11") Integer size,
-            @RequestParam(value = "searchWord") String searchWord,
+            @RequestParam(value = "searchWord", defaultValue = "") String searchWord,
             @Valid @RequestBody InRecipeSearchConditionDto requestDto,
             BindingResult bindingResult){
 

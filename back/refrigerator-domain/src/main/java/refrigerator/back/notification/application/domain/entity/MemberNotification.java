@@ -4,24 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@RedisHash
+@Table(name = "member_notification")
+@Entity
 public class MemberNotification {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_notification_id")
+    private Long id;
 
-    @Indexed
-    private String memberId;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
+    @Column(name = "sign", nullable = false)
     private Boolean sign;
 
     public void setSign(Boolean sign){

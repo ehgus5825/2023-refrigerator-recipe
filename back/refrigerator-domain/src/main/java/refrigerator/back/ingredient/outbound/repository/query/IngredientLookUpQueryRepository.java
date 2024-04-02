@@ -40,7 +40,9 @@ public class IngredientLookUpQueryRepository {
                         ingredient.id,
                         ingredient.name,
                         ingredient.expirationDate,
-                        ingredientImage.imageFileName))
+                        ingredientImage.imageFileName,
+                        ingredient.capacity,
+                        ingredient.capacityUnit))
                 .from(ingredient)
                 .where(
                         storageCheck(condition.getStorage()),
@@ -66,7 +68,9 @@ public class IngredientLookUpQueryRepository {
                         ingredient.id,
                         ingredient.name,
                         ingredient.expirationDate,
-                        ingredientImage.imageFileName))
+                        ingredientImage.imageFileName,
+                        ingredient.capacity,
+                        ingredient.capacityUnit))
                 .from(ingredient)
                 .where(
                         emailCheck(email),
@@ -88,7 +92,9 @@ public class IngredientLookUpQueryRepository {
                         ingredient.id,
                         ingredient.name,
                         ingredient.expirationDate,
-                        ingredientImage.imageFileName))
+                        ingredientImage.imageFileName,
+                        ingredient.capacity,
+                        ingredient.capacityUnit))
                 .from(ingredient)
                 .where(
                         emailCheck(email),

@@ -28,7 +28,7 @@ public class OutMyBookmarkPreviewDto {
         this.createDateTime = createDateTime;
     }
 
-    public MyBookmarkPreviewDto mapping(OutMyBookmarkDtoMapper mapper, ImageUrlConvert imageUrlConvert){
-        return mapper.toMyBookmarkPreviewDto(this, imageUrlConvert.getUrl(recipeImageName));
+    public MyBookmarkPreviewDto mapping(OutMyBookmarkDtoMapper mapper){
+        return mapper.toMyBookmarkPreviewDto(this);
     }
 }

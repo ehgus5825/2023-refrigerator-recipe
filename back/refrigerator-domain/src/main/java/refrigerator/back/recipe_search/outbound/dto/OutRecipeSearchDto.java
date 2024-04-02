@@ -29,7 +29,7 @@ public class OutRecipeSearchDto implements Serializable {
         this.views = views;
     }
 
-    public RecipeSearchDto mapping(OutRecipeSearchDtoMapper mapper, ImageUrlConvert imageUrlConvert){
-        return mapper.toInRecipeSearchDto(this, imageUrlConvert.getUrl(recipeImageName));
+    public RecipeSearchDto mapping(OutRecipeSearchDtoMapper mapper){
+        return mapper.toInRecipeSearchDto(this);
     }
 }

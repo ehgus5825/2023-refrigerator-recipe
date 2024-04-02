@@ -8,6 +8,10 @@ plugins {
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
+bootJar {
+	enabled = false
+}
+
 dependencies {
 	// db
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

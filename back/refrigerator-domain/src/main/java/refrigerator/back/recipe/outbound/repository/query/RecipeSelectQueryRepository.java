@@ -3,6 +3,7 @@ package refrigerator.back.recipe.outbound.repository.query;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import refrigerator.back.recipe.application.domain.entity.QRecipeViews;
 import refrigerator.back.recipe.outbound.dto.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import static refrigerator.back.recipe.application.domain.entity.QRecipe.recipe;
 import static refrigerator.back.recipe.application.domain.entity.QRecipeCourse.recipeCourse;
 import static refrigerator.back.recipe.application.domain.entity.QRecipeIngredient.recipeIngredient;
 import static refrigerator.back.recipe.application.domain.entity.QRecipeScore.recipeScore;
+import static refrigerator.back.recipe.application.domain.entity.QRecipeViews.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -34,9 +36,11 @@ public class RecipeSelectQueryRepository {
                         recipe.cookingTime,
                         recipe.kcal,
                         recipe.servings,
-                        recipe.difficulty))
+                        recipe.difficulty,
+                        recipeViews.views))
                 .from(recipe)
                 .leftJoin(recipeScore).on(recipeScore.recipeId.eq(recipe.recipeId))
+                .leftJoin(recipeViews).on(recipeViews.recipeID.eq(recipe.recipeId))
                 .where(recipe.recipeId.eq(recipeId))
                 .fetchOne();
     }

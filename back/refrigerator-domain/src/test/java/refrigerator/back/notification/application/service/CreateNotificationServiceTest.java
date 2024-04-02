@@ -60,7 +60,7 @@ class CreateNotificationServiceTest {
                 .willReturn(commentDto);
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .memberId(commentDto.getAuthorId())
+                .email(commentDto.getAuthorId())
                 .sign(false)
                 .build();
 
@@ -68,7 +68,7 @@ class CreateNotificationServiceTest {
                 .willReturn(memberNotification);
 
         given(saveMemberNotificationPort.save(memberNotification))
-                .willReturn("1");
+                .willReturn(1L);
 
         given(saveNotificationPort.saveNotification(any()))
                 .willReturn(1L);
@@ -80,7 +80,6 @@ class CreateNotificationServiceTest {
     @Test
     @DisplayName("댓글 좋아요 알림 생성")
     void madeNotificationTest() {
-        Long commentId = 1L;
 
         LocalDateTime now = LocalDateTime.of(2023, 1, 1, 0, 0, 0);
 
@@ -89,14 +88,15 @@ class CreateNotificationServiceTest {
         CommentNotificationDTO commentDto = CommentNotificationDTO.builder()
                 .authorId("email456@gmail.com")
                 .recipeId(1L)
+                .recipeName("나물비빔밥")
                 .build();
 
         given(currentTime.now())
                 .willReturn(now);
 
-        Notification notification = createNotificationService.madeNotification(commentId, commentDto, senderNickname);
+        Notification notification = createNotificationService.madeNotification(commentDto, senderNickname);
         assertThat(notification.getType()).isEqualTo(NotificationType.HEART);
-        assertThat(notification.getPath()).isEqualTo("/recipe/comment?recipeId=" + commentDto.getRecipeId() + "&commentID=" + commentId);
+        assertThat(notification.getPath()).isEqualTo("/recipe/comment?recipeID=" + commentDto.getRecipeId() + "&recipeName=" + commentDto.getRecipeName());
         assertThat(notification.getMemberId()).isEqualTo(commentDto.getAuthorId());
         assertThat(notification.getMethod()).isEqualTo(BasicHttpMethod.GET.name());
         assertThat(notification.getMessage()).isEqualTo(senderNickname + " 님이 좋아요를 눌렀습니다.");

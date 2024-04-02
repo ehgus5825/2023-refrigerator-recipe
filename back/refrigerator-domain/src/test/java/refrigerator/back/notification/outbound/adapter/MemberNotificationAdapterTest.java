@@ -2,31 +2,28 @@ package refrigerator.back.notification.outbound.adapter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import refrigerator.back.global.exception.BusinessException;
+import refrigerator.back.global.jpa.config.QuerydslConfig;
 import refrigerator.back.notification.outbound.repository.redis.MemberNotificationPersistenceRepository;
 import refrigerator.back.notification.application.domain.entity.MemberNotification;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DataRedisTest
-@Import(MemberNotificationAdapter.class)
+@DataJpaTest
+@Import({QuerydslConfig.class, MemberNotificationAdapter.class})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Slf4j
 class MemberNotificationAdapterTest {
 
     @Autowired MemberNotificationAdapter adapter;
 
     @Autowired MemberNotificationPersistenceRepository repository;
-
-    @BeforeEach
-    void init(){
-        repository.deleteAll();
-    }
 
     @Test
     @DisplayName("멤버 알림 생성 (회원가입시)")
@@ -35,16 +32,16 @@ class MemberNotificationAdapterTest {
         String memberId = "email123@gmail.com";
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .memberId(memberId)
+                .email(memberId)
                 .sign(false)
                 .build();
 
-        String id = adapter.save(memberNotification);
+        Long id = adapter.save(memberNotification);
 
-        repository.findById(id).ifPresent(
+        repository.findByEmail(memberId).ifPresent(
                 mn -> {
                     log.info("enter");
-                    assertThat(mn.getMemberId()).isEqualTo(memberId);
+                    assertThat(mn.getEmail()).isEqualTo(memberId);
                     assertThat(mn.getSign()).isEqualTo(false);
                 }
         );
@@ -57,7 +54,7 @@ class MemberNotificationAdapterTest {
         String memberId = "email123@gmail.com";
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .memberId(memberId)
+                .email(memberId)
                 .sign(false)
                 .build();
 

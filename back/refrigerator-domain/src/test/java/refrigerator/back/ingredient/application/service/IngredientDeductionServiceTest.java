@@ -10,6 +10,7 @@ import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.global.time.CurrentTime;
 import refrigerator.back.ingredient.application.dto.IngredientDeductionDTO;
 import refrigerator.back.ingredient.application.dto.MyIngredientDTO;
+import refrigerator.back.ingredient.application.port.out.DeleteIngredientPort;
 import refrigerator.back.ingredient.application.port.out.FindSubIngredientPort;
 import refrigerator.back.ingredient.application.port.out.UpdateVolumeIngredientPort;
 
@@ -29,6 +30,8 @@ class IngredientDeductionServiceTest {
 
     @Mock UpdateVolumeIngredientPort updatevolumeIngredientPort;
 
+    @Mock
+    DeleteIngredientPort deleteIngredientPort;
 
     @Mock CurrentTime<LocalDate> currentTime;
 
@@ -94,6 +97,8 @@ class IngredientDeductionServiceTest {
                 .build()));
 
         doNothing().when(updatevolumeIngredientPort).updateVolume(1L,0.0);
+
+        doNothing().when(deleteIngredientPort).deleteIngredient(1L);
 
         // when
         ingredientDeductionService.deduction(memberId, dtos);

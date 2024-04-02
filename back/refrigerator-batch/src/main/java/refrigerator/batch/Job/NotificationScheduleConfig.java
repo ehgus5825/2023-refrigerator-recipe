@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.JobScope;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.configuration.annotation.*;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.repeat.RepeatStatus;
@@ -42,11 +39,10 @@ import static refrigerator.back.member.application.domain.entity.QMember.member;
 @RequiredArgsConstructor
 @Configuration
 @Slf4j
-@ConditionalOnProperty(name = "job.name", havingValue = "scheduleBatch_Job")
+//@ConditionalOnProperty(name = "job.name", havingValue = "scheduleBatch_Job")
 public class NotificationScheduleConfig {
 
     public static final String BATCH_NAME = "scheduleBatch";
-    public static final String JOB_NAME = BATCH_NAME + "_Job";
 
     private final EntityManagerFactory entityManagerFactory;
     private final JobBuilderFactory jobBuilderFactory;
@@ -75,9 +71,9 @@ public class NotificationScheduleConfig {
      * step 3 : 유통기한 마감 3일전 식재료 알림 전송
      */
 
-    @Bean(name = JOB_NAME)
+    @Bean
     public Job scheduleJob(){
-        return jobBuilderFactory.get(JOB_NAME)
+        return jobBuilderFactory.get("scheduleJob")
                 .preventRestart()
                 .start(deleteNotificationStep())
                 .next(createDeadlineNotificationByOneStep())
@@ -152,7 +148,7 @@ public class NotificationScheduleConfig {
 
             Notification notification = Notification.create(
                     NotificationType.ONE_DAY_BEFORE_EXPIRATION,
-                    "/notification/exp?day=1",
+                    "/notification/exp?query=1",
                     dto.getEmail(),
                     BasicHttpMethod.GET.name(),
                     currentTime.now()
@@ -213,7 +209,7 @@ public class NotificationScheduleConfig {
 
             Notification notification = Notification.create(
                     NotificationType.THREE_DAY_BEFORE_EXPIRATION,
-                    "/notification/exp?day=3",
+                    "/notification/exp?query=3",
                     dto.getEmail(),
                     BasicHttpMethod.GET.name(),
                     currentTime.now()

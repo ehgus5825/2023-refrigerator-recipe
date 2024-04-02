@@ -14,5 +14,6 @@ public class MyScoreDetailDto {
     private String recipeImage;
     private String recipeName;
     private Double myScore;
-
+    private Double scoreAvg;
+    private Integer views;
 }

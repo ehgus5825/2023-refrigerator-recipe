@@ -13,9 +13,11 @@ import refrigerator.back.recipe_recommend.application.port.out.FindRecipeIngredi
 import refrigerator.back.recipe_recommend.application.port.out.FindRecommendRecipesPort;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +34,7 @@ public class RecipeRecommendService implements RecommendRecipeUseCase {
         Set<MyIngredientDto> myIngredients = findMyIngredientsPort.findMyIngredients(currentTime.now(), memberId);
         Map<Long, RecommendRecipeIngredientMap> recipeIngredientMap = findRecipeIngredientMapPort.findMap();
         RecommendRecipeMatchingService service = new RecommendRecipeMatchingService(recipeIngredientMap, myIngredients);
+
         return findRecommendRecipesPort.findByPercentMap(service.getRecipeMatchingPercent());
     }
 }

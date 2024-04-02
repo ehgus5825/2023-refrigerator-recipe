@@ -7,12 +7,16 @@ import org.springframework.stereotype.Repository;
 import refrigerator.back.myscore.application.domain.QMyScore;
 import refrigerator.back.myscore.outbound.dto.*;
 import refrigerator.back.recipe.application.domain.entity.QRecipe;
+import refrigerator.back.recipe.application.domain.entity.QRecipeScore;
+import refrigerator.back.recipe.application.domain.entity.QRecipeViews;
 
 import java.util.List;
 import java.util.Objects;
 
 import static refrigerator.back.myscore.application.domain.QMyScore.*;
 import static refrigerator.back.recipe.application.domain.entity.QRecipe.*;
+import static refrigerator.back.recipe.application.domain.entity.QRecipeScore.*;
+import static refrigerator.back.recipe.application.domain.entity.QRecipeViews.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -47,9 +51,13 @@ public class MyScoreSelectQueryRepository {
                         recipe.image,
                         recipe.recipeName,
                         myScore.score,
-                        myScore.createDateTime))
+                        myScore.createDateTime,
+                        recipeScore.scoreAvg,
+                        recipeViews.views))
                 .from(myScore)
                 .leftJoin(recipe).on(recipe.recipeId.eq(myScore.recipeId))
+                .leftJoin(recipeScore).on(recipeScore.recipeId.eq(myScore.recipeId))
+                .leftJoin(recipeViews).on(recipeViews.recipeID.eq(myScore.recipeId))
                 .where(myScore.memberId.eq(memberId))
                 .offset(page.getOffset())
                 .limit(page.getPageSize())

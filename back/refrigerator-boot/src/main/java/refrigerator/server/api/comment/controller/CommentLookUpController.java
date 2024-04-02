@@ -12,13 +12,12 @@ import refrigerator.back.comment.application.dto.CommentDto;
 import refrigerator.back.comment.application.port.in.FindCommentsUseCase;
 import refrigerator.back.comment.exception.CommentExceptionType;
 import refrigerator.back.global.exception.BusinessException;
+import refrigerator.server.api.global.common.BasicListResponseDTO;
 import refrigerator.server.security.common.email.GetMemberEmailUseCase;
 import refrigerator.back.comment.application.dto.InCommentsPreviewResponseDto;
-import refrigerator.server.api.comment.dto.response.CommentsResponseDto;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class CommentLookUpController {
 
 
     @GetMapping("/api/recipe/{recipeId}/comments")
-    public CommentsResponseDto findComments(
+    public BasicListResponseDTO<CommentDto> findComments(
              @PathVariable("recipeId") @Positive Long recipeId,
              @RequestParam(value = "sortCondition", defaultValue = "DATE") String sortCondition,
              @RequestParam(value = "page", defaultValue = "0")  @PositiveOrZero Integer page,
@@ -44,14 +43,21 @@ public class CommentLookUpController {
         String memberId = memberInformation.getMemberEmail();
         CommentSortCondition condition = CommentSortCondition.valueOf(sortCondition);
 
-        List<CommentDto> comments = findCommentListUseCase.findComments(
+        return new BasicListResponseDTO<>(findCommentListUseCase.findComments(
                 recipeId,
                 memberId,
                 condition,
                 page,
-                size);
-        List<CommentDto> myComments = findCommentListUseCase.findMyComments(memberId, recipeId);
-        return new CommentsResponseDto(comments, myComments);
+                size));
+    }
+
+    @GetMapping("/api/recipe/{recipeId}/comments/own")
+    public BasicListResponseDTO<CommentDto> findMyComments(
+            @PathVariable("recipeId") @Positive Long recipeId){
+
+        String memberId = memberInformation.getMemberEmail();
+
+        return new BasicListResponseDTO<>(findCommentListUseCase.findMyComments(memberId, recipeId));
     }
 
     @GetMapping("/api/recipe/{recipeId}/comments/preview")

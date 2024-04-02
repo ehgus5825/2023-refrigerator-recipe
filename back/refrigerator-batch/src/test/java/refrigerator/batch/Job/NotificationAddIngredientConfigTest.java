@@ -93,7 +93,7 @@ class NotificationAddIngredientConfigTest extends BatchTestSupport {
         }
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .memberId(email)
+                .email(email)
                 .sign(false)
                 .build();
 
@@ -126,7 +126,7 @@ class NotificationAddIngredientConfigTest extends BatchTestSupport {
             assertThat(notification.getMethod()).isEqualTo(BasicHttpMethod.GET.name());
         }
 
-        memberNotificationPersistenceRepository.findByMemberId(email).ifPresent(
+        memberNotificationPersistenceRepository.findByEmail(email).ifPresent(
                 memberNotification1 -> {
                     log.info("enter");
                     assertThat(memberNotification1.getId()).isEqualTo(mn.getId());

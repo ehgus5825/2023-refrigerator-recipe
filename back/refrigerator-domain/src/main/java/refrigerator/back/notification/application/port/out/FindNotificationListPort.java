@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface FindNotificationListPort {
     List<NotificationDTO> findNotificationList(String email, int page, int size);
+
+    List<NotificationDTO> findExpirationNotificationList(String email);
 }

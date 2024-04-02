@@ -2,7 +2,6 @@ package refrigerator.back.ingredient.application.port.in;
 
 import refrigerator.back.ingredient.application.dto.IngredientDeductionDTO;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface DeductionIngredientVolumeUseCase {

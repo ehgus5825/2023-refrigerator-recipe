@@ -1,5 +1,6 @@
 package refrigerator.back.mybookmark.outbound.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Slf4j
 class OutBookmarkDtoMapperTest {
 
     OutMyBookmarkDtoMapper mapper = Mappers.getMapper(OutMyBookmarkDtoMapper.class);
@@ -31,11 +33,12 @@ class OutBookmarkDtoMapperTest {
                 5,
                 createDateTime);
         // when
-        String recipeImage = "recipeImage";
-        MyBookmarkDto result = mapper.toMyBookmarkDto(outDto, recipeImage);
+        MyBookmarkDto result = mapper.toMyBookmarkDto(outDto);
         // then
         assertNotEquals(MyBookmarkDto.builder().build(), result);
-        assertEquals(recipeImage, result.getRecipeImage());
+
+        log.info("{}", result.getRecipeImage());
+        assertEquals(recipeImageName, result.getRecipeImage());
     }
 
     @Test
@@ -51,10 +54,9 @@ class OutBookmarkDtoMapperTest {
                 "recipeName",
                 createDateTime);
         // when
-        String recipeImage = "recipeImage";
-        MyBookmarkPreviewDto result = mapper.toMyBookmarkPreviewDto(outDto, recipeImage);
+        MyBookmarkPreviewDto result = mapper.toMyBookmarkPreviewDto(outDto);
         // then
         assertNotEquals(MyBookmarkPreviewDto.builder().build(), result);
-        assertEquals(recipeImage, result.getRecipeImage());
+        assertEquals(recipeImageName, result.getRecipeImage());
     }
 }

@@ -27,7 +27,7 @@ class MemberNotificationServiceTest {
         String memberId = "email123@gmail.com";
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .memberId(memberId)
+                .email(memberId)
                 .sign(false)
                 .build();
 
@@ -45,7 +45,7 @@ class MemberNotificationServiceTest {
         String memberId = "email123@gmail.com";
 
         given(saveMemberNotificationPort.save(any()))
-                .willReturn("1");
+                .willReturn(1L);
 
         memberNotificationService.createMemberNotification(memberId);
 
@@ -59,7 +59,7 @@ class MemberNotificationServiceTest {
         String memberId = "email123@gmail.com";
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .memberId(memberId)
+                .email(memberId)
                 .sign(true)
                 .build();
 

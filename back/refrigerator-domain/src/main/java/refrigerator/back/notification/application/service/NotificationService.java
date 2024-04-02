@@ -25,6 +25,12 @@ public class NotificationService implements FindNotificationListUseCase, ModifyN
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<NotificationDTO> getExpirationNotificationList(String email) {
+        return findNotificationListPort.findExpirationNotificationList(email);
+    }
+
+    @Override
     @Transactional
     public void modifyNotificationReadStatus(Long id) {
         updateNotificationReadStatusPort.updateReadStatus(id, true);

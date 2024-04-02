@@ -8,6 +8,7 @@ import refrigerator.back.ingredient.application.domain.MyIngredientCollection;
 import refrigerator.back.ingredient.application.dto.IngredientDeductionDTO;
 import refrigerator.back.ingredient.application.dto.MyIngredientDTO;
 import refrigerator.back.ingredient.application.port.in.DeductionIngredientVolumeUseCase;
+import refrigerator.back.ingredient.application.port.out.DeleteIngredientPort;
 import refrigerator.back.ingredient.application.port.out.FindSubIngredientPort;
 import refrigerator.back.ingredient.application.port.out.UpdateVolumeIngredientPort;
 
@@ -23,6 +24,7 @@ public class IngredientDeductionService implements DeductionIngredientVolumeUseC
 
     private final FindSubIngredientPort findSubIngredientPort;
     private final UpdateVolumeIngredientPort updatevolumeIngredientPort;
+    private final DeleteIngredientPort deleteIngredientPort;
     private final CurrentTime<LocalDate> currentTime;
 
     @Override
@@ -30,6 +32,6 @@ public class IngredientDeductionService implements DeductionIngredientVolumeUseC
 
         List<MyIngredientDTO> MyIngredients = findSubIngredientPort.getAvailableIngredients(memberId, currentTime.now());
         MyIngredientCollection collection = new MyIngredientCollection(MyIngredients, ingredientDTOList);
-        collection.deduction(updatevolumeIngredientPort);
+        collection.deduction(updatevolumeIngredientPort, deleteIngredientPort);
     }
 }

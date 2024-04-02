@@ -2,6 +2,7 @@ package refrigerator.back.recipe_recommend.outbound.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 import refrigerator.back.recipe.application.domain.value.RecipeIngredientType;
@@ -22,8 +23,11 @@ public interface OutRecommendRecipeDtoMapper {
     @Mapping(target = "type", source = "dto.typeName", qualifiedByName = "getRecipeIngredientType")
     RecommendRecipeIngredient toRecipeIngredientDto(OutRecipeIngredientDto dto);
 
-    @Mapping(target = "percent", source = "percent", qualifiedByName = "toStringPercent")
-    RecommendRecipeDto toRecommendRecipeDto(OutRecommendRecipeDto dto, String recipeImage, Double percent);
+    @Mappings({
+            @Mapping(target = "percent", source = "percent", qualifiedByName = "toStringPercent"),
+            @Mapping(source = "dto.recipeImageName", target = "recipeImage")
+    })
+    RecommendRecipeDto toRecommendRecipeDto(OutRecommendRecipeDto dto, Double percent);
 
     @Named("toStringPercent")
     static String toStringPercent(Double percent){

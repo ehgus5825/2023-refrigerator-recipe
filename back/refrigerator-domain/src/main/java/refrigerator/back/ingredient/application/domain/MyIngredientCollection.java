@@ -2,9 +2,9 @@ package refrigerator.back.ingredient.application.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import refrigerator.back.global.exception.BusinessException;
-import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
 import refrigerator.back.ingredient.application.dto.IngredientDeductionDTO;
 import refrigerator.back.ingredient.application.dto.MyIngredientDTO;
+import refrigerator.back.ingredient.application.port.out.DeleteIngredientPort;
 import refrigerator.back.ingredient.application.port.out.UpdateVolumeIngredientPort;
 
 import java.util.List;
@@ -41,24 +41,32 @@ public class MyIngredientCollection {
 
         for (String name : dtos.keySet()) {
             if(myIngredients.get(name) == null || !myIngredients.get(name).equals(dtos.get(name)) )
-                throw new BusinessException(EXCEEDED_EXPIRATION_DATE);
+                throw new BusinessException(ERROR_INGREDIENT_MATCHING);
         }
     }
 
-    public void deduction(UpdateVolumeIngredientPort updateVolumeIngredientPort){
+    public void deduction(UpdateVolumeIngredientPort updateVolumeIngredientPort, DeleteIngredientPort deleteIngredientPort){
         Map<String, Double> ingredientDTOMap = ingredientDTOList.stream().collect(Collectors
                 .toMap(IngredientDeductionDTO::getName, IngredientDeductionDTO::getVolume));
 
         myIngredients.forEach(ingredient -> {
+
             Double volume = ingredientDTOMap.get(ingredient.getName());
 
-            if (volume == null || volume > 9999.9 || volume <= 0.0) {
-                throw new BusinessException(EXCEEDED_CAPACITY_RANGE);
+            if(volume != null) {
+                if (volume > 9999.9 || volume <= 0.0) {
+                    throw new BusinessException(EXCEEDED_CAPACITY_RANGE);
+                }
+
+                if(ingredient.getVolume() > volume){
+                    Double updatedVolume = ingredient.getVolume() - volume;
+                    updateVolumeIngredientPort.updateVolume(ingredient.getId(), updatedVolume);
+                }
+                else {
+                    updateVolumeIngredientPort.updateVolume(ingredient.getId(), 0.0);
+                    deleteIngredientPort.deleteIngredient(ingredient.getId());
+                }
             }
-
-            Double updatedVolume = (ingredient.getVolume() < volume) ? 0.0 : ingredient.getVolume() - volume;
-
-            updateVolumeIngredientPort.updateVolume(ingredient.getId(), updatedVolume);
         });
     }
 }

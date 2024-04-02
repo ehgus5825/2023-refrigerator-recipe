@@ -31,7 +31,7 @@ public class OutMyBookmarkDto {
         this.createDateTime = createDateTime;
     }
 
-    public MyBookmarkDto mapping(OutMyBookmarkDtoMapper mapper, ImageUrlConvert imageUrlConvert){
-        return mapper.toMyBookmarkDto(this, imageUrlConvert.getUrl(recipeImageName));
+    public MyBookmarkDto mapping(OutMyBookmarkDtoMapper mapper){
+        return mapper.toMyBookmarkDto(this);
     }
 }

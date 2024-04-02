@@ -59,7 +59,6 @@ public class IngredientUpdateController {
         modifyIngredientUseCase.modifyIngredient(id, request.getExpirationDate(), request.getVolume(), request.getStorage());
     }
 
-    // TODO : Disabled?
     @DeleteMapping("/api/ingredients/{ingredientId}/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeIngredient(
@@ -70,6 +69,7 @@ public class IngredientUpdateController {
         removeIngredientUseCase.removeIngredient(id);
     }
 
+    // TODO : Disabled?
     @DeleteMapping("/api/ingredients/delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeAllIngredient(

@@ -11,7 +11,7 @@ import refrigerator.server.api.ingredient.dto.IngredientDeductionRequestDTO;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-01-13T16:05:59+0900",
+    date = "2024-03-14T23:08:16+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.19 (Amazon.com Inc.)"
 )
 @Component

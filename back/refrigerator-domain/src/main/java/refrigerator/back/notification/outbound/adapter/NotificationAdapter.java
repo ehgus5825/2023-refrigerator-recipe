@@ -38,6 +38,13 @@ public class NotificationAdapter implements UpdateNotificationReadStatusPort, Sa
     }
 
     @Override
+    public List<NotificationDTO> findExpirationNotificationList(String email) {
+        return notificationQueryRepository.findExpirationNotificationList(email)
+                .stream().map(dto -> dto.mapping(mapper, timeService))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void updateReadStatus(Long notificationId, boolean status) {
         notificationQueryRepository.updateReadStatus(notificationId, status)
                 .throwExceptionWhenNotAllowDuplicationResource(NOTIFICATION_READ_FAIL);

@@ -1,6 +1,7 @@
 package refrigerator.back.notification.application.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import refrigerator.back.notification.application.domain.entity.MemberNotification;
 import refrigerator.back.notification.application.dto.NotificationSignDTO;
@@ -12,6 +13,7 @@ import refrigerator.back.notification.application.port.out.SaveMemberNotificatio
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberNotificationService implements
         CreateMemberNotificationUseCase, FindMemberNotificationSignUseCase, TurnOffMemberNotificationSignUseCase {
 
@@ -27,7 +29,7 @@ public class MemberNotificationService implements
     public void createMemberNotification(String memberId) {
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .memberId(memberId)
+                .email(memberId)
                 .sign(false)
                 .build();
 

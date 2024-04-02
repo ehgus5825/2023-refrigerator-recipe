@@ -14,6 +14,10 @@ import refrigerator.back.ingredient.outbound.repository.query.IngredientLookUpQu
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static refrigerator.back.ingredient.exception.IngredientExceptionType.NOT_FOUND_INGREDIENT;
@@ -31,6 +35,7 @@ public class IngredientSubLookUpAdapter implements FindSubIngredientPort {
     public List<MyIngredientDTO> getAvailableIngredients(String email, LocalDate date) {
         return ingredientLookUpQueryRepository.findAvailableIngredients(email, date)
                 .stream().map(dto -> dto.mapping(outSubIngredientMapper))
+                .filter(distinctByKey(MyIngredientDTO::getName))
                 .collect(Collectors.toList());
     }
 
@@ -39,5 +44,10 @@ public class IngredientSubLookUpAdapter implements FindSubIngredientPort {
     public Ingredient getIngredient(Long id) {
         return ingredientPersistenceRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new BusinessException(NOT_FOUND_INGREDIENT));
+    }
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+        Map<Object, Boolean> map = new ConcurrentHashMap<>();
+        return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 }

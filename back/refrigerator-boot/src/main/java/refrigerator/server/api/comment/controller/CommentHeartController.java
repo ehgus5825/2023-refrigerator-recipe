@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import refrigerator.back.comment.application.port.in.ChangeCommentHeartCountUseCase;
 import refrigerator.back.notification.application.port.in.CreateCommentHeartNotificationUseCase;
 import refrigerator.server.security.common.email.GetMemberEmailUseCase;
-import refrigerator.server.api.comment.dto.response.CommentAddResponseDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -24,23 +23,22 @@ public class CommentHeartController {
 
     @PutMapping("/api/comments/{commentId}/heart/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public CommentAddResponseDto addHeartCount(
+    public void addHeartCount(
             @PathVariable("commentId") @Positive Long commentId){
 
         String memberId = getMemberEmailUseCase.getMemberEmail();
-        String peopleId = changeCommentHeartCountUseCase.add(commentId, memberId);
+        changeCommentHeartCountUseCase.add(commentId, memberId);
 
         createCommentHeartNotificationUseCase.createCommentHeartNotification(memberId, commentId);
-
-        return CommentAddResponseDto.builder().peopleId(peopleId).build();
     }
 
     @PutMapping("/api/comments/{commentId}/heart/reduce")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void reduceHeartCount(
-             @PathVariable("commentId") @Positive Long commentId,
-             @RequestParam("peopleId") @NotBlank String peopleId){
+             @PathVariable("commentId") @Positive Long commentId){
 
-        changeCommentHeartCountUseCase.reduce(commentId, peopleId);
+
+        String memberId = getMemberEmailUseCase.getMemberEmail();
+        changeCommentHeartCountUseCase.reduce(commentId, memberId);
     }
 }

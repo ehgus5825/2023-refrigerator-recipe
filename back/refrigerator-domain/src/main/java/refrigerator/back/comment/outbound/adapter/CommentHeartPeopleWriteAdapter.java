@@ -17,8 +17,8 @@ public class CommentHeartPeopleWriteAdapter implements SaveCommentHeartPeoplePor
     private final CommentHeartPeopleRedisRepository redisRepository;
 
     @Override
-    public void remove(String peopleId) {
-        redisRepository.deleteById(peopleId);
+    public void remove(CommentHeartPeople commentHeartPeople) {
+        redisRepository.delete(commentHeartPeople);
     }
 
     @Override

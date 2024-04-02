@@ -6,20 +6,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import refrigerator.back.notification.application.domain.entity.MemberNotification;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DataRedisTest
+@DataJpaTest
 @Slf4j
 class MemberNotificationPersistenceRepositoryTest {
 
     @Autowired MemberNotificationPersistenceRepository repository;
-
-    @BeforeEach
-    void clear(){
-        repository.deleteAll();
-    }
 
     @Test
     @DisplayName("memberId로 조회 테스트")
@@ -28,16 +24,16 @@ class MemberNotificationPersistenceRepositoryTest {
         String memberId = "email123@gmail.com";
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .memberId(memberId)
+                .email(memberId)
                 .sign(false)
                 .build();
 
         repository.save(memberNotification);
 
-        repository.findByMemberId(memberId).ifPresent(
+        repository.findByEmail(memberId).ifPresent(
                 mn -> {
                     log.info("enter");
-                    assertThat(mn.getMemberId()).isEqualTo(memberNotification.getMemberId());
+                    assertThat(mn.getEmail()).isEqualTo(memberNotification.getEmail());
                     assertThat(mn.getSign()).isEqualTo(memberNotification.getSign());
                 }
         );

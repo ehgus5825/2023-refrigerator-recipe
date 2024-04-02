@@ -1,6 +1,7 @@
 package refrigerator.back.recipe_searchword.application.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import refrigerator.back.global.exception.BusinessException;
@@ -25,6 +26,10 @@ public class LastSearchWordService implements AddSearchWordUseCase, DeleteSearch
 
     @Override
     public void addSearchWord(String memberId, String searchWord) {
+
+        if(searchWord.isEmpty())
+            return;
+
         String key = makeLastSearchWordKey(memberId);
         Integer size = getSearchWordListSizePort.getWordListSize(key);
         if (size >= 5){

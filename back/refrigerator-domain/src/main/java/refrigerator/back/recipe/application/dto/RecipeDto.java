@@ -19,4 +19,5 @@ public class RecipeDto {
     String kcal;
     String servings;
     String difficulty;
+    Integer views;
 }

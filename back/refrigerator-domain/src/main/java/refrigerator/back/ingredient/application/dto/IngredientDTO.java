@@ -18,6 +18,8 @@ public class IngredientDTO {
     private String name;
     private LocalDate expirationDate;
     private String image;
+    private Double volume;
+    private String unit;
 
     private String remainDays;
 

@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface FindNotificationListUseCase {
     List<NotificationDTO> getNotificationList(String email, int page, int size);
+
+    List<NotificationDTO> getExpirationNotificationList(String email);
+
+
 }
