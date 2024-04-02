@@ -1,9 +1,9 @@
 import { IngredientType, RecipeFilterName } from "../types";
 
 export interface RecipeBrief {
-	recipeID: number;
+	recipeId: number;
 	recipeName: string;
-	image: string;
+	recipeImage: string;
 	scoreAvg: number;
 	views: number;
 }
@@ -14,14 +14,14 @@ export interface RecipeDetail extends RecipeBrief {
 	kcal: string;
 	servings: string;
 	difficulty: string;
-	isBookmarked: boolean;
 	ingredients: RecipeIngredient[];
 	courses: RecipeStep[];
-	notNull: boolean;
+	isBookmarked: boolean;
+	isCooked: boolean;
 }
 
 export interface RecipeIngredient {
-	ingredientID: number;
+	ingredientId: number;
 	name: string;
 	type: IngredientType;
 	volume: string;
@@ -33,7 +33,7 @@ export interface RecipeIngredient {
 export interface RecipeStep {
 	step: string;
 	explanation: string;
-	image: string;
+	courseImage: string;
 }
 
 export interface RecipeDeductedIngredient {
@@ -48,30 +48,31 @@ export interface RecipeCalculatedIngredient extends RecipeDeductedIngredient {
 }
 
 export interface RecipeComment {
-	commentID: number;
+	commentId: number;
 	nickname: string;
-	content: string;
 	heart: number;
-	date: string;
+	createDate: string;
 	modifiedState: boolean;
-	isMyComment: boolean;
+	content: string;
+	likedState: boolean;
 }
 
 export interface BookmarkedRecipe extends RecipeBrief {
-	bookmarkID: number;
+	bookmarkId: number;
 }
 
 export interface RatedRecipe extends RecipeBrief {
 	scoreID: number;
+	myScore: number;
 }
 
 export interface MatchedRecipe extends RecipeBrief {
-	match: number;
+	percent: number;
 }
 
 export interface RecipeFilter {
 	key: string;
 	name: string;
 	activeItem: string;
-	fetchFilterMenu: () => Promise<any>;
+	fetchFilterMenu: string[];
 }

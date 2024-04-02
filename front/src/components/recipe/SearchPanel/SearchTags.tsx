@@ -1,6 +1,6 @@
 import router from "next/router";
 import styles from "./SearchPanel.module.scss";
-import { deleteLateSearch } from "@/api";
+import { deleteLateSearch } from "@/api/searchWord";
 
 type SearchTagsProps = {
 	tagData: string[];

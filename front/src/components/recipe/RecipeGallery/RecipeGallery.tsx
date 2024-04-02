@@ -1,13 +1,14 @@
 import router from "next/router";
 import { EyeFill, StarFill } from "react-bootstrap-icons";
-import { RecipeBrief, BookmarkedRecipe } from "@/types";
+import { BookmarkedRecipe, RatedRecipe } from "@/types";
 import styles from "./RecipeGallery.module.scss";
 
 type RecipeGalleryProps = {
-	recipeData: RecipeBrief[] | BookmarkedRecipe[];
+	recipeData: RatedRecipe[] | BookmarkedRecipe[];
 };
 
 export default function RecipeGallery({ recipeData }: RecipeGalleryProps) {
+
 	const onRecipeClick = (recipeID: number) => {
 		router.push(`/recipe/info?recipeID=${recipeID}`);
 	};
@@ -16,22 +17,22 @@ export default function RecipeGallery({ recipeData }: RecipeGalleryProps) {
 		<div className={styles.recipeGalleryContainer}>
 			{recipeData.map((recipe) => (
 				<div
-					key={recipe.recipeID}
+					key={recipe.recipeId}
 					className={styles.recipeContainer}
-					onClick={() => onRecipeClick(recipe.recipeID)}
+					onClick={() => onRecipeClick(recipe.recipeId)}
 				>
-					<img src={recipe.image} />
+					<img src={recipe.recipeImage} />
 					<div className={styles.recipeNameInfoContainer}>
 						<span className={styles.recipeName}>{recipe.recipeName}</span>
-						<div className={styles.recipeInfoContainer}>
+						<div className={styles.recipeInfoContainer}>	
 							<div className={styles.recipeInfo}>
-								<EyeFill width="18" height="18" />
+								<EyeFill width="18" height="18"/>
 								{recipe.views}
 							</div>
-							{recipe.scoreAvg != 0 && (
+							{recipe.scoreAvg !== 0 && (
 								<div className={styles.recipeInfo}>
-									<StarFill width="14" height="14" />
-									{recipe.scoreAvg}
+									<StarFill width="14" height="14" className={styles.starIcon} />
+									{recipe.scoreAvg.toFixed(1)}
 								</div>
 							)}
 						</div>

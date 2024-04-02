@@ -20,21 +20,25 @@ const initialState: IngredientInfoState = {
 	},
 };
 
+// 식재료 단건 조회
+
 export const getIngredientInfo = createAsyncThunk<IngredientDetail, number>(
 	"get/ingredients/info",
 	async (payload) => {
-		const url = `/api/ingredients/${payload}`;
+		const url = `/api/ingredients/${payload}/details`;
 		const res = await instance.get(url);
 		return res.data;
 	},
 );
+
+// 식재료 수정
 
 export const putIngredientInfo = createAsyncThunk<
 	IngredientDetail,
 	IngredientDetail
 >("modify/ingredients/info", async (payload) => {
 	const { ingredientID, storage, expirationDate, volume } = payload;
-	const url = `/api/ingredients/${ingredientID}`;
+	const url = `/api/ingredients/${ingredientID}/modify`;
 	const body = { storage, expirationDate, volume };
 	await instance.put(url, body);
 	return payload;

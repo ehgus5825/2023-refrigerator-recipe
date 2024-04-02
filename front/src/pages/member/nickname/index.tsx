@@ -14,18 +14,16 @@ export default function nickname() {
 	return (
 		<BackLayout title={"닉네임 변경"}>
 			<div className={styles.passwordContainer}>
-				<div>
-					<InputContent
-						title="닉네임"
-						type="text"
-						onChange={onNicknameHandler}
-					/>
-					<div>
-						<span className={styles.regularPw}>
-							<span>영어, 한글, 띄어쓰기 포함 3자리 이상 10자리 이하 문자</span>
-						</span>
-					</div>
-				</div>
+
+				<InputContent
+					title="닉네임"
+					type="text"
+					onChange={onNicknameHandler}
+				/>
+
+				<span className={styles.regularPw}>
+					<span>영어, 한글, 띄어쓰기를 포함하여 3 ~ 10자 입력</span>
+				</span>
 
 				<ModalOnBtn3 title="변경하기" ment="변경" nick={nick} />
 			</div>

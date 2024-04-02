@@ -1,6 +1,6 @@
 import router from "next/router";
 import styles from "./AppBar.module.scss";
-import { PlusCircle, ChevronLeft, Person } from "react-bootstrap-icons";
+import { PlusCircle, ChevronLeft, Person}  from "react-bootstrap-icons";
 import Link from "next/link";
 
 export const MyPageIcon = () => (

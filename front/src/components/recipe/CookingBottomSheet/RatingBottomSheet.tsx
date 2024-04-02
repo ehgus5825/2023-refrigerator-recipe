@@ -22,7 +22,7 @@ export default function RatingBottomSheet({
 	};
 
 	const onNextBtnClick = async () => {
-		rateRecipe(recipeID, score);
+		await rateRecipe(recipeID, score);
 		onHide();
 	};
 

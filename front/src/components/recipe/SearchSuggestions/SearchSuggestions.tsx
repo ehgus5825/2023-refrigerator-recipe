@@ -1,4 +1,4 @@
-import { getRecipeSearchSuggestions } from "@/api";
+import { getRecipeSearchSuggestions } from "@/api/completion";
 import { useEffect, useState } from "react";
 import styles from "./SearchSuggestions.module.scss";
 import router from "next/router";

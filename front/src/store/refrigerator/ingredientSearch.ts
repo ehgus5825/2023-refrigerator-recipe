@@ -13,10 +13,12 @@ const initialState: IngredientSearchState = {
 	keyword: "",
 };
 
+// 모든 식재료 목록 조회 (+)
+
 export const getIngredientSearchData = createAsyncThunk<IngredientBrief[]>(
 	"get/ingredients/search",
 	async () => {
-		const url = `/api/ingredients/search`;
+		const url = `/api/ingredients/search/all`;
 		const res = await instance.get(url);
 		return res.data.data;
 	},

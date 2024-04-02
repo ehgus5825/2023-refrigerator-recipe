@@ -13,11 +13,12 @@ export default function LinkBtn({ title, link }: LinkBtnProps) {
 		<Link legacyBehavior href={link}>
 			<Button className={styles.linkButton} variant="light" size="lg">
 				{title === "비밀번호 변경" ? (
-					<GearFill className={styles.mypageIcon} />
+					<>
+						<span>{title}</span>
+					</>
 				) : (
 					<PencilFill className={styles.mypageIcon} />
 				)}
-				{title}
 			</Button>
 		</Link>
 	);

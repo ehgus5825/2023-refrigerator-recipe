@@ -1,5 +1,5 @@
 .loginBtn {
-	width: 320px;
+	width: 300px;
 	height: 57px;
 	size: 25px;
 	text-align: left;
@@ -8,10 +8,18 @@
 	font-weight: 600;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	background-color: #6fb2d2;
 	border: none;
 
 	span {
-		margin-left: 20px;
+		margin-left: 10px;
+		margin-right: 30px;
+		font-size: large;
+		font-weight: bold;
 	}
+}
+
+.loginBtnContainer{
+	margin-bottom: 13px;
 }

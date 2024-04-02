@@ -4,14 +4,22 @@ import styles from "./Layout.module.scss";
 
 type layoutProps = {
 	title: string;
+	onBackClick? : Function;
 	children: React.ReactNode;
 };
 
-export default function RecipeCommentLayout({ title, children }: layoutProps) {
+// AppBar : 뒤로가기 아이콘
+
+export default function RecipeCommentLayout({ title, onBackClick , children }: layoutProps) {
+
+	const handleBackClick = () => {
+		onBackClick && onBackClick();
+	};
+
 	return (
 		<div className={styles.layoutContainer}>
 			<AppBar title={title}>
-				<BackIcon />
+				<BackIcon onBackClick={handleBackClick} />
 			</AppBar>
 			<div className={styles.layoutContentWithAppCommentForm}>{children}</div>
 		</div>

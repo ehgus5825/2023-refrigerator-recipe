@@ -3,7 +3,6 @@ import { getRecommendedRecipes } from "@/api";
 
 import { MatchedRecipe } from "@/types";
 
-import BackLayout from "@/components/layout/BackLayout";
 import RecipeGalleryWithMatch from "@/components/recipe/RecipeGallery/RecipeGalleryWithMatch";
 import NoRecommendationResult from "@/components/global/NoResult/NoRecommendationResult";
 import BackNavLayout from "@/components/layout/BackNavLayout";

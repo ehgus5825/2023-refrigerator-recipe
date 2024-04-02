@@ -8,11 +8,9 @@ type layoutProps = {
 	children: React.ReactNode;
 };
 
-export default function BackLayout({
-	title,
-	onBackClick,
-	children,
-}: layoutProps) {
+// AppBar : 뒤로가기 아이콘
+
+export default function BackLayout({ title, onBackClick, children }: layoutProps) {
 	const handleBackClick = () => {
 		onBackClick && onBackClick();
 	};

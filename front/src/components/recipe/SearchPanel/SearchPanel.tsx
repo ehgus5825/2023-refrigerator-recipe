@@ -1,6 +1,6 @@
 import SearchTags from "./SearchTags";
 import styles from "./SearchPanel.module.scss";
-import { getRecipeLastSearches, getRecipeRecommendationSearches } from "@/api";
+import { getRecipeLastSearches, getRecipeRecommendationSearches } from "@/api/searchWord";
 import { useEffect, useState } from "react";
 
 export default function SearchPanel() {
@@ -10,9 +10,9 @@ export default function SearchPanel() {
 	useEffect(() => {
 		(async () => {
 			const lateSearchesData = await getRecipeLastSearches();
+			const recommendationSearchesData = await getRecipeRecommendationSearches();
+
 			setLastSearches(lateSearchesData);
-			const recommendationSearchesData =
-				await getRecipeRecommendationSearches();
 			setRecommendationSearches(recommendationSearchesData);
 		})();
 	}, []);

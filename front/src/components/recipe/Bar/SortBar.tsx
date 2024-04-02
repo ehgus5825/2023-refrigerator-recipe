@@ -1,24 +1,24 @@
 import styles from "./Bar.module.scss";
 
 type SortBarProps = {
-	sortType: "좋아요순" | "최신순";
+	sortType: "HEART" | "DATE";
 	setSortType: Function;
 };
 
 export default function SortBar({ sortType, setSortType }: SortBarProps) {
 	const onSortBtnClick = () => {
-		setSortType(sortType === "좋아요순" ? "최신순" : "좋아요순");
+		setSortType(sortType === "HEART" ? "DATE" : "HEART");
 	};
 
 	return (
 		<div className={styles.sortbarContainer}>
-			{["좋아요순", "최신순"].map((type) => (
+			{["HEART", "DATE"].map((type) => (
 				<button
 					key={type}
 					className={sortType === type ? styles.selected : undefined}
 					onClick={onSortBtnClick}
 				>
-					{type}
+					 {type === 'HEART' ? '좋아요' : '최신순'}
 				</button>
 			))}
 		</div>

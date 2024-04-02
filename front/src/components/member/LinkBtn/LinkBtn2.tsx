@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import styles from "./LinkBtn.module.scss";
-import { login } from "@/api/login";
+import { login } from "@/api/auth";
 
 interface LinkBtn2Props {
 	title: string;

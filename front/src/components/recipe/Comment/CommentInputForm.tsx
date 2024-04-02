@@ -4,7 +4,7 @@ import { addComment, getMyComments, modifyComment } from "@/api";
 import styles from "./Comment.module.scss";
 
 type CommentInputFormProps = {
-	recipeID: number;
+	recipeID: string;
 	setMyCommentData: Function;
 	comment: string;
 	setComment: Function;
@@ -24,6 +24,7 @@ export default function CommentInputForm({
 	commentID,
 	commentInputRef,
 }: CommentInputFormProps) {
+	
 	useEffect(() => {
 		commentInputRef.current.focus();
 	}, [modifyMode]);
@@ -33,8 +34,8 @@ export default function CommentInputForm({
 		modifyMode
 			? await modifyComment(commentID, comment)
 			: await addComment(recipeID, comment);
-		const myCommentData = await getMyComments(recipeID);
-		setMyCommentData(myCommentData);
+		const data = await getMyComments(recipeID);
+		setMyCommentData(data);
 		setModifyMode(false);
 	};
 

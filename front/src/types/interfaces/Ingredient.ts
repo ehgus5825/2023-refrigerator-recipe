@@ -6,12 +6,12 @@ export interface IngredientBrief {
 	remainDays: string;
 	image: string;
 	phoneme?: string;
+	volume: number;
+	unit: string;
 }
 
 export interface IngredientDetail extends IngredientBrief {
 	storage: Storage;
 	expirationDate: string;
 	registrationDate: string;
-	volume: number;
-	unit: string;
 }

@@ -44,6 +44,12 @@ $days-font-weight: 400; //500;
 		font-weight: $days-font-weight;
 		color: $days-font-color;
 	}
+
+	.ingredientVolume {
+		font-size: 15px;
+		font-weight: bold;
+		color: $grey-800;
+	}
 }
 
 @mixin ingredient-icon {

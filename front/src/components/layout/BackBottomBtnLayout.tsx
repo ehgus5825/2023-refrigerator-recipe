@@ -4,14 +4,22 @@ import { BackIcon } from "./AppBar/AppBarIcons";
 
 type layoutProps = {
 	title?: string;
+	onBackClick? : Function;
 	children: React.ReactNode;
 };
 
-export default function BackBottomBtnLayout({ title, children }: layoutProps) {
+// AppBar : 뒤로가기 아이콘 // 아래 버튼
+
+export default function BackBottomBtnLayout({ title, onBackClick, children }: layoutProps) {
+
+	const handleBackClick = () => {
+		onBackClick && onBackClick();
+	};
+
 	return (
 		<div className={styles.layoutContainer}>
 			<AppBar title={title}>
-				<BackIcon />
+				<BackIcon onBackClick={handleBackClick}/>
 			</AppBar>
 			<div className={styles.layoutContentWithAppBottomBtn}>{children}</div>
 		</div>

@@ -3,8 +3,15 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-top: 25px;
-	gap: 15px;
+	margin-top: 45px;
+}
+
+.InputContentContainer {
+	margin-top: -20px;
+}
+
+.modalBtn{
+	margin-top: 45px;
 }
 
 .passwordTitle {
@@ -12,20 +19,22 @@
 	font-weight: 600;
 }
 
+
 .checkEmail,
 .checkPw,
 .clickBtn {
-	margin-top: -12px;
+	font-size: 14px;
+	margin-top: -10px;
 }
 
 .checkEmailTrue,
 .checkPwTrue {
-	color: blue;
+	color: #6fb2d2;
 }
 
 .checkEmailFalse,
 .checkPwFalse {
-	color: red;
+	color: #d76b6b;
 }
 
 .clickTrue span {
@@ -35,7 +44,9 @@
 }
 
 .regularPw {
-	color: #6fb2d2;
+	color: #d76b6b;
+	margin-bottom: 35px;
+	margin-top: -10px;
 	span {
 		display: flex;
 		font-size: 14px;

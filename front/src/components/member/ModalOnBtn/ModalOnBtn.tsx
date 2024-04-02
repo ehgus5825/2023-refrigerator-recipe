@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import styles from "./ModalOnBtn.module.scss";
-import { register } from "@/api/register";
+import { register } from "@/api/member";
 
 interface ModalOnBtnProps {
 	title: string;

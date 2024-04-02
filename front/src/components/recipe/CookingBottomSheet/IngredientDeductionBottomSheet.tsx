@@ -18,29 +18,31 @@ export default function IngredientDeductionBottomSheet({
 	onNextShow,
 	ingredients,
 }: IngredientDeductionBottomSheetProps) {
-	const [isDeductionAvailable, setIsDeductionAvailable] = useState<number[]>(
-		[],
-	);
+	const [isDeductionAvailable, setIsDeductionAvailable] = useState<number[]>([],);
 	const [isDeductionSelected, setIsDeductionSelected] = useState<number[]>([]);
 
 	useEffect(() => {
+
 		const filteredData = ingredients
 			.filter((ingredient) => ingredient.isOwned)
-			.map((ingredient) => ingredient.ingredientID);
+			.map((ingredient) => ingredient.ingredientId);
+
 		setIsDeductionAvailable(filteredData);
 		setIsDeductionSelected(filteredData);
 	}, []);
 
 	const onNextBtnClick = () => {
+
 		const selectedIngredients = ingredients
 			.filter((ingredient) =>
-				isDeductionSelected.includes(ingredient.ingredientID),
+				isDeductionSelected.includes(ingredient.ingredientId),
 			)
 			.map(({ name, transVolume, transUnit }) => ({
 				name: name,
 				volume: transVolume,
 				unit: transUnit,
 			}));
+
 		deductIngredient(selectedIngredients);
 		onNextShow();
 		onHide();
@@ -54,9 +56,7 @@ export default function IngredientDeductionBottomSheet({
 	const onIngredientClick = (ingredientID: number) => {
 		if (isDeductionAvailable.includes(ingredientID)) {
 			isDeductionSelected.includes(ingredientID)
-				? setIsDeductionSelected((prev) =>
-						prev.filter((id) => id !== ingredientID),
-				  )
+				? setIsDeductionSelected((prev) => prev.filter((id) => id !== ingredientID),)
 				: setIsDeductionSelected((prev) => [...prev, ingredientID]);
 		}
 	};
@@ -74,22 +74,22 @@ export default function IngredientDeductionBottomSheet({
 					</div>
 
 					<div className={styles.ingredientList}>
-						{ingredients.map(({ ingredientID, ...ingredient }) => {
+						{ingredients.map(({ ingredientId, ...ingredient }) => {
 							if (ingredient.transVolume && ingredient.transUnit) {
 								return (
 									<div
-										key={ingredientID}
+										key={ingredientId}
 										className={
-											isDeductionSelected.includes(ingredientID)
+											isDeductionSelected.includes(ingredientId)
 												? styles.selected
 												: undefined
 										}
-										onClick={() => onIngredientClick(ingredientID)}
+										onClick={() => onIngredientClick(ingredientId)}
 									>
-										{isDeductionSelected.includes(ingredientID) ? (
+										{isDeductionSelected.includes(ingredientId) ? (
 											<CheckCircleFill className={styles.icon} />
 										) : (
-											isDeductionAvailable.includes(ingredientID) && (
+											isDeductionAvailable.includes(ingredientId) && (
 												<CheckCircle />
 											)
 										)}

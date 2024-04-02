@@ -39,6 +39,12 @@ $appbar-font-weight: 600;
 	color: $grey-900;
 }
 
+.bellIcon {
+	width: $appbar-icon-size;
+	height: $appbar-icon-size;
+	color: #F2C93B;
+}
+
 .notiDotIcon {
 	position: absolute;
 	height: 7px;

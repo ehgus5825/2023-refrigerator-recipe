@@ -31,7 +31,7 @@ export default function RecipeSearchPage({ query }: RecipeSearchPageProps) {
 			(async () => {
 				setKeyword(query);
 				setPage(0);
-				const data = await searchRecipe(0, { searchWord: query });
+				const data = await searchRecipe(0, {}, query);
 				setRecipeResultData(data);
 				setIsScrollEnd(false);
 				setIsDataLoaded(true);
@@ -41,7 +41,7 @@ export default function RecipeSearchPage({ query }: RecipeSearchPageProps) {
 	useEffect(() => {
 		if (page != 0 && !isScrollEnd) {
 			(async () => {
-				const data = await searchRecipe(page, { searchWord: query });
+				const data = await searchRecipe(page, {}, query);
 				data.length !== 0
 					? setRecipeResultData((prev) => [...prev, ...data])
 					: setIsScrollEnd(true);

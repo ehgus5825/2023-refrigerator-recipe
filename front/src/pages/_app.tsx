@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { silentRefresh } from "@/api/login";
+import { silentRefresh } from "@/api/auth";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 

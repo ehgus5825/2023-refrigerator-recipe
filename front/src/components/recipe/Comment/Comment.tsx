@@ -1,65 +1,66 @@
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { RecipeComment } from "@/types";
-import { deleteComment, likeComment, unlikeComment } from "@/api";
+import { deleteComment, likeComment, unlikeComment } from "@/api/comment";
 import styles from "./Comment.module.scss";
+import { useState } from "react";
 
 type CommentProps = {
 	comment: RecipeComment;
-	isLiked: boolean;
 	preview?: boolean;
 	setComment?: Function;
 	setCommentID?: Function;
 	setModifyMode?: Function;
 	setMyCommentData?: Function;
 	setOtherCommentData?: Function;
-	setHeartCommentIDs?: Function;
 };
 
 export default function Comment({
 	comment,
-	isLiked,
 	preview,
 	setComment,
 	setCommentID,
 	setModifyMode,
 	setMyCommentData,
 	setOtherCommentData,
-	setHeartCommentIDs,
 }: CommentProps) {
 	const {
-		commentID,
+		commentId,
 		nickname,
 		content,
-		date,
+		createDate,
 		modifiedState,
 		heart,
-		isMyComment,
+		likedState,
 	} = comment;
+	const [isLikedState, setIsLikedState] = useState(likedState);
+	const [peopleId, setPeopleId] = useState("");
 
 	const onModifyTextClick = () => {
 		setModifyMode && setModifyMode(true);
-		setCommentID && setCommentID(commentID);
+		setCommentID && setCommentID(commentId);
 		setComment && setComment(content);
 		// TODO: input focus 하기
 	};
+
 	const onDeleteTextClick = async () => {
 		// TODO: 삭제 확인 모달
 		setMyCommentData &&
 			setMyCommentData((prevCommentData: RecipeComment[]) =>
 				prevCommentData.filter(
-					(commentItem) => commentID !== commentItem.commentID,
+					(commentItem) => commentId !== commentItem.commentId,
 				),
 			);
-		await deleteComment(commentID);
+		await deleteComment(commentId);
 	};
 
 	const onLikeCommentClick = async () => {
-		setHeartCommentIDs &&
-			setHeartCommentIDs((prevIDs: number[]) => [...prevIDs, commentID]);
+
+		setIsLikedState(!isLikedState);
+
 		setMyCommentData &&
 			setMyCommentData((prevCommentData: RecipeComment[]) =>
 				prevCommentData.map((commentItem) =>
-					commentItem.commentID === commentID
+					commentItem.commentId === commentId
 						? { ...commentItem, heart: heart + 1 }
 						: commentItem,
 				),
@@ -67,22 +68,22 @@ export default function Comment({
 		setOtherCommentData &&
 			setOtherCommentData((prevCommentData: RecipeComment[]) =>
 				prevCommentData.map((commentItem) =>
-					commentItem.commentID === commentID
+					commentItem.commentId === commentId
 						? { ...commentItem, heart: heart + 1 }
 						: commentItem,
 				),
 			);
-		await likeComment(comment.commentID);
+		!preview && await likeComment(comment.commentId);
 	};
+
 	const onUnlikeCommentClick = async () => {
-		setHeartCommentIDs &&
-			setHeartCommentIDs((prevIDs: number[]) =>
-				prevIDs.filter((id) => id !== commentID),
-			);
+
+		setIsLikedState(!isLikedState);
+
 		setMyCommentData &&
 			setMyCommentData((prevCommentData: RecipeComment[]) =>
 				prevCommentData.map((commentItem) =>
-					commentItem.commentID === commentID
+					commentItem.commentId === commentId
 						? { ...commentItem, heart: heart - 1 }
 						: commentItem,
 				),
@@ -90,19 +91,19 @@ export default function Comment({
 		setOtherCommentData &&
 			setOtherCommentData((prevCommentData: RecipeComment[]) =>
 				prevCommentData.map((commentItem) =>
-					commentItem.commentID === commentID
+					commentItem.commentId === commentId
 						? { ...commentItem, heart: heart - 1 }
 						: commentItem,
 				),
 			);
-		await unlikeComment(comment.commentID);
+		!preview && await unlikeComment(comment.commentId);
 	};
 
 	return (
 		<div className={styles.commentContainer}>
 			<div className={styles.commentHeader}>
 				<div className={styles.commentNickname}>{nickname}</div>
-				{isMyComment && !preview && (
+				{!preview && setMyCommentData && (
 					<div className={styles.commentMenu}>
 						<div onClick={onModifyTextClick}>수정</div>
 						<div onClick={onDeleteTextClick}>삭제</div>
@@ -113,10 +114,10 @@ export default function Comment({
 			<div className={styles.commentContent}>{content}</div>
 
 			<div className={styles.commentInfo}>
-				<div>{date}</div>
+				<div>{createDate}</div>
 				{modifiedState && <div>(수정됨)</div>}
 				<div> </div>
-				{isLiked ? (
+				{isLikedState ? (
 					<HeartFill
 						className={styles.commentIcon}
 						onClick={onUnlikeCommentClick}

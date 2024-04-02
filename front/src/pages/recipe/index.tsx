@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { FILTERS } from "@/components/recipe/Bar/filters";
-import { getRecipes, searchRecipe } from "@/api";
+import { searchRecipe } from "@/api";
 import { useIntersectionObserver } from "@/hooks";
 import { RecipeBrief, RecipeFilter } from "@/types";
 
@@ -20,6 +20,7 @@ export default function RecipeListPage() {
 	const [page, setPage] = useState(0);
 	const [isDataLoaded, setIsDataLoaded] = useState(false);
 	const [isScrollEnd, setIsScrollEnd] = useState(false);
+	const [query, setQuery] = useState({});
 
 	const [filters, setFilters] = useState<RecipeFilter[]>(FILTERS);
 	const [activeFilter, setActiveFilter] = useState({
@@ -27,26 +28,29 @@ export default function RecipeListPage() {
 		activeItem: "",
 		menu: [],
 	});
-	const [isFilterMenuBottomSheetShow, setIsFilterMenuBottomSheetShow] =
-		useState(false);
 
-	const [query, setQuery] = useState({});
+	const [isFilterMenuBottomSheetShow, setIsFilterMenuBottomSheetShow] = useState(false);
 
 	useEffect(() => {
+
 		const activeFilters = filters.filter(
 			(filter) => filter.activeItem !== "전체",
 		);
+
 		const activeFilterParams = activeFilters.reduce((acc, item) => {
 			acc[item.key] = item.activeItem;
 			return acc;
 		}, {} as { [key: string]: string });
+
 		setQuery(activeFilterParams);
 	}, [filters]);
 
 	useEffect(() => {
 		(async () => {
 			setPage(0);
-			const data = query ? await searchRecipe(0, query) : await getRecipes(0);
+			
+			const data = await searchRecipe(0, query, "");
+
 			setRecipeData(data);
 			setIsScrollEnd(false);
 			setIsDataLoaded(true);
@@ -56,9 +60,8 @@ export default function RecipeListPage() {
 	useEffect(() => {
 		if (page !== 0 && !isScrollEnd) {
 			(async () => {
-				const data = query
-					? await searchRecipe(page, query)
-					: await getRecipes(page);
+				const data = await searchRecipe(page, query, "");
+
 				data.length !== 0
 					? setRecipeData((prev) => [...prev, ...data])
 					: setIsScrollEnd(true);

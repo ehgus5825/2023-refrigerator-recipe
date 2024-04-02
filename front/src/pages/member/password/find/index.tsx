@@ -3,7 +3,7 @@ import router from "next/router";
 import { Button } from "react-bootstrap";
 import styles from "./styles.module.scss";
 import InputContent from "@/components/member/InputContent/InputContent";
-import { findPassword } from "@/api/password";
+import { findPassword } from "@/api/auth";
 import BackLayout from "@/components/layout/BackLayout";
 
 export default function change() {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Check } from "react-bootstrap-icons";
-import { getMatchedIngredients } from "@/api";
+import { getMatchedIngredients } from "@/api/completion";
 import styles from "./IngredientList.module.scss";
 
 type IngredientListProps = {

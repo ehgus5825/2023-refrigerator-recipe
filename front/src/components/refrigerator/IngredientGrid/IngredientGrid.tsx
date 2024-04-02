@@ -48,6 +48,9 @@ export default function IngredientGrid({
 							<span className={styles.ingredientDays}>
 								{getDday(ingredient.remainDays)}
 							</span>
+							<span className={styles.ingredientVolume}>
+								{ingredient.volume} {ingredient.unit}
+							</span>
 						</div>
 					</div>
 				</div>

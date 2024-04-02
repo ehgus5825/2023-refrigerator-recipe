@@ -17,16 +17,16 @@ export default function RecipeGrid({ recipeData }: RecipeListProps) {
 		<div className={styles.recipelistContainer}>
 			{recipeData.map((recipe) => (
 				<div
-					key={recipe.recipeID}
+					key={recipe.recipeId}
 					className={styles.recipeContainer}
-					onClick={() => onRecipeClick(recipe.recipeID)}
+					onClick={() => onRecipeClick(recipe.recipeId)}
 				>
-					<img src={recipe.image} className={styles.recipeImage} />
+					<img src={recipe.recipeImage} className={styles.recipeImage} />
 					<div className={styles.recipeInfoContainer}>
 						<div className={styles.recipeName}>{recipe.recipeName}</div>
 						<div className="d-flex gap-3">
 							{recipe.scoreAvg != 0 && (
-								<Stars id={recipe.recipeID} score={recipe.scoreAvg} label />
+								<Stars id={recipe.recipeId} score={recipe.scoreAvg} label />
 							)}
 							<div className={styles.recipeInfo}>
 								<EyeFill width="16" height="16" />

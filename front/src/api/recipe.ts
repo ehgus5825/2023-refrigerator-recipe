@@ -1,18 +1,9 @@
-import { RecipeDeductedIngredient } from "@/types";
 import instance from "./interceptors";
 
-export const getRecipes = async (page: number) => {
-	const url = `/api/recipe/search/normal?page=${page}`;
-	try {
-		const response = await instance.get(url);
-		return response.data.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
+// 레시피 정보 조회
 
 export const getRecipe = async (recipeID: number) => {
-	const url = `/api/recipe/${recipeID}/details`;
+	const url = `/api/recipe/${recipeID}`;
 	try {
 		const response = await instance.get(url);
 		return response.data;
@@ -20,6 +11,8 @@ export const getRecipe = async (recipeID: number) => {
 		console.error(error);
 	}
 };
+
+// 레시피 추천
 
 export const getRecommendedRecipes = async () => {
 	const url = `/api/recipe/recommend`;
@@ -34,63 +27,14 @@ export const getRecommendedRecipes = async () => {
 	}
 };
 
-export const getRecipeFoodType = async () => {
-	const url = `/api/recipe/search/condition/food-type`;
+// 레시피 검색
+
+export const searchRecipe = async (page: number, body: any, searchWord: String) => {
+	const url = `/api/recipe/search?page=${page}&searchWord=${searchWord}`;
 	try {
-		const response = await instance.get(url);
+		const response = await instance.post(url, body);
 		return response.data.data;
 	} catch (error) {
-		console.error(error);
-	}
-};
-
-export const getRecipeIngredientCategory = async () => {
-	const url = `/api/recipe/search/condition/category`;
-	try {
-		const response = await instance.get(url);
-		return response.data.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
-
-export const getRecipeRecipeType = async () => {
-	const url = `/api/recipe/search/condition/recipe-type`;
-	try {
-		const response = await instance.get(url);
-		return response.data.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
-
-export const getRecipeDifficulty = async () => {
-	const url = `/api/recipe/search/condition/difficulty`;
-	try {
-		const response = await instance.get(url);
-		return response.data.data;
-	} catch (error) {
-		console.error(error);
-	}
-};
-
-export const deductIngredient = async (
-	ingredients: RecipeDeductedIngredient[],
-) => {
-	const url = `/api/ingredients/deduction`;
-	console.log(ingredients);
-	try {
-		await instance.put(url, { ingredients });
-	} catch (error) {
-		console.error(error);
-	}
-};
-
-export const rateRecipe = async (recipeID: number, score: number) => {
-	const url = `/api/my-score/cooking?recipeId=${recipeID}&score=${score}`;
-	try {
-		await instance.post(url);
-	} catch (error) {
-		console.error(error);
+		console.log(error);
 	}
 };

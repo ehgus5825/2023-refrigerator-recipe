@@ -26,29 +26,37 @@ export default function RecipeInfoPage({ recipeID }: RecipeInfoPageProps) {
 	const [commentData, setCommentData] = useState<RecipeComment[]>([]);
 	const [commentNum, setCommentNum] = useState(0);
 
+	const [refresh, setRefresh] = useState(false);
+
 	const [isRecipeStepBottomSheetShow, setIsRecipeStepBottomSheetShow] =
 		useState(false);
-	const [
-		isIngredientDeductionBottomSheetShow,
-		setIsIngredientDeductionBottomSheetShow,
-	] = useState(false);
+
+	const [isIngredientDeductionBottomSheetShow, setIsIngredientDeductionBottomSheetShow] =
+		useState(false);
+
 	const [isRatingBottomSheetShow, setIsRatingBottomSheetShow] = useState(false);
 
 	useEffect(() => {
 		(async () => {
+					
 			const recipeData = await getRecipe(recipeID);
+
 			setRecipe({
-				...recipeData,
+				...recipeData.recipeInfo,
+				ingredients: recipeData.ingredients,
 				courses: recipeData.courses.sort(
 					(a: any, b: any) => parseInt(a.step) - parseInt(b.step),
 				),
+				isCooked: recipeData.isCooked,
+				isBookmarked: recipeData.isBookmarked,
 			});
 
 			const data = await getCommentsPreview(recipeID);
+
 			setCommentData(data.comments);
 			setCommentNum(data.count);
 		})();
-	}, []);
+	}, [refresh]);
 
 	useEffect(() => {
 		recipe &&
@@ -61,11 +69,21 @@ export default function RecipeInfoPage({ recipeID }: RecipeInfoPageProps) {
 			: setIsRatingBottomSheetShow(true);
 	};
 
+	const offIngredientDeductionBottomSheet = () => {
+		setIsIngredientDeductionBottomSheetShow(false);
+		setRefresh(!refresh);
+	}
+
+	const offRatingBottomSheet = () => {
+		setIsRatingBottomSheetShow(false)
+		setRefresh(!refresh);
+	}
+
 	return (
 		<>
 			{recipe && (
 				<RecipeInfoLayout recipeName={recipe.recipeName}>
-					<img src={recipe.image} className={styles.backgroundImg} />
+					<img src={recipe.recipeImage} className={styles.backgroundImg} />
 					<div className={styles.recipeInfoContainer}>
 						<RecipeDescription recipe={recipe} setRecipe={setRecipe} />
 						<RecipeIngredients
@@ -77,11 +95,10 @@ export default function RecipeInfoPage({ recipeID }: RecipeInfoPageProps) {
 							setIsRecipeStepBottomModalShow={setIsRecipeStepBottomSheetShow}
 						/>
 						<RecipeCommentsPreview
-							recipeID={recipeID}
+							recipeID={recipe.recipeId}
 							recipeName={recipe.recipeName}
 							commentData={commentData}
 							commentNum={commentNum}
-							setCommentData={setCommentData}
 						/>
 					</div>
 				</RecipeInfoLayout>
@@ -100,17 +117,19 @@ export default function RecipeInfoPage({ recipeID }: RecipeInfoPageProps) {
 			{recipe && isOwned && (
 				<IngredientDeductionBottomSheet
 					show={isIngredientDeductionBottomSheetShow}
-					onHide={() => setIsIngredientDeductionBottomSheetShow(false)}
+					onHide={offIngredientDeductionBottomSheet}
 					onNextShow={() => setIsRatingBottomSheetShow(true)}
 					ingredients={recipe.ingredients}
 				/>
 			)}
 
-			<RatingBottomSheet
-				show={isRatingBottomSheetShow}
-				onHide={() => setIsRatingBottomSheetShow(false)}
-				recipeID={recipeID}
-			/>
+			{recipe && (
+				<RatingBottomSheet
+					show={isRatingBottomSheetShow}
+					onHide={offRatingBottomSheet}
+					recipeID={recipeID}
+				/>
+			)}
 		</>
 	);
 }

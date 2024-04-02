@@ -1,18 +1,22 @@
+import { RecipeDeductedIngredient } from "@/types";
 import instance from "./interceptors";
 
-export const getMatchedIngredients = async (keyword: string) => {
-	const url = `/api/word-completion/ingredient?keyword=${keyword}`;
+// 식재료 차감
+
+export const deductIngredient = async (data: RecipeDeductedIngredient[]) => {
+	const url = `/api/ingredients/deduction`;
+
 	try {
-		const response = await instance.get(url);
-		return response.data.data.slice(0, 5);
+		await instance.put(url, { data });
 	} catch (error) {
-		console.log(error);
-		throw error;
+		console.error(error);
 	}
 };
 
+// 식재료명에 따른 단위 조회
+
 export const getIngredientUnit = async (name: string) => {
-	const url = `/api/ingredients/unit?name=${name}`;
+	const url = `/api/ingredients/search/unit?name=${name}`;
 	try {
 		const response = await instance.get(url);
 		return response.data.unit;
@@ -22,8 +26,10 @@ export const getIngredientUnit = async (name: string) => {
 	}
 };
 
-export const getExpiringIngredients = async (day: number) => {
-	const url = `/api/ingredients/deadline/${day}`;
+// 특정일 만료 식재료 목록 조회
+
+export const getExpiringIngredients = async (days: String) => {
+	const url = `/api/ingredients/search/deadline/${days}`;
 	try {
 		const response = await instance.get(url);
 		return response.data.data;
@@ -31,6 +37,8 @@ export const getExpiringIngredients = async (day: number) => {
 		throw error;
 	}
 };
+
+// 식재료 요청
 
 export const requestIngredient = async (name: string, unit: string) => {
 	const url = `/api/ingredients/propose`;
@@ -43,8 +51,10 @@ export const requestIngredient = async (name: string, unit: string) => {
 	}
 };
 
+// 식재료 등록
+
 export const addIngredient = async (body: Object) => {
-	const url = `/api/ingredients`;
+	const url = `/api/ingredients/register`;
 	try {
 		await instance.post(url, body);
 	} catch (error) {
@@ -53,8 +63,10 @@ export const addIngredient = async (body: Object) => {
 	}
 };
 
+// 식재료 삭제
+
 export const deleteIngredient = async (ingredientID: number) => {
-	const url = `/api/ingredients/${ingredientID}`;
+	const url = `/api/ingredients/${ingredientID}/delete`;
 	try {
 		await instance.delete(url);
 	} catch (error) {
@@ -62,3 +74,7 @@ export const deleteIngredient = async (ingredientID: number) => {
 		throw error;
 	}
 };
+
+// 식재료 전체 삭제 (???)
+
+// 레시피 중 소유한 식재료 목록 조회 (???)
