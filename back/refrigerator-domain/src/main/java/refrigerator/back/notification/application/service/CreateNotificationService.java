@@ -41,16 +41,16 @@ public class CreateNotificationService implements CreateCommentHeartNotification
 
         turnOnMemberNotification(details.getAuthorId());
 
-        Notification notification = madeNotification(commentId, details, senderNickname);
+        Notification notification = madeNotification(details, senderNickname);
         
         return saveNotificationPort.saveNotification(notification);
     }
 
-    public Notification madeNotification(Long commentId, CommentNotificationDTO details, String senderNickname) {
+    public Notification madeNotification(CommentNotificationDTO details, String senderNickname) {
 
         Notification notification = Notification.create(
                 NotificationType.HEART,
-                "/recipe/comment?recipeId=" + details.getRecipeId() + "&commentID=" + commentId,
+                "/recipe/comment?recipeID=" + details.getRecipeId() + "&recipeName=" + details.getRecipeName(),
                 details.getAuthorId(),
                 BasicHttpMethod.GET.name(),
                 currentTime.now()

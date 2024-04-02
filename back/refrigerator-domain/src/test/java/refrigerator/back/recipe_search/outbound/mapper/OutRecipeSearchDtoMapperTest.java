@@ -20,18 +20,17 @@ class OutRecipeSearchDtoMapperTest {
         double scoreAvg = 4.3;
         int views = 2;
         OutRecipeSearchDto outDto = new OutRecipeSearchDto(recipeId, recipeName, recipeImageName, scoreAvg, views);
-        String recipeImage = "recipeImage";
         // when
-        RecipeSearchDto result = mapper.toInRecipeSearchDto(outDto, recipeImage);
+        RecipeSearchDto result = mapper.toInRecipeSearchDto(outDto);
         // then
         RecipeSearchDto expected = RecipeSearchDto.builder()
                 .recipeId(recipeId)
                 .recipeName(recipeName)
-                .recipeImage(recipeImage)
+                .recipeImage(recipeImageName)
                 .scoreAvg(scoreAvg)
                 .views(views)
                 .build();
         assertEquals(expected, result);
-        assertEquals(expected.getRecipeImage(), recipeImage);
+        assertEquals(expected.getRecipeImage(), recipeImageName);
     }
 }

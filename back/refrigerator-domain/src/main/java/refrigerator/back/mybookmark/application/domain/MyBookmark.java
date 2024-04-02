@@ -55,22 +55,20 @@ public class MyBookmark{
         return number == 1;
     }
 
-    public Long add(RecipeBookmarkModifyHandler handler){
+    public void add(RecipeBookmarkModifyHandler handler){
         if (!deleted){
             throw new BusinessException(MyBookmarkExceptionType.ALREADY_ADD_BOOKMARK);
         }
         deleted = false;
         handler.added(recipeId);
-        return bookmarkId;
     }
 
-    public Long deleted(RecipeBookmarkModifyHandler handler){
+    public void deleted(RecipeBookmarkModifyHandler handler){
         if (deleted){
             throw new BusinessException(MyBookmarkExceptionType.ALREADY_DELETE_BOOKMARK);
         }
         deleted = true;
         handler.deleted(recipeId);
-        return bookmarkId;
     }
 
 }

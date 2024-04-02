@@ -53,6 +53,7 @@ public class CommentUpdateQueryRepository {
                         commentHeart.commentId.eq(commentId),
                         commentHeart.deleteStatus.eq(false))
                 .execute();
+
         em.flush(); //
         em.clear();
         return WriteQueryResultType.findTypeByResult(result);

@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.JobScope;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.configuration.annotation.*;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
@@ -24,7 +21,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.ColumnMapRowMapper;
 import refrigerator.back.global.exception.BasicHttpMethod;
 import refrigerator.back.global.time.CurrentTime;
 import refrigerator.back.ingredient.application.domain.entity.RegisteredIngredient;
@@ -41,16 +37,10 @@ import refrigerator.batch.common.querydsl.options.QuerydslNoOffsetNumberOptions;
 import refrigerator.batch.common.querydsl.reader.QuerydslNoOffsetPagingItemReader;
 import refrigerator.batch.dto.SuggestedIngredientDTO;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.sql.DataSource;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static refrigerator.back.ingredient.application.domain.entity.QSuggestedIngredient.suggestedIngredient;
 import static refrigerator.back.ingredient.application.domain.entity.QRegisteredIngredient.registeredIngredient;
@@ -60,11 +50,8 @@ import static refrigerator.back.member.application.domain.entity.QMember.member;
 @RequiredArgsConstructor
 @Configuration
 @Slf4j
-@ConditionalOnProperty(name = "job.name", havingValue = "updateIngredientBatch_Job")
+//@ConditionalOnProperty(name = "job.name", havingValue = "updateIngredientBatch_Job")
 public class NotificationAddIngredientConfig {
-
-    public static final String BATCH_NAME = "updateIngredientBatch";
-    public static final String JOB_NAME = BATCH_NAME + "_Job";
 
     private final EntityManagerFactory entityManagerFactory;
     private final JobBuilderFactory jobBuilderFactory;
@@ -88,9 +75,9 @@ public class NotificationAddIngredientConfig {
      * step 3 : 쌓여있는 제안 식재료 삭제
      */
 
-    @Bean(name = JOB_NAME)
+    @Bean
     public Job updateIngredientJob() throws Exception {
-        return jobBuilderFactory.get(JOB_NAME)
+        return jobBuilderFactory.get("updateIngredientJob")
                 .preventRestart()
                 .start(analyzeIngredientStep())
                 .next(updateIngredientStep())
@@ -208,7 +195,7 @@ public class NotificationAddIngredientConfig {
 
             Notification notification = Notification.create(
                     NotificationType.INGREDIENT,
-                    "/refrigerator/addUp/info?ingredient=" + suggestedIngredient.getName(),
+                    "/refrigerator/add/info?ingredient=" + suggestedIngredient.getName(),
                     suggestedIngredient.getEmail(),
                     BasicHttpMethod.GET.name(),
                     currentTime.now()

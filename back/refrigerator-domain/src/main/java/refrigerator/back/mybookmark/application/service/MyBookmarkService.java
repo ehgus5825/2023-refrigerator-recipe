@@ -1,6 +1,7 @@
 package refrigerator.back.mybookmark.application.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import refrigerator.back.global.exception.BusinessException;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class MyBookmarkService implements AddMyBookmarkUseCase, DeleteMyBookmarkUseCase {
 
     private final FindMyBookmarkPort findMyBookmarkPort;
@@ -33,7 +35,8 @@ public class MyBookmarkService implements AddMyBookmarkUseCase, DeleteMyBookmark
             MyBookmark newBookmark = MyBookmark.create(memberId, recipeId, currentTime.now(), modifyHandler);
             return saveMyBookmarkPort.save(newBookmark);
         }
-        return myBookmark.add(modifyHandler);
+        myBookmark.add(modifyHandler);
+        return saveMyBookmarkPort.save(myBookmark);
     }
 
     @Override
@@ -42,6 +45,7 @@ public class MyBookmarkService implements AddMyBookmarkUseCase, DeleteMyBookmark
         if (myBookmark == null){
             throw new BusinessException(MyBookmarkExceptionType.NOT_FOUND_BOOKMARK);
         }
-        return myBookmark.deleted(modifyHandler);
+        myBookmark.deleted(modifyHandler);
+        return saveMyBookmarkPort.save(myBookmark);
     }
 }

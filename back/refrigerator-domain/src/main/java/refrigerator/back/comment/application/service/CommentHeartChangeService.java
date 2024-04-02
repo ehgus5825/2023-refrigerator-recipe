@@ -20,22 +20,26 @@ public class CommentHeartChangeService implements ChangeCommentHeartCountUseCase
     private final ChangeCommentHeartCountPort changeCommentHeartCountPort;
     private final SaveCommentHeartPeoplePort saveCommentHeartPeoplePort;
     private final RemoveCommentHeartPeoplePort removeCommentHeartPeoplePort;
+    private final FindCommentHeartPeoplePort commentHeartPeoplePort;
     private final RandomUUID randomUUID;
 
     @Override
-    public String add(Long commentId, String memberId) {
-        Boolean isExistPeople = checkExistCommentHeartPeoplePort.checkByCommentIdAndMemberId(commentId, memberId);
+    public void add(Long commentId, String memberId) {
+        Boolean isExistPeople = checkExistCommentHeartPeoplePort.checkByCommentIdAndMemberIdExist(commentId, memberId);
         CommentHeartPeople commentHeartPeople = CommentHeartPeople.add(isExistPeople, randomUUID, commentId, memberId);
         saveCommentHeartPeoplePort.save(commentHeartPeople);
+
         changeCommentHeartCountPort.change(commentId, CommentHeartValue.ADD);
-        return commentHeartPeople.getId();
     }
 
     @Override
-    public void reduce(Long commentId, String peopleId) {
-        Boolean isExistPeople = checkExistCommentHeartPeoplePort.checkByPeopleId(peopleId);
+    public void reduce(Long commentId, String memberId) {
+        Boolean isExistPeople = checkExistCommentHeartPeoplePort.checkByCommentIdAndMemberIdExist(commentId, memberId);
         CommentHeartPeople.checkReduceRequest(isExistPeople);
-        removeCommentHeartPeoplePort.remove(peopleId);
+
+        CommentHeartPeople commentHeartPeople = commentHeartPeoplePort.findByCommentIdAndMemberId(commentId, memberId);
+        removeCommentHeartPeoplePort.remove(commentHeartPeople);
+
         changeCommentHeartCountPort.change(commentId, CommentHeartValue.REDUCE);
     }
 }

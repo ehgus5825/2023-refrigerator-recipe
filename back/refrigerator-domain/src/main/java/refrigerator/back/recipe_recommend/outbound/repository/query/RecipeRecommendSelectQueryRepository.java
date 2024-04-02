@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import refrigerator.back.recipe.application.domain.entity.QRecipeViews;
 import refrigerator.back.recipe_recommend.outbound.dto.*;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import static refrigerator.back.ingredient.application.domain.entity.QIngredient
 import static refrigerator.back.recipe.application.domain.entity.QRecipe.recipe;
 import static refrigerator.back.recipe.application.domain.entity.QRecipeIngredient.recipeIngredient;
 import static refrigerator.back.recipe.application.domain.entity.QRecipeScore.recipeScore;
+import static refrigerator.back.recipe.application.domain.entity.QRecipeViews.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -49,7 +51,8 @@ public class RecipeRecommendSelectQueryRepository {
                         ingredient.capacityUnit))
                 .from(ingredient)
                 .where(ingredient.email.eq(memberId),
-                        ingredient.expirationDate.goe(startDate))
+                        ingredient.expirationDate.goe(startDate),
+                        ingredient.deleted.eq(false))
                 .fetch();
     }
 
@@ -63,9 +66,11 @@ public class RecipeRecommendSelectQueryRepository {
                         recipe.recipeId,
                         recipe.recipeName,
                         recipe.image,
-                        recipeScore.scoreAvg))
+                        recipeScore.scoreAvg,
+                        recipeViews.views))
                 .from(recipe)
                 .innerJoin(recipeScore).on(recipeScore.recipeId.eq(recipe.recipeId))
+                .leftJoin(recipeViews).on(recipeViews.recipeID.eq(recipe.recipeId))
                 .where(recipe.recipeId.in(ids))
                 .fetch();
     }

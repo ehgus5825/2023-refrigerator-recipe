@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import;
 import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.ingredient.application.dto.IngredientDeductionDTO;
 import refrigerator.back.ingredient.application.dto.MyIngredientDTO;
+import refrigerator.back.ingredient.application.port.out.DeleteIngredientPort;
 import refrigerator.back.ingredient.application.port.out.UpdateVolumeIngredientPort;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import static org.assertj.core.api.Assertions.*;
 class MyIngredientCollectionTest {
 
     @Autowired UpdateVolumeIngredientPort updateVolumeIngredientPort;
+    @Autowired DeleteIngredientPort deleteIngredientPort;
 
     @Test
     @DisplayName("빈 리스트 테스트")
@@ -83,7 +85,7 @@ class MyIngredientCollectionTest {
 
 
         MyIngredientCollection collection = new MyIngredientCollection(myIngredients, dtos);
-        assertThatThrownBy(() -> collection.deduction(updateVolumeIngredientPort))
+        assertThatThrownBy(() -> collection.deduction(updateVolumeIngredientPort, deleteIngredientPort))
                 .isInstanceOf(BusinessException.class);
     }
 
@@ -112,7 +114,7 @@ class MyIngredientCollectionTest {
         dtos.add(builder2.name("피클").unit("개").build());
 
         MyIngredientCollection collection = new MyIngredientCollection(myIngredients, dtos);
-        assertThatThrownBy(() -> collection.deduction(updateVolumeIngredientPort))
+        assertThatThrownBy(() -> collection.deduction(updateVolumeIngredientPort, deleteIngredientPort))
                 .isInstanceOf(BusinessException.class);
     }
 
@@ -140,7 +142,7 @@ class MyIngredientCollectionTest {
         dtos.add(builder2.name("피클").unit("개").build());
 
         MyIngredientCollection collection = new MyIngredientCollection(myIngredients, dtos);
-        assertThatThrownBy(() -> collection.deduction(updateVolumeIngredientPort))
+        assertThatThrownBy(() -> collection.deduction(updateVolumeIngredientPort, deleteIngredientPort))
                 .isInstanceOf(BusinessException.class);
     }
 }

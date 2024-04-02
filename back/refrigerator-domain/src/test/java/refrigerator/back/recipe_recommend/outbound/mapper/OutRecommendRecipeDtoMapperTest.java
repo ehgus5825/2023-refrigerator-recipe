@@ -62,18 +62,19 @@ class OutRecommendRecipeDtoMapperTest {
         String recipeName = "recipeName";
         String recipeImageName = "recipeImageName";
         double scoreAvg = 3.2;
-        OutRecommendRecipeDto outDto = new OutRecommendRecipeDto(recipeId, recipeName, recipeImageName, scoreAvg);
+        Integer views = 5;
+        OutRecommendRecipeDto outDto = new OutRecommendRecipeDto(recipeId, recipeName, recipeImageName, scoreAvg, views);
         // when
-        String recipeImage = "recipeImage";
         double percent = 60.0;
-        RecommendRecipeDto result = mapper.toRecommendRecipeDto(outDto, recipeImage, percent);
+        RecommendRecipeDto result = mapper.toRecommendRecipeDto(outDto, percent);
         // then
         RecommendRecipeDto expected = RecommendRecipeDto.builder()
                 .recipeId(recipeId)
                 .recipeName(recipeName)
-                .recipeImage(recipeImage)
+                .recipeImage(recipeImageName)
                 .percent("60.00")
                 .scoreAvg(scoreAvg)
+                .views(5)
                 .build();
         assertEquals(expected, result);
     }

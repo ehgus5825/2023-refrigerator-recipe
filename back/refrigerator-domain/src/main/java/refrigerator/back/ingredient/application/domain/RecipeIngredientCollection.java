@@ -1,5 +1,6 @@
 package refrigerator.back.ingredient.application.domain;
 
+import lombok.extern.slf4j.Slf4j;
 import refrigerator.back.global.exception.BusinessException;
 import refrigerator.back.ingredient.application.dto.MyIngredientDTO;
 import refrigerator.back.ingredient.application.dto.RecipeIngredientDto;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 
 import static refrigerator.back.ingredient.exception.IngredientExceptionType.NOT_FOUND_REGISTERED_RECIPE;
 
+@Slf4j
 public class RecipeIngredientCollection {
 
     List<RecipeIngredientDto> recipeIngredients;

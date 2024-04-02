@@ -2,8 +2,8 @@ package refrigerator.back.notification.application.domain.entity;
 
 import lombok.*;
 import refrigerator.back.global.exception.BusinessException;
+import refrigerator.back.ingredient.exception.IngredientExceptionType;
 import refrigerator.back.notification.application.domain.value.NotificationType;
-import refrigerator.back.notification.exception.NotificationExceptionType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -60,7 +60,7 @@ public class Notification {
 
     public void createExpirationDateMessage(String name, Long count, Integer days){
         if(count < 1)
-            throw new BusinessException(NotificationExceptionType.TEST_ERROR);
+            throw new BusinessException(IngredientExceptionType.NOT_FOUND_INGREDIENT);
         else if(count > 1)
             this.message = name + " 외 "+ (count - 1) + "개 식재료의 소비기한이 " + days + "일 남았습니다. 식재료 확인하러가기!";
         else

@@ -2,11 +2,15 @@ package refrigerator.back.comment.outbound.adapter;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import refrigerator.back.comment.application.domain.entity.CommentHeartPeople;
 import refrigerator.back.comment.application.dto.CommentHeartPeopleDto;
 import refrigerator.back.comment.application.port.out.CheckExistCommentHeartPeoplePort;
 import refrigerator.back.comment.application.port.out.FindCommentHeartPeoplePort;
+import refrigerator.back.comment.exception.CommentExceptionType;
 import refrigerator.back.comment.outbound.mapper.OutCommentHeartPeopleMappingCollection;
 import refrigerator.back.comment.outbound.repository.redis.CommentHeartPeopleRedisRepository;
+import refrigerator.back.global.exception.BusinessException;
+import refrigerator.back.member.exception.MemberExceptionType;
 
 import java.util.Map;
 
@@ -23,13 +27,14 @@ public class CommentHeartPeopleLookUpAdapter implements FindCommentHeartPeoplePo
     }
 
     @Override
-    public Boolean checkByCommentIdAndMemberId(Long commentId, String memberId) {
+    public Boolean checkByCommentIdAndMemberIdExist(Long commentId, String memberId) {
         return redisRepository.findByCommentIdAndMemberId(commentId, memberId).isPresent();
     }
 
     @Override
-    public Boolean checkByPeopleId(String peopleId) {
-        return redisRepository.findById(peopleId).isPresent();
+    public CommentHeartPeople findByCommentIdAndMemberId(Long commentId, String memberId) {
+        return redisRepository.findByCommentIdAndMemberId(commentId, memberId)
+                .orElseThrow(() -> new BusinessException(CommentExceptionType.FAIL_MODIFY_COMMENT));
     }
 
 }

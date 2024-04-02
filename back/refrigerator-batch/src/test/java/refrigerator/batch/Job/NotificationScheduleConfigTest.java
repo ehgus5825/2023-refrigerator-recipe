@@ -86,7 +86,7 @@ class NotificationScheduleConfigTest extends BatchTestSupport{
         //////////////////멤버 알림/////////////////////
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .memberId(email)
+                .email(email)
                 .sign(false)
                 .build();
 
@@ -148,7 +148,7 @@ class NotificationScheduleConfigTest extends BatchTestSupport{
         if(ingredient1 != null) {
             assertThat(notificationList.get(0).getMemberId()).isEqualTo(ingredient1.getEmail());
             assertThat(notificationList.get(0).getMessage()).isEqualTo(ingredient1.getName() + " 외 " + (ingredient1.getCount() - 1) + "개 식재료의 소비기한이 " + 1 + "일 남았습니다. 식재료 확인하러가기!");
-            assertThat(notificationList.get(0).getPath()).isEqualTo("/notification/exp?day=1");
+            assertThat(notificationList.get(0).getPath()).isEqualTo("/notification/exp?query=1");
             assertThat(notificationList.get(0).getType()).isEqualTo(NotificationType.ONE_DAY_BEFORE_EXPIRATION);
             assertThat(notificationList.get(0).getMethod()).isEqualTo(BasicHttpMethod.GET.name());
         }
@@ -158,12 +158,12 @@ class NotificationScheduleConfigTest extends BatchTestSupport{
         if(ingredient2 != null) {
             assertThat(notificationList.get(1).getMemberId()).isEqualTo(ingredient2.getEmail());
             assertThat(notificationList.get(1).getMessage()).isEqualTo(ingredient2.getName() + "의 소비기한이 " + 3 + "일 남았습니다. 식재료 확인하러가기!");
-            assertThat(notificationList.get(1).getPath()).isEqualTo("/notification/exp?day=3");
+            assertThat(notificationList.get(1).getPath()).isEqualTo("/notification/exp?query=3");
             assertThat(notificationList.get(1).getType()).isEqualTo(NotificationType.THREE_DAY_BEFORE_EXPIRATION);
             assertThat(notificationList.get(1).getMethod()).isEqualTo(BasicHttpMethod.GET.name());
         }
 
-        memberNotificationPersistenceRepository.findByMemberId(email).ifPresent(
+        memberNotificationPersistenceRepository.findByEmail(email).ifPresent(
                 memberNotification1 -> {
                     log.info("enter");
                     assertThat(memberNotification1.getId()).isEqualTo(mn.getId());

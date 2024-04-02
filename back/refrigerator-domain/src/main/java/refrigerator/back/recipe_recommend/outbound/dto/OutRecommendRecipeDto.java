@@ -15,22 +15,19 @@ public class OutRecommendRecipeDto {
     private String recipeName;
     private String recipeImageName;
     private Double scoreAvg;
+    private Integer views;
 
     @QueryProjection
-    public OutRecommendRecipeDto(Long recipeId, String recipeName, String recipeImageName, Double scoreAvg) {
+    public OutRecommendRecipeDto(Long recipeId, String recipeName, String recipeImageName, Double scoreAvg, Integer views) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.recipeImageName = recipeImageName;
         this.scoreAvg = scoreAvg;
+        this.views = views;
     }
 
-    public RecommendRecipeDto mapping(OutRecommendRecipeDtoMapper mapper,
-                                      ImageUrlConvert imageUrlConvert,
-                                      Double percent){
-        return mapper.toRecommendRecipeDto(
-                this,
-                imageUrlConvert.getUrl(recipeImageName),
-                percent);
+    public RecommendRecipeDto mapping(OutRecommendRecipeDtoMapper mapper, Double percent){
+        return mapper.toRecommendRecipeDto(this, percent);
     }
 
 }

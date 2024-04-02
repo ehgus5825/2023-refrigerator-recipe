@@ -20,14 +20,16 @@ public interface OutRecipeDtoMapper {
     @Mappings({
             @Mapping(source = "dto.cookingTime", target = "cookingTime", qualifiedByName = "addCookingTimeUnit"),
             @Mapping(source = "dto.kcal", target = "kcal", qualifiedByName = "addKcalUnit"),
-            @Mapping(source = "dto.servings", target = "servings", qualifiedByName = "addServingsUnit")
+            @Mapping(source = "dto.servings", target = "servings", qualifiedByName = "addServingsUnit"),
+            @Mapping(source = "dto.recipeImageName", target = "recipeImage")
     })
-    RecipeDto toRecipeDto(OutRecipeDto dto, String recipeImage);
+    RecipeDto toRecipeDto(OutRecipeDto dto);
 
     @Mapping(target = "isOwned", ignore = true)
     RecipeIngredientDto toRecipeIngredientDto(OutRecipeIngredientDto dto);
 
-    RecipeCourseDto toRecipeCourseDto(OutRecipeCourseDto dto, String courseImage);
+    @Mapping(source = "dto.imageName", target = "courseImage")
+    RecipeCourseDto toRecipeCourseDto(OutRecipeCourseDto dto);
 
     @Named("addKcalUnit")
     static String addKcalUnit(Integer kcal){

@@ -24,7 +24,7 @@ public class OutRecipeCourseDto {
         this.imageName = imageName;
     }
 
-    public RecipeCourseDto mapping(OutRecipeDtoMapper mapper, ImageUrlConvert imageUrlConvert){
-        return mapper.toRecipeCourseDto(this, null);
+    public RecipeCourseDto mapping(OutRecipeDtoMapper mapper){
+        return mapper.toRecipeCourseDto(this);
     }
 }

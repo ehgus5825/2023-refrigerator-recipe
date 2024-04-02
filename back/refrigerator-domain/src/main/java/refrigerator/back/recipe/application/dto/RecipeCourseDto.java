@@ -11,6 +11,6 @@ public class RecipeCourseDto {
     private String step;
     private String explanation;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+//    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String courseImage;
 }

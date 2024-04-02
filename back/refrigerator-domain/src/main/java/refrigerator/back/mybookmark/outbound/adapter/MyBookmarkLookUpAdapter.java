@@ -19,19 +19,18 @@ public class MyBookmarkLookUpAdapter implements FindMyBookmarksPort {
 
     private final MyBookmarkSelectQueryRepository queryRepository;
     private final OutMyBookmarkDtoMapper mapper;
-    private final ImageUrlConvert imageUrlConvert;
 
     @Override
     public List<MyBookmarkDto> findBookmarks(String memberId, int page, int size) {
         return queryRepository.selectMyBookmarks(memberId, PageRequest.of(page, size)).stream()
-                .map(bookmark -> bookmark.mapping(mapper, imageUrlConvert))
+                .map(bookmark -> bookmark.mapping(mapper))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<MyBookmarkPreviewDto> findBookmarkPreviews(String memberId, int size) {
         return queryRepository.selectMyBookmarkPreviews(memberId, PageRequest.of(0, size)).stream()
-                .map(bookmark -> bookmark.mapping(mapper, imageUrlConvert))
+                .map(bookmark -> bookmark.mapping(mapper))
                 .collect(Collectors.toList());
     }
 

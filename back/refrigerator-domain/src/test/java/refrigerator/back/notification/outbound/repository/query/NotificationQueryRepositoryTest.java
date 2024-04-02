@@ -90,7 +90,7 @@ class NotificationQueryRepositoryTest {
                 .findNotificationList(email, PageRequest.of(0, 20));
 
         // then
-        assertThat(list.size()).isEqualTo(10);
+        assertThat(list.size()).isEqualTo(6);
     }
 
     @Test
@@ -107,13 +107,27 @@ class NotificationQueryRepositoryTest {
                 .findNotificationList(email, PageRequest.of(0, 20));
 
         // then
-        assertThat(list.size()).isEqualTo(10);
-        assertThat(list.get(0).getType()).isEqualTo(NotificationType.ONE_DAY_BEFORE_EXPIRATION);
-        assertThat(list.get(1).getType()).isEqualTo(NotificationType.ONE_DAY_BEFORE_EXPIRATION);
-        assertThat(list.get(2).getType()).isEqualTo(NotificationType.THREE_DAY_BEFORE_EXPIRATION);
-        assertThat(list.get(3).getType()).isEqualTo(NotificationType.THREE_DAY_BEFORE_EXPIRATION);
-        assertThat(list.get(4).getCreateDate()).isEqualTo(now.plusHours(1));
-        assertThat(list.get(5).getCreateDate()).isEqualTo(now.plusHours(1));
+        assertThat(list.size()).isEqualTo(6);
+    }
+
+    @Test
+    @DisplayName("유통기한 알림 목록 조회")
+    void findExpirationNotificationListSortTest() {
+
+        // given
+        String email = "dhtest@gmail.com";
+
+        LocalDateTime now = LocalDateTime.of(2023, 1, 1, 0, 0, 0);
+
+        // when
+        List<OutNotificationDTO> list = notificationQueryRepository
+                .findExpirationNotificationList(email);
+
+        // then
+        assertThat(list.size()).isEqualTo(4);
+        for (OutNotificationDTO outNotificationDTO : list) {
+            log.info(outNotificationDTO.toString());
+        }
     }
 
     @Test

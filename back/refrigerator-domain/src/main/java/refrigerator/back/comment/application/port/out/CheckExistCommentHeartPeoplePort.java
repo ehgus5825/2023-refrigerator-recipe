@@ -1,6 +1,7 @@
 package refrigerator.back.comment.application.port.out;
 
+import refrigerator.back.comment.application.domain.entity.CommentHeartPeople;
+
 public interface CheckExistCommentHeartPeoplePort {
-    Boolean checkByCommentIdAndMemberId(Long commentId, String memberId);
-    Boolean checkByPeopleId(String peopleId);
+    Boolean checkByCommentIdAndMemberIdExist(Long commentId, String memberId);
 }

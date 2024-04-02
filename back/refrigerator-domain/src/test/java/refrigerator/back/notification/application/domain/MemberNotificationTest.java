@@ -13,13 +13,13 @@ class MemberNotificationTest {
     void memberNotificationTest() {
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .id("1")
-                .memberId("email123@gmail.com")
+                .id(1L)
+                .email("email123@gmail.com")
                 .sign(false)
                 .build();
 
-        assertThat(memberNotification.getId()).isEqualTo("1");
-        assertThat(memberNotification.getMemberId()).isEqualTo("email123@gmail.com");
+        assertThat(memberNotification.getId()).isEqualTo(1L);
+        assertThat(memberNotification.getEmail()).isEqualTo("email123@gmail.com");
         assertThat(memberNotification.getSign()).isEqualTo(false);
 
         memberNotification.setSign(true);

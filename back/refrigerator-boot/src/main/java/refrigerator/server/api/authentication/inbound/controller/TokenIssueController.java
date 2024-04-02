@@ -61,6 +61,7 @@ public class TokenIssueController {
     // 멤버 조회
     // 그 멤버 정보로 토큰 생성 (AccessToken O)
     // grantType과 함께 반환
+    // TODO : 없어져야하는 거 아닌가? 이메일 하나로 토큰을 받을 수 있다는 건 위험한데
     @PostMapping("/api/auth/issue/temporary-token")
     public TemporaryAccessTokenResponseDTO issueTemporaryToken(
             @Valid @RequestBody TemporaryAccessTokenRequestDTO request,
@@ -71,5 +72,4 @@ public class TokenIssueController {
         String authToken = issueTemporaryAccessToken.issueTemporaryAccessToken(request.getEmail());
         return new TemporaryAccessTokenResponseDTO(grantType, authToken);
     }
-
 }

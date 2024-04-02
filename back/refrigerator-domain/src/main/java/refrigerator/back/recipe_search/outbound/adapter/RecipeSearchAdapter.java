@@ -25,7 +25,7 @@ public class RecipeSearchAdapter implements FindRecipeSearchDtoPort {
     @Override
     public List<RecipeSearchDto> search(RecipeSearchCondition condition, int page, int size) {
         return repository.selectSearchRecipeDtos(condition, PageRequest.of(page, size)).stream()
-                .map(recipe -> recipe.mapping(mapper, imageUrlConvert))
+                .map(recipe -> recipe.mapping(mapper))
                 .collect(Collectors.toList());
     }
 

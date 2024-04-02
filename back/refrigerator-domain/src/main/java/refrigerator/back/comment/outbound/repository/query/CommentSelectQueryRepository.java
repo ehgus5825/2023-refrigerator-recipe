@@ -2,6 +2,7 @@ package refrigerator.back.comment.outbound.repository.query;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +25,9 @@ public class CommentSelectQueryRepository {
 
     /**
      * 댓글 미리보기 조회 쿼리
+     *
      * @param recipeId 레시피 식별자 값
-     * @param page 페이징 처리를 위한 값
+     * @param page     페이징 처리를 위한 값
      * @return 전체 댓글 개수 + 하트 수 상위 3개 댓글 반환
      */
     public List<OutCommentDto> selectPreviewComments(Long recipeId, Pageable page) {
@@ -49,28 +51,30 @@ public class CommentSelectQueryRepository {
 
     /**
      * 레시피 전체 댓글 개수 조회
+     *
      * @param recipeId 레시피 식별자
      * @return 댓글 개수 Dto
      */
-    public OutCommentNumberDto selectCommentsCount(Long recipeId){
+    public OutCommentNumberDto selectCommentsCount(Long recipeId) {
         Long number = jpaQueryFactory
                 .select(comment.count())
                 .from(comment)
-                .where(recipeIdEq(recipeId))
+                .where(recipeIdEq(recipeId), notDeleted())
                 .fetchOne();
         return new OutCommentNumberDto(number);
     }
 
     /**
      * 댓글 전체 조회 쿼리 (회원이 작성한 댓글 제외)
-     * @param recipeId 레시피 식별자 값
-     * @param memberId 사용자 id (이메일)
-     * @param page 페이징 처리를 위한 값
+     *
+     * @param recipeId      레시피 식별자 값
+     * @param memberId      사용자 id (이메일)
+     * @param page          페이징 처리를 위한 값
      * @param sortCondition 정렬 조건 (좋아요 순 or 최신 순)
      * @return 정렬 조건에 맞는 상위 11개 댓글 추출
      */
     public List<OutCommentDto> selectComments(Long recipeId, String memberId, Pageable page, CommentSortCondition sortCondition) {
-        return jpaQueryFactory
+        JPAQuery<OutCommentDto> query = jpaQueryFactory
                 .select(new QOutCommentDto(
                         comment.commentId,
                         member.nickname,
@@ -83,13 +87,22 @@ public class CommentSelectQueryRepository {
                 .leftJoin(commentHeart).on(commentHeart.commentId.eq(comment.commentId))
                 .offset(page.getOffset())
                 .limit(page.getPageSize())
-                .where(recipeIdEq(recipeId), notDeleted(), member.email.ne(memberId))
-                .orderBy(conditionEq(sortCondition))
-                .fetch();
+                .where(recipeIdEq(recipeId), notDeleted(), member.email.ne(memberId));
+
+        if (sortCondition == CommentSortCondition.HEART) {
+            query.orderBy(conditionEq(sortCondition), ifHeart(sortCondition));
+        } else {
+            query.orderBy(conditionEq(sortCondition));
+        }
+
+        List<OutCommentDto> result = query.fetch();
+
+        return result;
     }
 
     /**
      * 내가 쓴 댓글 조회
+     *
      * @param memberId 사용자 id (email)
      * @param recipeId 레시피 식별자값
      * @return
@@ -122,9 +135,16 @@ public class CommentSelectQueryRepository {
     }
 
     private OrderSpecifier<?> conditionEq(CommentSortCondition sortCondition) {
-        if (sortCondition == CommentSortCondition.HEART){
+        if (sortCondition == CommentSortCondition.HEART) {
             return commentHeart.count.desc();
         }
         return comment.commentRecord.createDateTime.desc();
+    }
+
+    private OrderSpecifier<?> ifHeart(CommentSortCondition sortCondition) {
+        if (sortCondition == CommentSortCondition.HEART) {
+            return comment.commentRecord.createDateTime.desc();
+        }
+        return null;
     }
 }

@@ -17,5 +17,5 @@ public class RecommendRecipeDto {
 
     private String percent;
 
-
+    private Integer views;
 }

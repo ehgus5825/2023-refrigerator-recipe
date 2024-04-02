@@ -26,6 +26,8 @@ public class MemberNotificationController {
         return findMemberNotificationSignUseCase.getMemberNotificationSign(memberInformation.getMemberEmail());
     }
 
+    // TODO : disable?
+
     @PutMapping("/api/notifications/sign/off")       // turn off sign
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void TurnOffNotificationSign(){

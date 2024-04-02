@@ -20,14 +20,13 @@ import java.util.stream.Collectors;
 public class MyScoreListLookUpAdapter implements FindMyScoreListPort {
 
     private final MyScoreSelectQueryRepository queryRepository;
-    private final ImageUrlConvert imageUrlConvert;
     private final OutMyScoreListDtoMapper mapper;
 
     @Override
     public List<MyScoreDetailDto> findMyScoreDetails(String memberId, int page, int size) {
         List<OutMyScoreDetailDto> scores = queryRepository.selectMyScoreDetailDtos(memberId, PageRequest.of(page, size));
         return scores.stream()
-                .map(score -> score.mapping(mapper, imageUrlConvert))
+                .map(score -> score.mapping(mapper))
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +34,7 @@ public class MyScoreListLookUpAdapter implements FindMyScoreListPort {
     public List<MyScorePreviewDto> findMyScorePreviews(String memberId, int page, int size) {
         List<OutMyScorePreviewDto> scores = queryRepository.selectMyScorePreviewDtos(memberId, PageRequest.of(page, size));
         return scores.stream()
-                .map(score -> score.mapping(mapper, imageUrlConvert))
+                .map(score -> score.mapping(mapper))
                 .collect(Collectors.toList());
     }
 }

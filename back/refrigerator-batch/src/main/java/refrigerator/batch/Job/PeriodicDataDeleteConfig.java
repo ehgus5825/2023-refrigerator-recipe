@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -18,11 +19,8 @@ import refrigerator.back.mybookmark.application.port.batch.DeleteBookmarkBatchPo
 @RequiredArgsConstructor
 @Configuration
 @Slf4j
-@ConditionalOnProperty(name = "job.name", havingValue = "periodicDeleteScheduleBatch_Job")
+//@ConditionalOnProperty(name = "job.name", havingValue = "periodicDeleteScheduleBatch_Job")
 public class PeriodicDataDeleteConfig {
-
-    public static final String BATCH_NAME = "periodicDeleteScheduleBatch";
-    public static final String JOB_NAME = BATCH_NAME + "_Job";
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
@@ -37,9 +35,9 @@ public class PeriodicDataDeleteConfig {
      * step 3 : 삭제 처리된 북마크 삭제
      */
 
-    @Bean(name = JOB_NAME)
+    @Bean
     public Job periodicDeleteScheduleJob() {
-        return jobBuilderFactory.get(JOB_NAME)
+        return jobBuilderFactory.get("periodicDeleteScheduleJob")
                 .preventRestart()
                 .start(deleteCommentStep())
                 .next(deleteIngredientStep())

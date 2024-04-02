@@ -4,9 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +37,15 @@ class MemberNotificationControllerTest {
     @DisplayName("알림 신호 조회 => 종 버튼에 빨간점이 있는지 없는지 확인")
     void getNotificationSignTest() throws Exception {
 
+
+        MemberNotification memberNotification = MemberNotification.builder()
+                .email("mstest102@gmail.com")
+                .sign(true)
+                .build();
+
+        saveMemberNotificationPort.save(memberNotification);
+
+
         mockMvc.perform(
                 get("/api/notifications/sign")
                         .header(HttpHeaders.AUTHORIZATION, TestTokenService.getToken(jsonWebTokenUseCase))
@@ -52,7 +59,7 @@ class MemberNotificationControllerTest {
     void TurnOffNotificationSignTest() throws Exception {
 
         MemberNotification memberNotification = MemberNotification.builder()
-                .memberId("mstest102@gmail.com")
+                .email("mstest102@gmail.com")
                 .sign(true)
                 .build();
 

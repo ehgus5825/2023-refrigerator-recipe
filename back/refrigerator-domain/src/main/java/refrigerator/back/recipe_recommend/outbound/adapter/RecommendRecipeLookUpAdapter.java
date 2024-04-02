@@ -19,13 +19,12 @@ public class RecommendRecipeLookUpAdapter implements FindRecommendRecipesPort {
 
     private final RecipeRecommendSelectQueryRepository queryRepository;
     private final OutRecommendRecipeDtoMapper mapper;
-    private final ImageUrlConvert imageUrlConvert;
 
     @Override
     public List<RecommendRecipeDto> findByPercentMap(Map<Long, Double> percentMap) {
         List<Long> recipeIds = new ArrayList<>(percentMap.keySet());
         return queryRepository.selectRecipeInfoByIds(recipeIds).stream()
-                .map(recipe -> recipe.mapping(mapper, imageUrlConvert, percentMap.get(recipe.getRecipeId())))
+                .map(recipe -> recipe.mapping(mapper, percentMap.get(recipe.getRecipeId())))
                 .collect(Collectors.toList());
     }
 }

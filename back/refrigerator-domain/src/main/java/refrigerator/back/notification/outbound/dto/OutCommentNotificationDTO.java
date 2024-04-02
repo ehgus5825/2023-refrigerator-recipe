@@ -12,11 +12,13 @@ public class OutCommentNotificationDTO {
 
     private String authorId;
     private Long recipeId;
+    private String recipeName;
 
     @QueryProjection
-    public OutCommentNotificationDTO(String authorId, Long recipeId) {
+    public OutCommentNotificationDTO(String authorId, Long recipeId, String recipeName) {
         this.authorId = authorId;
         this.recipeId = recipeId;
+        this.recipeName = recipeName;
     }
 
     public CommentNotificationDTO mapping(OutNotificationMapper mapper){

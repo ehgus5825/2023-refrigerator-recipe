@@ -39,11 +39,12 @@ class OutRecipeDtoMapperTest {
                 40,
                 40,
                 2,
-                "difficulty");
+                "difficulty",
+                5);
         String recipeImage = "recipeImage";
-        RecipeDto result = mapper.toRecipeDto(outRecipeDto, recipeImage);
+        RecipeDto result = mapper.toRecipeDto(outRecipeDto);
         assertNotEquals(RecipeDto.builder().build(), result);
-        assertEquals(recipeImage, result.getRecipeImage());
+        assertEquals("recipeImageName", result.getRecipeImage());
         assertTrue(kcalRegex.matcher(result.getKcal()).matches());
         assertTrue(cookingTimeRegex.matcher(result.getCookingTime()).matches());
         assertTrue(servingsRegex.matcher(result.getServings()).matches());
@@ -71,9 +72,9 @@ class OutRecipeDtoMapperTest {
                 "explanation",
                 "imageName");
         String courseImage = "courseImage";
-        RecipeCourseDto result = mapper.toRecipeCourseDto(outRecipeCourseDto, courseImage);
+        RecipeCourseDto result = mapper.toRecipeCourseDto(outRecipeCourseDto);
         assertNotEquals(RecipeCourseDto.builder().build(), result);
-        assertEquals(courseImage, result.getCourseImage());
+        assertEquals("imageName", result.getCourseImage());
     }
 
 }

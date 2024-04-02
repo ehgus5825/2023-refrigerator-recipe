@@ -20,7 +20,7 @@ public enum IngredientExceptionType implements BasicExceptionType {
     FAILED_TO_DELETE_INGREDIENTS("FAILED_TO_DELETE_INGREDIENTS", "식재료를 삭제하는데 실패하였습니다.", BAD_REQUEST),
     EXCEEDED_CAPACITY_RANGE("EXCEEDED_CAPACITY_RANGE", "용량 범위를 초과하였습니다.", BAD_REQUEST),
     INVALID_DATE("INVALID_DATE", "잘못된 날짜 값 입니다.", BAD_REQUEST),
-    EXCEEDED_EXPIRATION_DATE("EXCEEDED_EXPIRATION_DATE", "식재료의 유통기한이 초과되었습니다.", BAD_REQUEST),
+    ERROR_INGREDIENT_MATCHING("ERROR_INGREDIENT_MATCHING", "식재료 매칭 오류가 발생하였습니다.", BAD_REQUEST),
     CAPACITY_MODIFICATION_FAILED("CAPACITY_MODIFICATION_FAILED", "용량을 수정하는 데 실패하였습니다.", BAD_REQUEST);
 
     private final String errorCode;

@@ -8,4 +8,5 @@ import lombok.Getter;
 public class CommentNotificationDTO {
     private String authorId;
     private Long recipeId;
+    private String recipeName;
 }

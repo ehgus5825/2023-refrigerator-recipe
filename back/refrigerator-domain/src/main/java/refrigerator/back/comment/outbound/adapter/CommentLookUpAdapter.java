@@ -38,7 +38,7 @@ public class CommentLookUpAdapter implements FindCommentPort {
 
     @Override
     public List<CommentDto> findMyComments(String memberId, Long recipeId) {
-        Pageable page = PageRequest.of(0, 11);
+        Pageable page = PageRequest.of(0, 3);
         return mapping(queryRepository.selectMyComments(memberId, recipeId, page));
     }
 

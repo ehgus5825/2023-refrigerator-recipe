@@ -6,26 +6,36 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import refrigerator.back.global.time.CurrentTime;
+import refrigerator.batch.Job.PeriodicDataDeleteConfig;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-@RequiredArgsConstructor
+@Configuration
 public class DeleteScheduled {
 
-    private final Job periodicDeleteScheduleJob;
-    private final JobLauncher jobLauncher;
-    private final CurrentTime<LocalDateTime> currentTime;
+    @Autowired
+    private PeriodicDataDeleteConfig periodicDataDeleteConfig;
+
+    @Autowired
+    private JobLauncher jobLauncher;
+
+    @Autowired
+    private CurrentTime<LocalDateTime> currentTime;
 
     /**
      * 삭제 처리된 데이터 제거
      * (매 달 1일, 15일 마다 실행)
      * **/
-    @Scheduled(cron = "0 0 0 1,15 * *")
+//    @Scheduled(cron = "0 0 0 1,15 * *")
+//    @Scheduled(cron = "0 0/5 * * * *")
     public void deleteScheduled() throws JobParametersInvalidException, JobExecutionAlreadyRunningException,
             JobRestartException, JobInstanceAlreadyCompleteException {
 
@@ -37,6 +47,6 @@ public class DeleteScheduled {
 
         JobParameters parameters = new JobParameters(jobParameterMap);
 
-        JobExecution jobExecution = jobLauncher.run(periodicDeleteScheduleJob, parameters);
+        JobExecution jobExecution = jobLauncher.run(periodicDataDeleteConfig.periodicDeleteScheduleJob(), parameters);
     }
 }

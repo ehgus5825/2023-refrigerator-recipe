@@ -50,14 +50,14 @@ class NotificationTest {
 
         Notification notification = Notification.create(
                 NotificationType.HEART,
-                "/recipe/comment?recipeId=1&commentID=1",
+                "/recipe/comment?recipeID=1&recipeName=나물비빔밥",
                 "email123@gmain.com",
                 BasicHttpMethod.GET.name(),
                 currentTime.now()
         );
 
         assertThat(notification.getType()).isEqualTo(NotificationType.HEART);
-        assertThat(notification.getPath()).isEqualTo("/recipe/comment?recipeId=1&commentID=1");
+        assertThat(notification.getPath()).isEqualTo("/recipe/comment?recipeID=1&recipeName=나물비빔밥");
         assertThat(notification.getMemberId()).isEqualTo("email123@gmain.com");
         assertThat(notification.getMethod()).isEqualTo(BasicHttpMethod.GET.name());
         assertThat(notification.getCreateDate()).isEqualTo(currentTime.now());

@@ -1,6 +1,7 @@
 package refrigerator.server.api.ingredient.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import static refrigerator.server.api.global.exception.ValidationExceptionHandle
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class IngredientDeductionController {
 
     private final DeductionIngredientVolumeUseCase deductionIngredientVolumeUseCase;

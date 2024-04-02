@@ -19,13 +19,18 @@ public class OutIngredientDTO {
     private String name;
     private LocalDate expirationDate;
     private String imageName;
+    private Double volume;
+    private String unit;
+
 
     @QueryProjection
-    public OutIngredientDTO(Long ingredientID, String name, LocalDate expirationDate, String image) {
+    public OutIngredientDTO(Long ingredientID, String name, LocalDate expirationDate, String image, Double volume, String unit) {
         this.ingredientID = ingredientID;
         this.name = name;
         this.expirationDate = expirationDate;
         this.imageName = image;
+        this.volume = volume;
+        this.unit = unit;
     }
 
     public IngredientDTO mapping(OutIngredientMapper mapper, ImageUrlConvert imageUrlConvert){

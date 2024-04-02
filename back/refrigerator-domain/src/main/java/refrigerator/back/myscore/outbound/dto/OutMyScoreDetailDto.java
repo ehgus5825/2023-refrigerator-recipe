@@ -18,18 +18,22 @@ public class OutMyScoreDetailDto {
     private String recipeName;
     private Double myScore;
     private LocalDateTime createDateTime;
+    private Double scoreAvg;
+    private Integer views;
 
     @QueryProjection
-    public OutMyScoreDetailDto(Long scoreId, Long recipeId, String recipeImageName, String recipeName, Double myScore, LocalDateTime createDateTime) {
+    public OutMyScoreDetailDto(Long scoreId, Long recipeId, String recipeImageName, String recipeName, Double myScore, LocalDateTime createDateTime, Double scoreAvg, Integer views) {
         this.scoreId = scoreId;
         this.recipeId = recipeId;
         this.recipeImageName = recipeImageName;
         this.recipeName = recipeName;
         this.myScore = myScore;
         this.createDateTime = createDateTime;
+        this.scoreAvg = scoreAvg;
+        this.views = views;
     }
 
-    public MyScoreDetailDto mapping(OutMyScoreListDtoMapper mapper, ImageUrlConvert imageUrlConvert){
-        return mapper.toMyScoreDetailDto(this, imageUrlConvert.getUrl(recipeImageName));
+    public MyScoreDetailDto mapping(OutMyScoreListDtoMapper mapper){
+        return mapper.toMyScoreDetailDto(this);
     }
 }

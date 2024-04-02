@@ -3,6 +3,7 @@ package refrigerator.back.recipe.outbound.repository.query;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import refrigerator.back.global.exception.WriteQueryResultType;
 
@@ -14,6 +15,7 @@ import static refrigerator.back.recipe.application.domain.entity.QRecipeViews.re
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class RecipeUpdateQueryRepository {
 
     private final EntityManager em;
@@ -44,6 +46,9 @@ public class RecipeUpdateQueryRepository {
      * @return
      */
     public WriteQueryResultType updateRecipeBookmarkCount(Long recipeId, int value) {
+
+        log.info("{}", value);
+
         long result = jpaQueryFactory
                 .update(recipeBookmark)
                 .set(recipeBookmark.count, recipeBookmark.count.add(value))
@@ -58,7 +63,9 @@ public class RecipeUpdateQueryRepository {
     }
 
     public BooleanExpression decideUpdateCondition(int value) {
-        return recipeBookmark.count.goe((value > 0) ? 1 : 0);
+        if(value == -1)
+            return recipeBookmark.count.goe(1);
+        return null;
     }
 
 }

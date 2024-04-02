@@ -22,7 +22,6 @@ class RecipeUpdateQueryRepositoryTest {
     @Test
     @DisplayName("value에 따른 조건절 확인하기")
     void decideUpdateCondition(){
-        assertTrue(queryRepository.decideUpdateCondition(1).toString().contains("1"));
-        assertTrue(queryRepository.decideUpdateCondition(-1).toString().contains("0"));
+        assertTrue(queryRepository.decideUpdateCondition(-1).toString().contains("1"));
     }
 }
