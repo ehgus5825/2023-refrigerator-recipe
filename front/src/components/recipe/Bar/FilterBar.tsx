@@ -12,8 +12,10 @@ export default function FilterBar({
 	setActiveFilter,
 	setIsFilterMenuBottomSheetShow,
 }: FilterBarProps) {
+
 	const onFilterBtnClick = async (filter: RecipeFilter) => {
-		const data = await filter.fetchFilterMenu();
+		const data = filter.fetchFilterMenu;
+		
 		setActiveFilter({
 			name: filter.name,
 			activeItem: filter.activeItem,
@@ -29,7 +31,9 @@ export default function FilterBar({
 					{filter.activeItem === "전체" ? (
 						<button>{filter.name}</button>
 					) : (
-						<button className={styles.selected}>{filter.activeItem}</button>
+						<button className={styles.selected}>
+							{filter.activeItem}
+						</button>
 					)}
 				</div>
 			))}

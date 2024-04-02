@@ -41,6 +41,7 @@ export default function IngredientRequestModal({
 					<div className={styles.inputContainer}>
 						<span>단위</span>
 						<Input setValue={setUnit} usage="modal" />
+						{/* 단위 select로 변경해야함. (개, g, ml, 장, 묶음)*/}
 					</div>
 				</div>
 			</Modal.Body>

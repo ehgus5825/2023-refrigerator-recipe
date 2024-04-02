@@ -22,12 +22,14 @@ const initialState: IngredientDataState = {
 	isDataEnd: false,
 };
 
+// 식재료 목록 조회
+
 export const getIngredientData = createAsyncThunk<
 	IngredientBrief[],
 	IngredientDataState["settings"]
 >("get/ingredients", async (payload) => {
 	const { page, storage, isExpired } = payload;
-	const url = `/api/ingredients?page=${page}&storage=${storage}&deadline=${isExpired}`;
+	const url = `/api/ingredients/search?page=${page}&storage=${storage}&deadline=${isExpired}`;
 	const res = await instance.get(url);
 	return res.data.data;
 });

@@ -39,7 +39,6 @@ export default function AddIngredientInfoPage({ name }: pageProps) {
 			const data = await getIngredientUnit(name);
 			setUnit(data);
 		})();
-		console.log(storage);
 	}, []);
 
 	const updateIngredient = (key: string, value: string | number) => {

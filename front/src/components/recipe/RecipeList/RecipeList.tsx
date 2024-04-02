@@ -13,17 +13,17 @@ export default function RecipeList({ recipeData }: RecipeListProps) {
 		<div className={styles.recipelistContainer}>
 			{recipeData.map((recipe) => (
 				<Link
-					key={recipe.recipeID}
+					key={recipe.recipeId}
 					style={{ textDecoration: "none" }}
-					href={`/recipe/info?recipeID=${recipe.recipeID}`}
+					href={`/recipe/info?recipeID=${recipe.recipeId}`}
 				>
 					<div className={styles.recipeContainer}>
-						<img src={recipe.image} className={styles.recipeImage} />
+						<img src={recipe.recipeImage} className={styles.recipeImage} />
 						<div className={styles.recipeInfoContainer}>
 							<div className={styles.recipeName}>{recipe.recipeName}</div>
 							<div className="d-flex gap-3">
 								{recipe.scoreAvg != 0 && (
-									<Stars id={recipe.recipeID} score={recipe.scoreAvg} label />
+									<Stars id={recipe.recipeId} score={recipe.scoreAvg} label />
 								)}
 								<div className={styles.recipeInfo}>
 									<EyeFill width="16" height="16" />

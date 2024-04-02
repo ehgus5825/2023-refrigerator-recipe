@@ -30,7 +30,7 @@ export default function RecipeInfo({
 				<span />
 				<Tooltip
 					messageLines={tooltipMessageLines}
-					style={{ top: "40px", left: "-185px", width: "300px" }}
+					style={{ top: "40px", left: "-185px", width: "330px" }}
 				>
 					<QuestionCircle className={styles.questionIcon} />
 				</Tooltip>

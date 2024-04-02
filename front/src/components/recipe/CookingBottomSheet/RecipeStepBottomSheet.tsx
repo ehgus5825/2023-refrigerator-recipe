@@ -59,10 +59,10 @@ export default function RecipeStepBottomSheet({
 					</div>
 
 					<div className={styles.stepContent}>
-						{recipeSteps[activeIndex].image && (
+						{recipeSteps[activeIndex].courseImage && (
 							<img
 								className={styles.image}
-								src={recipeSteps[activeIndex].image.replace(/,+$/, "")}
+								src={recipeSteps[activeIndex].courseImage.replace(/,+$/, "")}
 							/>
 						)}
 

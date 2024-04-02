@@ -3,8 +3,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-top: 25px;
-	gap: 15px;
+	margin-top: 45px;
 }
 
 .registerTitle {
@@ -27,17 +26,18 @@
 .checkPw,
 .clickBtn,
 .notice {
+	font-size: 14px;
 	margin-top: -10px;
 }
 
 .checkEmailTrue,
 .checkPwTrue {
-	color: blue;
+	color: #6fb2d2;
 }
 
 .checkEmailFalse,
 .checkPwFalse {
-	color: red;
+	color: #d76b6b;
 }
 
 .clickTrue {
@@ -50,10 +50,20 @@
 }
 
 .regularPw {
-	color: #6fb2d2;
+	color: #d76b6b;
+	margin-top: -10px;
+	margin-bottom: 20px;
 	span {
 		display: flex;
 		font-size: 14px;
 		justify-content: left;
 	}
+}
+
+.InputContentNickname{
+	margin-top: 10px;
+}
+
+.modalBtn{
+	margin-top: 35px;
 }

@@ -1,4 +1,4 @@
-import { login } from "@/api/login";
+import { login } from "@/api/auth";
 import styles from "./styles.module.scss";
 import InputContent from "@/components/member/InputContent/InputContent";
 import LinkBtn2 from "@/components/member/LinkBtn/LinkBtn2";
@@ -41,7 +41,9 @@ export default function LoginEmail() {
 					onEnterPress={handleEnterPress}
 				/>
 
-				<LinkBtn2 title={"로그인"} email={email} password={password} />
+				<div className={styles.loginbtn}>
+					<LinkBtn2 title={"로그인"} email={email} password={password} />
+				</div>
 			</div>
 		</BackLayout>
 	);

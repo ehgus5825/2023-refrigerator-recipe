@@ -1,5 +1,5 @@
 export type Storage = "냉장" | "냉동" | "실온" | "조미료";
-export type CommentSortType = "좋아요순" | "최신순";
+export type CommentSortType = "HEART" | "DATE";
 export type RecipeFilterName =
 	| "요리 유형"
 	| "주재료 유형"

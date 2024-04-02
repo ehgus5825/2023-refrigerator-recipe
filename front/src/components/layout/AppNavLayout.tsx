@@ -9,6 +9,9 @@ type layoutProps = {
 	children: React.ReactNode;
 };
 
+// AppBar : 마이페이지 아이콘 + 알림 아이콘 + 식재료 추가 아이콘
+// NavBar
+
 export default function AppNavLayout({ title, children }: layoutProps) {
 	return (
 		<div className={styles.layoutContainer}>

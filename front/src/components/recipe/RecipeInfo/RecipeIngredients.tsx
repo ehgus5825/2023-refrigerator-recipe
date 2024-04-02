@@ -1,4 +1,4 @@
-import { CheckCircle, CheckCircleFill, CheckLg } from "react-bootstrap-icons";
+import { CheckCircleFill } from "react-bootstrap-icons";
 import { RecipeIngredient } from "@/types";
 import styles from "./RecipeInfo.module.scss";
 
@@ -17,6 +17,7 @@ export default function RecipeIngredients({
 		const typeIngredients = ingredients.filter(
 			(ingredient) => ingredient.type === type,
 		);
+
 		if (typeIngredients.length !== 0) {
 			acc.set(type, typeIngredients);
 		}
@@ -38,7 +39,7 @@ export default function RecipeIngredients({
 						<div>
 							{typeIngredients.map((ingredient: RecipeIngredient) => (
 								<div
-									key={ingredient.ingredientID}
+									key={ingredient.ingredientId}
 									className={
 										ingredient.isOwned
 											? styles.recipeIngredientInfoSelected

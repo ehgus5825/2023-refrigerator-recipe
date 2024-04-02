@@ -51,12 +51,16 @@ export default function IngredientInfoPage() {
 							disabled
 						/>
 					</FormLabel>
+					<div className={styles.btnContainer}>
+						<Link href={`/refrigerator/modify`}>
+							<BottomBtn label="수정하기" />
+						</Link>
+					</div>
 				</div>
+				
 			</div>
 
-			<Link href={`/refrigerator/modify`}>
-				<BottomBtn label="수정하기" />
-			</Link>
+
 
 			<IngredientDeleteModal
 				show={isDeleteModalOn}

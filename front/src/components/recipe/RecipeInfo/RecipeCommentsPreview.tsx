@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./RecipeInfo.module.scss";
 import { RecipeComment } from "@/types";
-import { getHeartCommentIDs } from "@/api";
 import Comment from "../Comment/Comment";
 import Link from "next/link";
 
@@ -10,7 +9,6 @@ type RecipeCommentsPreviewProps = {
 	recipeName: string;
 	commentData: RecipeComment[];
 	commentNum: number;
-	setCommentData: Function;
 };
 
 export default function RecipeCommentsPreview({
@@ -18,16 +16,7 @@ export default function RecipeCommentsPreview({
 	recipeName,
 	commentData,
 	commentNum,
-	setCommentData,
 }: RecipeCommentsPreviewProps) {
-	const [heartCommentIDs, setHeartCommentIDs] = useState<number[]>([]);
-
-	useEffect(() => {
-		(async () => {
-			const heartData = await getHeartCommentIDs();
-			setHeartCommentIDs(heartData);
-		})();
-	}, []);
 
 	return (
 		<div className={styles.recipeInfoContainer}>
@@ -43,12 +32,9 @@ export default function RecipeCommentsPreview({
 
 			<div className={styles.recipeCommentList}>
 				{commentData?.map((comment) => (
-					<div key={comment.commentID}>
+					<div key={comment.commentId}>
 						<Comment
 							comment={comment}
-							isLiked={heartCommentIDs.includes(comment.commentID)}
-							setOtherCommentData={setCommentData}
-							setHeartCommentIDs={setHeartCommentIDs}
 							preview
 						/>
 					</div>

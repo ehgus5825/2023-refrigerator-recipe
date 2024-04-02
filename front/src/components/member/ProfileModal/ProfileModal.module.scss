@@ -7,20 +7,38 @@
 	gap: 15px;
 }
 
-.profileTitle {
-	font-size: 27px;
+.headerContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.title{
+	padding-left: 170px;
 	font-weight: 600;
 }
 
-.profileImages {
-	img {
-		width: 100px;
-		height: 100px;
-	}
-	button {
-		margin: 1px;
-		border-color: black;
-	}
+.imageList{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.btnStyle {
+	margin: 8px;
+	border: none;
+	background-color: white;
+}
+
+.btnImg {
+	width: 120px;
+	height: 120px;
+	border-radius: 45%;
+	border: grey solid 3px;
 }
 
 .nicknameRule {

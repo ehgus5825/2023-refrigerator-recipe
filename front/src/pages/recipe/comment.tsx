@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import {
-	getCommentsByLike,
-	getCommentsByDate,
-	getMyComments,
-	getHeartCommentIDs,
-} from "@/api";
+import { getComments, getMyComments } from "@/api";
 import { useIntersectionObserver } from "@/hooks";
 import { CommentSortType, RecipeComment } from "@/types";
 
@@ -17,7 +12,7 @@ import CommentInputForm from "@/components/recipe/Comment/CommentInputForm";
 import styles from "@/scss/pages.module.scss";
 
 type RecipeCommentPageProps = {
-	recipeID: number;
+	recipeID: string;
 	recipeName: string;
 };
 
@@ -28,18 +23,13 @@ export default function RecipeCommentPage({
 	const [myCommentData, setMyCommentData] = useState<RecipeComment[]>([]);
 	const [otherCommentData, setOtherCommentData] = useState<RecipeComment[]>([]);
 
-	const [sortType, setSortType] = useState<CommentSortType>("좋아요순");
-	const getCommentsBySortType = {
-		좋아요순: getCommentsByLike,
-		최신순: getCommentsByDate,
-	};
+	const [sortType, setSortType] = useState<CommentSortType>("HEART");
 
 	const [page, setPage] = useState(0);
 	const [isDataLoaded, setIsDataLoaded] = useState(false);
 	const [isScrollEnd, setIsScrollEnd] = useState(false);
 
 	const [modifyMode, setModifyMode] = useState(false);
-	const [heartCommentIDs, setHeartCommentIDs] = useState<number[]>([]);
 
 	const [comment, setComment] = useState("");
 	const [commentID, setCommentID] = useState(0);
@@ -47,20 +37,15 @@ export default function RecipeCommentPage({
 
 	useEffect(() => {
 		(async () => {
-			const myData = await getMyComments(recipeID);
-			setMyCommentData(myData);
-
-			// NOTE: localstorage에 저장할지 고민 중
-			const heartData = await getHeartCommentIDs();
-			setHeartCommentIDs(heartData);
-		})();
-	}, []);
-
-	useEffect(() => {
-		(async () => {
 			setPage(0);
-			const otherData = await getCommentsBySortType[sortType](recipeID, 0);
-			setOtherCommentData(otherData);
+
+			const mydata = await getMyComments(recipeID);
+			const data = await getComments(recipeID, 0, sortType);
+
+			console.log(mydata);
+
+			setMyCommentData(mydata);
+			setOtherCommentData(data);
 			setIsScrollEnd(false);
 			setIsDataLoaded(true);
 		})();
@@ -69,9 +54,11 @@ export default function RecipeCommentPage({
 	useEffect(() => {
 		(async () => {
 			if (page != 0 && !isScrollEnd) {
-				const otherData = await getCommentsBySortType[sortType](recipeID, page);
-				otherData.length !== 0
-					? setOtherCommentData((prev) => [...prev, ...otherData])
+
+				const data = await getComments(recipeID, page, sortType);
+
+				data.length !== 0
+					? setOtherCommentData((prev) => [...prev, ...data])
 					: setIsScrollEnd(true);
 			}
 		})();
@@ -88,17 +75,25 @@ export default function RecipeCommentPage({
 				className={styles.commentListContainer}
 				style={{ marginTop: "46px" }}
 			>
-				{[...myCommentData, ...otherCommentData]?.map((comment) => (
-					<div key={comment.commentID}>
+				{[...myCommentData]?.map((comment) => (
+					<div key={comment.commentId}>
 						<Comment
 							comment={comment}
-							isLiked={heartCommentIDs.includes(comment.commentID)}
 							setComment={setComment}
 							setCommentID={setCommentID}
 							setModifyMode={setModifyMode}
 							setMyCommentData={setMyCommentData}
+						/>
+					</div>
+				))}
+				{[...otherCommentData]?.map((comment) => (
+					<div key={comment.commentId}>
+						<Comment
+							comment={comment}
+							setComment={setComment}
+							setCommentID={setCommentID}
+							setModifyMode={setModifyMode}
 							setOtherCommentData={setOtherCommentData}
-							setHeartCommentIDs={setHeartCommentIDs}
 						/>
 					</div>
 				))}
@@ -119,7 +114,7 @@ export default function RecipeCommentPage({
 }
 
 export async function getServerSideProps(context: any) {
-	const recipeID = Number(context.query.recipeID);
+	const recipeID = context.query.recipeID;
 	const recipeName = context.query.recipeName;
 
 	return {

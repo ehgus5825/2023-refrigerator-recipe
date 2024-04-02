@@ -16,6 +16,7 @@ export default function FilterMenuBottomSheet({
 	activeFilter,
 	setFilters,
 }: FilterMenuBottomSheetProps) {
+	
 	const onFilterItemClick = (filterItem: string) => {
 		setFilters((prevFilters: RecipeFilter[]) =>
 			prevFilters.map((prevFilter) => {

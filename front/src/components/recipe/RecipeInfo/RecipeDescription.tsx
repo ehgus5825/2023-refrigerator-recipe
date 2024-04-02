@@ -2,8 +2,6 @@ import { RecipeDetail } from "@/types";
 import Stars from "../Stars/Stars";
 import styles from "./RecipeInfo.module.scss";
 import { BookmarkIcon } from "./BookmarkIcon";
-import { useEffect, useState } from "react";
-import { getBookmarkIDs } from "@/api";
 
 type RecipeDescriptionProps = {
 	recipe: RecipeDetail;
@@ -31,7 +29,7 @@ export default function RecipeDescription({
 				<div className={styles.recipeInbun}>{recipe.servings}</div>
 				<span />
 				<BookmarkIcon
-					recipeID={recipe.recipeID}
+					recipeID={recipe.recipeId}
 					isBookmarked={recipe.isBookmarked}
 					setRecipe={setRecipe}
 				/>
@@ -46,7 +44,7 @@ export default function RecipeDescription({
 						<div key={key}>
 							<div className={styles.recipeInfoKey}>{key}</div>
 							{key === "별점" && (
-								<Stars id={recipe.recipeID} score={Number(value)} />
+								<Stars id={recipe.recipeId} score={Number(value)} />
 							)}
 							<div className={styles.recipeInfoValue}>
 								{key === "별점" && value ? Number(value).toFixed(1) : value}

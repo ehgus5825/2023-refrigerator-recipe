@@ -4,9 +4,10 @@ export const useIntersectionObserver = (
 	setPage: Function,
 	isDataLoaded: boolean,
 ) => {
+	
 	useEffect(() => {
 		const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-			if (entries[0].isIntersecting) setPage();
+			if (entries[0].isIntersecting) setPage((prevPage: number) => prevPage + 1);
 		};
 		const options = { threshold: 0.1 };
 

@@ -1,4 +1,4 @@
-import { unregister } from "@/api/unregister";
+import { unregister } from "@/api/member";
 import Link from "next/link";
 import { Button, Modal } from "react-bootstrap";
 

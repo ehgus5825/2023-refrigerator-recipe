@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import styles from "./ConfirmCancelModal.module.scss";
+import { GearFill, PencilFill } from "react-bootstrap-icons";
 
 export default function ConfirmCancelModal(props: {
-	style: string;
-	variant: string;
 	title: string;
 	ment: string;
 	api: any;
@@ -17,10 +16,10 @@ export default function ConfirmCancelModal(props: {
 	return (
 		<>
 			<Button
-				className={`${styles[props.style]}`}
-				variant={props.variant}
+				className={styles.linkButton}
+				variant="light"
 				onClick={handleShow}
-			>
+			>			
 				{props.title}
 			</Button>
 

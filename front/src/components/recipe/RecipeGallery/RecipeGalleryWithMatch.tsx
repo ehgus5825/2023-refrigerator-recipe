@@ -16,11 +16,11 @@ export default function RecipeGalleryWithMatch({
 		<div className={styles.recipeGalleryContainer}>
 			{recipeData.map((recipe) => (
 				<div
-					key={recipe.recipeID}
+					key={recipe.recipeId}
 					className={styles.recipeContainer}
-					onClick={() => onRecipeClick(recipe.recipeID)}
+					onClick={() => onRecipeClick(recipe.recipeId)}
 				>
-					<img src={recipe.image} />
+					<img src={recipe.recipeImage} />
 
 					<div className={styles.recipeNameInfoContainer}>
 						<div className={styles.recipeNameScoreCol}>
@@ -31,7 +31,7 @@ export default function RecipeGalleryWithMatch({
 									: ` `}
 							</div>
 						</div>
-						<div className={styles.recipeMatch}>{recipe.match} %</div>
+						<div className={styles.recipeMatch}>{recipe.percent} %</div>
 					</div>
 				</div>
 			))}
