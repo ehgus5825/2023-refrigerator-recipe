@@ -2,7 +2,7 @@ const rewrites = async () => {
 	return [
 		{
 			source: "/:path*",
-			destination: "http://127.0.0.1:8080/:path*",
+			destination: "http://15.165.98.171:8080/:path*",
 		},
 	];
 };
