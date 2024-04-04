@@ -6,8 +6,7 @@ export default function Document() {
 			<Head>
 				<meta 
 					http-equiv="Content-Security-Policy" 
-					content="img-src 'self' http://file.okdab.com/*"
-				/>
+					content="upgrade-insecure-requests" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<body>
