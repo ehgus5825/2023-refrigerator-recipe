@@ -8,7 +8,7 @@ export default function Document() {
 					httpEquiv="Content-Security-Policy"
 					content="upgrade-insecure-requests"
 				/> */}
-				<meta http-equiv="Content-Security-Policy" content="img-src 'self' http://file.okdab.com/"/>
+				<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src *;"/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<body>
