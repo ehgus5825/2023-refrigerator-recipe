@@ -83,7 +83,7 @@ export default function RecipeInfoPage({ recipeID }: RecipeInfoPageProps) {
 		<>
 			{recipe && (
 				<RecipeInfoLayout recipeName={recipe.recipeName}>
-					<img src={recipe.recipeImage} // "/images/no-image.jpg" 
+					<img src="/images/no-image.jpg" 
 						className={styles.backgroundImg} />
 					<div className={styles.recipeInfoContainer}>
 						<RecipeDescription recipe={recipe} setRecipe={setRecipe} />

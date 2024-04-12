@@ -20,7 +20,7 @@ export default function RecipeGalleryWithMatch({
 					className={styles.recipeContainer}
 					onClick={() => onRecipeClick(recipe.recipeId)}
 				>
-					<img src={recipe.recipeImage} //"/images/no-image.jpg" 
+					<img src="/images/no-image.jpg" 
 					/>
 
 					<div className={styles.recipeNameInfoContainer}>

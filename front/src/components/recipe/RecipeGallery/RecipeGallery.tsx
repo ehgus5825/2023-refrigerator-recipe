@@ -21,7 +21,7 @@ export default function RecipeGallery({ recipeData }: RecipeGalleryProps) {
 					className={styles.recipeContainer}
 					onClick={() => onRecipeClick(recipe.recipeId)}
 				>
-					<img src={recipe.recipeImage}	// "/images/no-image.jpg" 
+					<img src="/images/no-image.jpg" 
 					/>
 					<div className={styles.recipeNameInfoContainer}>
 						<span className={styles.recipeName}>{recipe.recipeName}</span>
