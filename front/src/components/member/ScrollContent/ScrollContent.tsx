@@ -40,7 +40,7 @@ export default function ScrollContent(props: any) {
 								onClick={() => onContentClick(i.recipeId)}
 							>
 								<img className={styles.imgContainer}
-									src="/images/no-image.jpg"
+									src={i.recipeImage } //"/images/no-image.jpg"
 									alt={i.recipeName}
 								/>
 							</button>
@@ -57,7 +57,7 @@ export default function ScrollContent(props: any) {
 								onClick={() => onContentClick(i.recipeId)}
 							>
 								<img className={styles.imgContainer}
-									src="/images/no-image.jpg"
+									src={i.recipeImage} // "/images/no-image.jpg"
 									alt={i.recipeName}
 								/>
 							</button>

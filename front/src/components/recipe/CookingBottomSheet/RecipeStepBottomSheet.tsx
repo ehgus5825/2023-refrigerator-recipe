@@ -59,12 +59,12 @@ export default function RecipeStepBottomSheet({
 					</div>
 
 					<div className={styles.stepContent}>
-						{/* {recipeSteps[activeIndex].courseImage && (
+						{recipeSteps[activeIndex].courseImage && (
 							<img
 								className={styles.image}
 								src={recipeSteps[activeIndex].courseImage.replace(/,+$/, "")}
 							/>
-						)} */}
+						)}
 
 						<span className={styles.explanation}>
 							{recipeSteps[activeIndex].explanation}
