@@ -3,8 +3,8 @@
  
 <br>
  
- ## 🤷‍♂️ 사용자
- 냉장고 속 식재료 정보를 기반으로 레시피를 추천 받고 싶거나 식재료를 관리나 소진을 효율적으로 하고싶은 사용자
+## 🏅 목표
+냉장고 속 식재료 정보를 기반으로 레시피를 추천하여 사용자의 식재료를 호율적으로 소진하거나 관리할 수 있도록 하기 위함.
 
 <br>
 
@@ -23,7 +23,7 @@ https://fridge-recipe-app.netlify.app/
 
 https://youtu.be/2Gc1CvMocMk?si=VNDVysbYzdTRYnTx
 
-### 3. 상세 소개
+### 3. 주요 내용
 
 https://www.notion.so/Ver-2-fd924dfd1e344bb38d09bab8eae1840e
 
@@ -31,11 +31,9 @@ https://www.notion.so/Ver-2-fd924dfd1e344bb38d09bab8eae1840e
 
 [https://www.notion.so/a45c85947b314badbc067cf19bf362c1](https://www.notion.so/a45c85947b314badbc067cf19bf362c1?pvs=21)
 
-### 
-
 <br>
 
-## 📗 기술 스택
+## ⚙️ 기술 스택
 
   - Front End - [`김명선`](https://github.com/mxxseonkim), [`이진경`](https://github.com/j-kyung99)
     - Typescript, React, SCSS
@@ -85,7 +83,3 @@ https://www.notion.so/Ver-2-fd924dfd1e344bb38d09bab8eae1840e
 - [[테스트] 통합 테스트와 슬라이스 테스트](https://velog.io/@ehgus5825/%EB%83%89%EB%B6%80-%ED%86%B5%ED%95%A9-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%99%80-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EC%8A%A4-%ED%85%8C%EC%8A%A4%ED%8A%B8)
 - [[테스트] 좋은 테스트에 대한 고찰](https://velog.io/@ehgus5825/%EB%83%89%EB%B6%80-%EC%A2%8B%EC%9D%80-%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0)
 - [[배포] AWS와 Dokcer를 이용한 프로젝트 배포기](https://velog.io/@ehgus5825/%EB%83%89%EB%B6%80-%EB%B0%B0%EC%B9%98-%EC%84%9C%EB%B2%84-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-feat.-jenkins)
-
-<br>
-  
-
