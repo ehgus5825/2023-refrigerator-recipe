@@ -16,6 +16,28 @@
 
 <br>
 
+## 🔗 Link
+
+### 1. 서비스 링크
+
+https://fridge-recipe-app.netlify.app/
+
+### 2. Github
+
+https://github.com/ehgus5825/2023-refrigerator-recipe
+
+### 3. 기술 블로그
+
+[https://velog.io/@ehgus5825/series/냉장고를-부탁해](https://velog.io/@ehgus5825/series/%EB%83%89%EC%9E%A5%EA%B3%A0%EB%A5%BC-%EB%B6%80%ED%83%81%ED%95%B4)
+
+### 4. 개발 문서
+
+[https://www.notion.so/a45c85947b314badbc067cf19bf362c1](https://www.notion.so/a45c85947b314badbc067cf19bf362c1?pvs=21)
+
+### 5. 시연 영상
+
+https://youtu.be/2Gc1CvMocMk?si=VNDVysbYzdTRYnTx
+
 ## 📗 기술 스택
 
   - Front End - [`김명선`](https://github.com/mxxseonkim), [`이진경`](https://github.com/j-kyung99)
