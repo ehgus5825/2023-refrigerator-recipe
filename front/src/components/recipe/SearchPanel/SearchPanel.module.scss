@@ -1,0 +1,60 @@
+@import "@/scss/variables";
+
+$tag-font-size: 17px;
+$tag-bg-color: $grey-100;
+$tag-font-color: $grey-500;
+
+$delete-btn-font-size: 20px;
+$delete-btn-font-color: $grey-400;
+
+.panelContainer {
+	display: flex;
+	flex-direction: column;
+	padding: 3rem 1.5rem 1rem 1.5rem;
+	gap: 3rem;
+}
+
+.partContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.description {
+	font-size: 16px;
+	color: $grey-400;
+	margin-top: 0.375rem;
+	margin-bottom: 0.25rem;
+}
+
+// pages.scss
+.title {
+	display: flex;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.tagsContainer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.tag {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1rem;
+
+	background-color: $tag-bg-color;
+	border: none;
+	border-radius: 1.5rem;
+	color: $tag-font-color;
+	font-size: $tag-font-size;
+
+	> div {
+		font-size: $delete-btn-font-size;
+		line-height: $delete-btn-font-size;
+		color: $delete-btn-font-color;
+	}
+}

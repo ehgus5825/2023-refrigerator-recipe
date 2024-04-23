@@ -1,0 +1,55 @@
+@import "@/scss/variables";
+
+$appbar-icon-size: 24px;
+$appbar-font-size: 18px;
+$appbar-font-weight: 600;
+
+@mixin appbar-container {
+	position: fixed;
+	width: 100%;
+	height: $appbar-height;
+	padding: $pd-basic;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 1;
+}
+.appbarContainer {
+	@include appbar-container();
+	background-color: white;
+}
+.appbarTransparentContainer {
+	@include appbar-container();
+	background-color: transparent;
+}
+
+.appbarTitle {
+	position: absolute;
+	width: 60%;
+	text-align: center;
+	left: 50%;
+	translate: -50%;
+	font-size: $appbar-font-size;
+	font-weight: $appbar-font-weight;
+}
+
+.appbarIcon {
+	width: $appbar-icon-size;
+	height: $appbar-icon-size;
+	color: $grey-900;
+}
+
+.bellIcon {
+	width: $appbar-icon-size;
+	height: $appbar-icon-size;
+	color: #F2C93B;
+}
+
+.notiDotIcon {
+	position: absolute;
+	height: 7px;
+	width: 7px;
+	left: 90%;
+	top: 10%;
+	color: #ef5350;
+}

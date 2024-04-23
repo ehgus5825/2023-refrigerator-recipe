@@ -1,0 +1,69 @@
+.registerContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 45px;
+}
+
+.registerTitle {
+	font-size: 27px;
+	font-weight: 600;
+}
+
+.registerInput {
+	width: 320px;
+	height: 57px;
+}
+
+.registerBtn {
+	width: 320px;
+	height: 57px;
+	margin-bottom: 35px;
+}
+
+.checkEmail,
+.checkPw,
+.clickBtn,
+.notice {
+	font-size: 14px;
+	margin-top: -10px;
+}
+
+.checkEmailTrue,
+.checkPwTrue {
+	color: #6fb2d2;
+}
+
+.checkEmailFalse,
+.checkPwFalse {
+	color: #d76b6b;
+}
+
+.clickTrue {
+	color: #6fb2d2;
+	span {
+		display: flex;
+		font-size: 12px;
+		justify-content: left;
+	}
+}
+
+.regularPw {
+	color: #d76b6b;
+	margin-top: -10px;
+	margin-bottom: 20px;
+	span {
+		display: flex;
+		font-size: 14px;
+		justify-content: left;
+	}
+}
+
+.InputContentNickname{
+	margin-top: 10px;
+}
+
+.modalBtn{
+	margin-top: 35px;
+}

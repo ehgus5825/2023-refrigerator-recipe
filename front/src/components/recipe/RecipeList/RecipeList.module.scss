@@ -1,0 +1,54 @@
+@import "@/scss/variables";
+
+$img-size: 64px;
+
+$name-font-size: 19px;
+$name-font-color: $grey-800;
+$name-font-weight: 400; //bold;
+
+$info-font-size: 15px;
+$info-font-color: $grey-400;
+$info-font-weight: 300; //500;
+
+.recipelistContainer {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+
+	.recipeContainer {
+		display: flex;
+		padding: 1rem 0.25rem;
+		gap: 1.25rem;
+		border-bottom: 1px solid $grey-100;
+
+		.recipeImage {
+			height: $img-size;
+			width: $img-size;
+			border: 1px solid $grey-100;
+			border-radius: 0.5rem;
+		}
+
+		.recipeInfoContainer {
+			display: flex;
+			flex-direction: column;
+			gap: 0.375rem;
+			justify-content: center;
+
+			.recipeName {
+				font-size: $name-font-size;
+				font-weight: $name-font-weight;
+				color: $name-font-color;
+				letter-spacing: 0.5px;
+			}
+
+			.recipeInfo {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+				font-size: $info-font-size;
+				color: $info-font-color;
+				font-weight: $info-font-weight;
+			}
+		}
+	}
+}

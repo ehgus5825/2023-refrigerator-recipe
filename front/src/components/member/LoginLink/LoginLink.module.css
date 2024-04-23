@@ -1,0 +1,16 @@
+.loginLink {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.loginLink span {
+  margin-bottom: 7px;
+  font-size: 17px;
+}
+.loginLink a {
+  margin-left: 7px;
+  color: black;
+  font-weight: 600;
+  text-decoration: none;
+}/*# sourceMappingURL=LoginLink.module.css.map */

@@ -1,0 +1,24 @@
+@import "@/scss/variables";
+
+.requestIngredientContainer {
+	position: fixed;
+	width: 100%;
+	bottom: 90px;
+	display: flex;
+	flex-direction: column;
+}
+
+@mixin requestIngredient($color: $grey-500) {
+	font-size: 15px;
+	text-align: center;
+	line-height: 180%;
+	color: $color;
+}
+.requestIngredientDescription {
+	@include requestIngredient();
+}
+.requestIngredientLink {
+	@include requestIngredient($grey-700);
+	font-weight: bold;
+	text-decoration: underline;
+}

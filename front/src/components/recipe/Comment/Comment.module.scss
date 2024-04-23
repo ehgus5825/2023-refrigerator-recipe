@@ -1,0 +1,125 @@
+@import "@/scss/variables";
+
+$comment-nickname-font-size: 18px;
+$comment-nickname-font-color: $grey-900;
+
+$comment-content-font-size: 17px;
+$comment-content-font-color: $grey-700;
+
+$comment-info-font-size: 14px;
+$comment-info-font-color: $grey-400;
+
+$comment-btn-font-size: 14px;
+$comment-btn-font-color: $grey-700;
+
+.commentContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+
+	.commentHeader {
+		display: flex;
+
+		.commentNickname {
+			flex: 1;
+			color: $grey-900;
+			font-size: $comment-nickname-font-size;
+			font-weight: bold;
+		}
+
+		.commentMenu {
+			display: flex;
+			gap: 0.5rem;
+			color: $comment-info-font-color;
+			font-size: $comment-info-font-size;
+		}
+	}
+
+	.commentContent {
+		color: $comment-content-font-color;
+		font-size: $comment-content-font-size;
+		color: $grey-700;
+		line-height: 1.6rem;
+	}
+
+	.commentInfo {
+		display: flex;
+		gap: 0.25rem;
+		align-items: center;
+
+		font-size: $comment-info-font-size;
+		color: $comment-info-font-color;
+
+		.commentIcon {
+			padding: 1px;
+		}
+	}
+}
+
+.commentInputFormContainer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+
+	.commentInputFormStatusBar {
+		display: flex;
+		align-items: center;
+		padding: 0 0.5rem;
+		color: $comment-info-font-color;
+		border-top: $divider;
+
+		> span {
+			flex: 1;
+			padding: 0.35rem;
+			text-align: center;
+			font-size: $comment-info-font-size;
+		}
+	}
+
+	.commentInputContainer {
+		width: 100%;
+		display: flex;
+		gap: 0.25rem;
+		align-items: center;
+
+		border-top: $divider;
+		padding: 0.85rem 1rem;
+
+		input {
+			flex: 1;
+			font-size: $comment-content-font-size;
+			color: $comment-content-font-color;
+			background-color: transparent;
+			border: none;
+
+			&:focus {
+				outline: none;
+			}
+			&::placeholder {
+				color: $placeholder-color;
+			}
+		}
+
+		.clearIcon {
+			padding: 1px;
+			margin: 0rem 0.5rem;
+			color: $comment-info-font-color;
+		}
+
+		button {
+			border: none;
+			border-left: $divider;
+			padding: 0 0.25rem 0 1rem;
+
+			background-color: transparent;
+			color: $comment-btn-font-color;
+
+			&:disabled {
+				color: $placeholder-color;
+			}
+		}
+	}
+}

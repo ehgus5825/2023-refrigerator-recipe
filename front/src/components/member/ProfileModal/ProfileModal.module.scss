@@ -1,0 +1,55 @@
+.profileContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 25px;
+	gap: 15px;
+}
+
+.headerContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.title{
+	padding-left: 170px;
+	font-weight: 600;
+}
+
+.imageList{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.btnStyle {
+	margin: 8px;
+	border: none;
+	background-color: white;
+}
+
+.btnImg {
+	width: 120px;
+	height: 120px;
+	border-radius: 45%;
+	border: grey solid 3px;
+}
+
+.nicknameRule {
+	margin-top: -10px;
+}
+
+.regularNick {
+	color: #6fb2d2;
+	span {
+		display: flex;
+		font-size: 14px;
+		justify-content: left;
+	}
+}

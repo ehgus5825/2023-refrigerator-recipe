@@ -1,0 +1,45 @@
+@import "@/scss/variables";
+
+$result-font-size: 18px;
+$result-description-font-size: 15px;
+$result-title-font-color: $grey-700;
+$result-keyword-font-color: $grey-500;
+$result-description-font-color: $grey-400;
+
+.noResultContainer {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 3rem;
+	justify-content: center;
+	text-align: center;
+	gap: 0.25rem;
+	line-height: 180%;
+
+	font-size: $result-font-size;
+	color: $result-description-font-color;
+}
+
+.noResultKeyword {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: $result-keyword-font-color;
+	font-weight: 600;
+}
+
+.noResultTitle {
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: $result-title-font-color;
+	font-weight: 600;
+	padding: 3rem 0 0.5rem 0;
+}
+
+.noResultDescription {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: $result-description-font-size;
+}

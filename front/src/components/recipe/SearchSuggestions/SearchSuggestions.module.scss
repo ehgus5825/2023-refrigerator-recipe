@@ -1,0 +1,18 @@
+@import "@/scss/variables";
+
+$search-suggestion-font-size: 18px;
+$search-suggestion-font-color: $grey-400;
+
+.searchSuggestionsContainer {
+	display: flex;
+	flex-direction: column;
+	padding: $pd-sm $pd-basic;
+
+	> div {
+		padding: 0.75rem 1rem;
+		border-bottom: $divider;
+
+		color: $search-suggestion-font-color;
+		font-size: $search-suggestion-font-size;
+	}
+}

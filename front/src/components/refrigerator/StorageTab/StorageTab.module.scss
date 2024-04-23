@@ -1,0 +1,47 @@
+@import "@/scss/variables";
+
+$tab-font-size-lg: 18px;
+$tab-font-size-sm: $tab-font-size-lg - 2px;
+$tab-font-weight-selected: 500;
+
+$tab-bg-color: $grey-100;
+$tab-bg-color-selected: white;
+$tab-font-color: $grey-500;
+$tab-font-color-selected: $grey-700;
+
+@mixin tab-container {
+	display: flex;
+	width: 100%;
+	padding: 0.35rem;
+	border-radius: 0.75rem;
+	background-color: $grey-100;
+}
+.tabContainer_sm {
+	@include tab-container();
+	height: $refrigerator-bar-height;
+	font-size: $tab-font-size-sm;
+}
+.tabContainer_lg {
+	@include tab-container();
+	height: $ingredient-info-height;
+	font-size: $tab-font-size-lg;
+}
+
+@mixin tab-item() {
+	flex: 1;
+	border: none;
+	border-radius: 0.6rem;
+	padding: 0.25rem;
+}
+.tabItem {
+	@include tab-item();
+	background-color: transparent;
+	color: $tab-font-color;
+}
+.tabItem_selected {
+	@include tab-item();
+	background-color: $tab-bg-color-selected;
+	color: $tab-font-color-selected;
+	font-weight: $tab-font-weight-selected;
+	box-shadow: 0.25rem 0.25rem 0.25rem rgba($grey-300, 0.3);
+}

@@ -1,0 +1,37 @@
+@import "@/scss/variables";
+
+.messageContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	flex: 1;
+	padding: 1.25rem 1rem;
+	font-size: 17px;
+	text-align: center;
+	color: $grey-600;
+
+	.ingredientName {
+		font-size: 19px;
+		font-weight: bold;
+		color: $grey-800;
+	}
+
+	.message {
+		line-height: 150%;
+		letter-spacing: 0.5px;
+		padding-bottom: 1rem;
+	}
+
+	.inputContainer {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+		justify-content: center;
+
+		> span {
+			font-size: 18px;
+			font-weight: 600;
+			display: inline-block;
+		}
+	}
+}

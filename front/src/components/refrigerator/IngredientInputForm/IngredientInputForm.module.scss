@@ -1,0 +1,44 @@
+@import "@/scss/variables";
+
+$unit-font-size: 18px;
+$unit-font-color: $grey-500;
+
+$btn-group-color: $primary-color-refrigerator;
+$btn-bg-color: white;
+$btn-font-color: white;
+$btn-font-size: 16px;
+
+// volumeInputForm
+.volumeInputForm {
+	display: flex;
+	gap: 0.75rem;
+	align-items: center;
+
+	.unit {
+		color: $unit-font-color;
+		font-size: $unit-font-size;
+	}
+}
+
+// dateInputForm
+.dateInputForm {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.datePlusBtnGroup {
+	display: flex;
+	gap: 0.25rem;
+
+	.datePlusBtn {
+		flex: 1;
+		padding: 0.5rem;
+		border: none;
+		background-color: $btn-group-color;
+		color: $btn-font-color;
+		font-size: $btn-font-size;
+		outline: 0.125rem solid white;
+		border-radius: 0.75rem;
+	}
+}

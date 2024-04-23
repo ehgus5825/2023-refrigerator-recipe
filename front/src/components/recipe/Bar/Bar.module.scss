@@ -1,0 +1,48 @@
+@import "@/scss/variables";
+
+$pd-minus-basic: -$pd-basic;
+
+$filter-font-size: 15px;
+$filter-bg-color: white;
+$filter-text-color: $grey-400;
+
+$filter-text-color-selected: $grey-600;
+
+@mixin barContainer {
+	display: flex;
+	gap: 0.35rem;
+	align-items: center;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	button {
+		padding: 0.15rem 0.8rem;
+		border: 1px solid $grey-300;
+		font-size: $filter-font-size;
+		background-color: $filter-bg-color;
+		color: $filter-text-color;
+		border-radius: 3rem;
+	}
+
+	.selected {
+		font-weight: 600;
+		border: 1.5px solid $primary-color-recipe;
+		color: $filter-text-color-selected;
+	}
+}
+
+.filterbarContainer {
+	@include barContainer();
+
+	overflow: scroll;
+	white-space: nowrap;
+	padding: 0.7rem $pd-basic 0.25rem $pd-basic;
+	margin: 0 $pd-minus-basic;
+}
+
+.sortbarContainer {
+	@include barContainer();
+	// justify-content: flex-end;
+}
